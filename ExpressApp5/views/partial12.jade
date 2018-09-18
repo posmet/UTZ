@@ -1,0 +1,19 @@
+﻿div(ng-controller="MyCtrl12 as $ctrl")
+    h3 Настройка параметров обработки активных матриц
+        div(ng-show="loading") 
+            i(class="fa fa-spinner fa-spin") 
+            Загрузка ...
+    a(class="btn btn-primary btn-sm" ng-click="oncreate()") Добавить
+    {{rsp}}
+    div(ng-show="checkadd" class="form-row")
+       input(type="text" placeholder="Введите групповой код"  ng-model="newgrpcode")
+       input(type="text" placeholder="Введите код аптеки"  ng-model="newphcode")
+    form
+        div(class="form-row")
+            div(class="col")
+                input(type="text" class="form-control" placeholder="Введите групповой код" ng-model="searchGrp")
+            div(class="col")
+                input(type="text" class="form-control" placeholder="Введите код аптеки" ng-model="searchPh")
+            a(class="btn btn-primary btn-sm" ng-click="onClick()") Получить
+        a(class="btn btn-primary btn-sm" ng-click="onSearch()") Получить для подтверждения
+    div(class="grid" ui-grid="$ctrl.gridOptions" ui-grid-move-columns)

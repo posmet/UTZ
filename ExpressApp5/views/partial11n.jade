@@ -1,0 +1,12 @@
+﻿div(ng-controller="MyCtrl11 as $ctrl")
+    h3 Аптеки
+    small
+        form
+            div(class="form-row")
+                a(class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onmatrix()") Матрица
+                {{rsp}}
+            div(ng-show="loading") 
+                i(class="fa fa-spinner fa-spin") 
+                Загрузка ...
+
+        div(id="gridSaveState" class="grid" ui-grid="$ctrl.gridOptions" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-edit ui-grid-resize-columns ui-grid-selection ui-grid-cellnav ng-dblclick="$ctrl.onmatrix()")

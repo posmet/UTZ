@@ -1,0 +1,694 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>ExpressApp5</Name>
+    <RootNamespace>ExpressApp5</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>f74cc874-a67c-4e19-ab35-d96f77b4dc44</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>app.js</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ProjectFiles</ProjectView>
+    <NodejsPort>3000</NodejsPort>
+    <StartWebBrowser>true</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="app.js" />
+    <Compile Include="boot\index.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="boot\express.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="boot\passport.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="public\angular-chart.js" />
+    <Compile Include="public\appO.js" />
+    <Compile Include="public\app.js" />
+    <Compile Include="public\chart.js" />
+    <Compile Include="public\csv.js" />
+    <Compile Include="public\excel-builder.dist.js" />
+    <Compile Include="public\jszip.min.js" />
+    <Compile Include="public\js\app.js" />
+    <Compile Include="public\js\controllers.js" />
+    <Compile Include="public\js\directives.js" />
+    <Compile Include="public\js\filters.js" />
+    <Compile Include="public\js\jquery.min.js" />
+    <Compile Include="public\js\lib\angular\angular-animate.js" />
+    <Compile Include="public\js\lib\angular\angular-animate.min.js" />
+    <Compile Include="public\js\lib\angular\angular-aria.js" />
+    <Compile Include="public\js\lib\angular\angular-aria.min.js" />
+    <Compile Include="public\js\lib\angular\angular-bootstrap-prettify.js" />
+    <Compile Include="public\js\lib\angular\angular-bootstrap-prettify.min.js" />
+    <Compile Include="public\js\lib\angular\angular-bootstrap.js" />
+    <Compile Include="public\js\lib\angular\angular-bootstrap.min.js" />
+    <Compile Include="public\js\lib\angular\angular-cookies.js" />
+    <Compile Include="public\js\lib\angular\angular-cookies.min.js" />
+    <Compile Include="public\js\lib\angular\angular-loader.js" />
+    <Compile Include="public\js\lib\angular\angular-loader.min.js" />
+    <Compile Include="public\js\lib\angular\angular-message-format.js" />
+    <Compile Include="public\js\lib\angular\angular-message-format.min.js" />
+    <Compile Include="public\js\lib\angular\angular-messages.js" />
+    <Compile Include="public\js\lib\angular\angular-messages.min.js" />
+    <Compile Include="public\js\lib\angular\angular-mocks.js" />
+    <Compile Include="public\js\lib\angular\angular-parse-ext.js" />
+    <Compile Include="public\js\lib\angular\angular-parse-ext.min.js" />
+    <Compile Include="public\js\lib\angular\angular-resource.js" />
+    <Compile Include="public\js\lib\angular\angular-resource.min.js" />
+    <Compile Include="public\js\lib\angular\angular-route.js" />
+    <Compile Include="public\js\lib\angular\angular-route.min.js" />
+    <Compile Include="public\js\lib\angular\angular-sanitize.js" />
+    <Compile Include="public\js\lib\angular\angular-sanitize.min.js" />
+    <Compile Include="public\js\lib\angular\angular-scenario.js" />
+    <Compile Include="public\js\lib\angular\angular-touch.js" />
+    <Compile Include="public\js\lib\angular\angular-touch.min.js" />
+    <Compile Include="public\js\lib\angular\angular.js" />
+    <Compile Include="public\js\lib\angular\angular.min.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_af-na.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_af-za.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_af.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_am-et.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_am.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-001.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-ae.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-bh.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-dz.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-eg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-iq.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-jo.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-kw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-lb.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-ly.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-ma.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-om.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-qa.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-sa.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-sd.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-sy.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-tn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar-ye.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ar.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_bg-bg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_bg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_bn-bd.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_bn-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_bn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ca-ad.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ca-es.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ca.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_chr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_cs-cz.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_cs.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_cy.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_da-dk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_da.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_de-at.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_de-be.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_de-ch.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_de-de.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_de-li.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_de-lu.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_de.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_el-cy.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_el-gr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_el-polyton.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_el.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-as.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-au.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-bb.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-be.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-bm.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-bw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-bz.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-ca.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-dsrt-us.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-dsrt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-fm.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-gb.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-gu.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-gy.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-hk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-ie.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-iso.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-jm.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-mh.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-mp.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-mt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-mu.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-na.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-nz.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-ph.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-pk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-pr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-pw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-sg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-tc.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-tt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-um.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-us.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-vg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-vi.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-za.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-zw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en-zz.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_en.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-419.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-ar.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-bo.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-cl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-co.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-cr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-do.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-ea.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-ec.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-es.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-gq.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-gt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-hn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-ic.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-mx.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-ni.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-pa.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-pe.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-pr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-py.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-sv.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-us.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-uy.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es-ve.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_es.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_et-ee.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_et.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_eu-es.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_eu.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fa-af.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fa-ir.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fa.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fi-fi.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fi.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fil-ph.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fil.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-be.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-bf.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-bi.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-bj.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-bl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-ca.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-cd.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-cf.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-cg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-ch.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-ci.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-cm.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-dj.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-fr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-ga.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-gf.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-gn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-gp.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-gq.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-km.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-lu.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-mc.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-mf.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-mg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-ml.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-mq.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-ne.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-re.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-rw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-sn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-td.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-tg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr-yt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_fr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_gl-es.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_gl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_gsw-ch.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_gsw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_gu-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_gu.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_haw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_he-il.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_he.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_hi-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_hi.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_hr-hr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_hr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_hu-hu.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_hu.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_id-id.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_id.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_is-is.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_is.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_it-ch.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_it-it.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_it-sm.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_it.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_iw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ja-jp.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ja.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_kn-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_kn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ko-kr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ko.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ln-cd.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ln-cg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ln.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_lt-lt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_lt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_lv-lv.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_lv.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ml-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ml.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_mo.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_mr-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_mr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ms-bn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ms-my.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ms.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_mt-mt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_mt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_nl-aw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_nl-be.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_nl-cw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_nl-nl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_nl-sx.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_nl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_no.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_or-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_or.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_pl-pl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_pl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_pt-ao.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_pt-br.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_pt-gw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_pt-mz.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_pt-pt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_pt-st.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_pt.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ro-md.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ro-ro.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ro.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ru-md.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ru-ru.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ru-ua.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ru.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sk-sk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sl-si.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sq-al.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sq.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr-cyrl-ba.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr-cyrl-me.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr-cyrl-rs.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr-cyrl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr-latn-ba.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr-latn-me.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr-latn-rs.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr-latn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr-rs.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sv-fi.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sv-se.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sv.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sw-ke.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sw-tz.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_sw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ta-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ta-lk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ta.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_te-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_te.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_th-th.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_th.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_tl-ph.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_tl.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_tr-tr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_tr.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_uk-ua.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_uk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ur-in.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ur-pk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_ur.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_vi-vn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_vi.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-cn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hans-cn.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hans-hk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hans-mo.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hans-sg.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hans.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hant-hk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hant-mo.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hant-tw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hant.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-hk.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh-tw.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zh.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zu-za.js" />
+    <Compile Include="public\js\lib\angular\i18n\angular-locale_zu.js" />
+    <Compile Include="public\js\lib\chart\angular-chart.js" />
+    <Compile Include="public\js\lib\chart\angular-chart.min.js" />
+    <Compile Include="public\js\lib\chart\chart.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.all.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.all.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ar.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ar.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.bg.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.bg.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.cs.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.cs.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.da.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.da.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.de.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.de.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.es-ct.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.es-ct.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.es.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.es.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.fa.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.fa.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.fi.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.fi.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.fr.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.fr.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.he.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.he.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.hy.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.hy.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.is.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.is.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.it.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.it.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ja.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ja.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ko.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ko.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.nl.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.nl.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.no.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.no.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.pl.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.pl.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.pt-br.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.pt-br.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.pt.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.pt.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ro.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ro.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.rs-lat.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.rs-lat.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ru.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ru.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.sk.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.sk.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.sv.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.sv.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ta.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ta.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.tr.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.tr.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ua.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.ua.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.zh-cn.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.zh-cn.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.zh-tw.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\i18n\ui-grid.language.zh-tw.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.auto-resize.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.auto-resize.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.cellnav.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.cellnav.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.core.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.core.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.edit.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.edit.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.empty-base-layer.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.empty-base-layer.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.expandable.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.expandable.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.exporter.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.exporter.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.grouping.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.grouping.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.importer.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.importer.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.infinite-scroll.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.infinite-scroll.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.move-columns.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.move-columns.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.pagination.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.pagination.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.pinning.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.pinning.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.resize-columns.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.resize-columns.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.row-edit.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.row-edit.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.saveState.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.saveState.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.selection.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.selection.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.tree-base.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.tree-base.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.tree-view.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.tree-view.min.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.validate.js" />
+    <Compile Include="public\js\lib\chart\ui-grid\ui-grid.validate.min.js" />
+    <Compile Include="public\js\lib\ui-bootstrap\ui-bootstrap.js" />
+    <Compile Include="public\js\ng-infinite-scroll.js" />
+    <Compile Include="public\js\services.js" />
+    <Compile Include="public\lodash.min.js" />
+    <Compile Include="public\pdfmake.js" />
+    <Compile Include="public\ui-grid.js" />
+    <Compile Include="public\ui-grid.language.ru.js" />
+    <Compile Include="public\vfs_fonts.js" />
+    <Compile Include="routes\api.js" />
+    <Compile Include="routes\connectToDatabase.js" />
+    <Compile Include="routes\index.js" />
+    <Compile Include="routes\auth.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="routes\home.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="package.json" />
+    <Content Include="public\css\bootstrap.min.css" />
+    <Content Include="public\css\fontawesome.min.css" />
+    <Content Include="public\css\main.css" />
+    <Content Include="public\css\main1.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\images\ico-lock.png" />
+    <Content Include="public\images\ico-user.png" />
+    <Content Include="public\js\lib\angular\angular-animate.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-aria.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-cookies.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-csp.css" />
+    <Content Include="public\js\lib\angular\angular-loader.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-message-format.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-messages.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-parse-ext.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-resource.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-route.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-sanitize.min.js.map" />
+    <Content Include="public\js\lib\angular\angular-touch.min.js.map" />
+    <Content Include="public\js\lib\angular\angular.min.js.map" />
+    <Content Include="public\js\lib\angular\errors.json" />
+    <Content Include="public\js\lib\angular\sitemap.xml" />
+    <Content Include="public\js\lib\angular\version.json" />
+    <Content Include="public\js\lib\angular\version.txt" />
+    <Content Include="public\js\lib\chart\angular-chart.min.js.map" />
+    <Content Include="public\js\lib\chart\ui-grid\fonts\ui-grid.eot" />
+    <Content Include="public\js\lib\chart\ui-grid\fonts\ui-grid.svg" />
+    <Content Include="public\js\lib\chart\ui-grid\fonts\ui-grid.ttf" />
+    <Content Include="public\js\lib\chart\ui-grid\fonts\ui-grid.woff" />
+    <Content Include="public\js\lib\chart\ui-grid\less\animation.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\body.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\bootstrap\bootstrap.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\cell.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\cellnav\less\cellNav.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\edit\less\edit.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\elements.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\empty-base-layer\less\emptyBaseLayer.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\expandable\less\expandable.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\exporter\less\exporter.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\footer.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\grid.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\grouping\less\grouping.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\header.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\icons.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\importer\less\importer.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\main.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\menu.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\move-columns\less\colMovable.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\pagination\less\pagination.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\pinning\less\pinning.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\resize-columns\less\column-resizer.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\row-edit\less\rowEdit.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\rtl.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\selection\less\selection.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\sorting.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\tree-base\less\tree-base.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\tree-view\less\tree-view.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\validate\less\validate.less" />
+    <Content Include="public\js\lib\chart\ui-grid\less\variables.less" />
+    <Content Include="public\js\lib\chart\ui-grid\ui-grid.css" />
+    <Content Include="public\js\lib\chart\ui-grid\ui-grid.min.css" />
+    <Content Include="public\index55.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\main.css" />
+    <Content Include="public\expandableRowTemplate.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\ui-grid.css" />
+    <Content Include="README.md" />
+    <Content Include="views\index2.jade" />
+    <Content Include="views\index.jade" />
+    <Content Include="views\layout.jade" />
+    <Content Include="views\auth.jade">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\partial11n.jade" />
+    <Content Include="views\partial12n.jade">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\partial11.jade" />
+    <Content Include="views\partial12.jade" />
+    <Content Include="views\partial12_1.jade" />
+    <Content Include="views\partial13n.jade" />
+    <Content Include="views\partial13.jade" />
+    <Content Include="views\partial14n.jade" />
+    <Content Include="views\partial15n.jade" />
+    <Content Include="views\partial3o.jade" />
+    <Content Include="views\partial7.jade">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\waiting.jade">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="views\partial5.jade" />
+    <Content Include="views\partial4.jade" />
+    <Content Include="views\partial3.jade" />
+    <Content Include="views\partials\.gitignore" />
+    <Content Include="views\partial1.jade" />
+    <Content Include="views\partial2.jade" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="boot\" />
+    <Folder Include="public\" />
+    <Folder Include="public\css\" />
+    <Folder Include="public\images\" />
+    <Folder Include="public\js\" />
+    <Folder Include="public\js\lib\" />
+    <Folder Include="public\js\lib\angular\" />
+    <Folder Include="public\js\lib\angular\i18n\" />
+    <Folder Include="public\js\lib\chart\" />
+    <Folder Include="public\js\lib\chart\ui-grid\" />
+    <Folder Include="public\js\lib\chart\ui-grid\fonts\" />
+    <Folder Include="public\js\lib\chart\ui-grid\i18n\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\bootstrap\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\cellnav\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\cellnav\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\edit\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\edit\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\empty-base-layer\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\empty-base-layer\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\expandable\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\expandable\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\exporter\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\exporter\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\grouping\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\grouping\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\importer\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\importer\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\move-columns\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\move-columns\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\pagination\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\pagination\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\pinning\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\pinning\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\resize-columns\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\resize-columns\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\row-edit\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\row-edit\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\selection\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\selection\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\tree-base\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\tree-base\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\tree-view\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\tree-view\less\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\validate\" />
+    <Folder Include="public\js\lib\chart\ui-grid\less\validate\less\" />
+    <Folder Include="public\js\lib\ui-bootstrap\" />
+    <Folder Include="routes\" />
+    <Folder Include="views\" />
+    <Folder Include="views\partials\" />
+  </ItemGroup>
+  <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

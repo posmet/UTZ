@@ -1,0 +1,42 @@
+﻿div(ng-controller="MyCtrl4")
+    p Обработка заявки.
+    small
+        table(class="table table-bordered table-striped")
+            thead(class="thead-light")
+                tr
+                    th(scoup="col")	ГрКод
+                    th(scoup="col")	Наименование
+                    th(scoup="col")	РСП
+                    th(scoup="col")	Ост
+                    th(scoup="col")	ВП
+                    th(scoup="col")	Заявка
+                    th(scoup="col")	Нужно заказать
+                    th(scoup="col")	НЗаказа
+                    th(scoup="col")	ДЗаказа
+                    th(scoup="col")	Кратность
+                    th(scoup="col")	МинЗпс
+                    th(scoup="col")	МинЗкз
+                    th(scoup="col")	ЦенаЗ
+                    th(scoup="col")	ЦенаП
+            tbody
+                tr(ng-repeat="row in rq")
+                    td {{row.GrCode}}
+                    td {{row.Gr_Name}}
+                    td {{row.CalcVel}}
+                    td {{row.Ost}}
+                    td {{row.Wait}}
+                    td {{row.Req}}
+                    td 
+                        form(action="/view4", method="put")
+                            div(class="form-row")
+                                input(type="text" ng-model="row.Req") 
+                                a(class="btn btn-success btn-sm") изменить
+                    td {{row.Order}}
+                    td {{row.DateRq}}
+                    td {{row.Ratio}}
+                    td {{row.MinQty}}
+                    td {{row.MinReq}}
+                    td {{row.PriceIn}}
+                    td {{row.PriceOut}}
+                    
+

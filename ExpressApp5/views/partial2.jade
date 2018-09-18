@@ -1,0 +1,44 @@
+﻿div(ng-controller="MyCtrl3")
+    p Настройка параметров обработки активной матрицы.
+    p Обработка заявки.
+    table(class="table table-bordered table-striped")
+        thead(class="thead-light")
+            tr
+                th	ГрКод
+                th	Наименование
+                th	КодСклада
+                th	Аптека
+                th	НомерЗаказа
+                th	ДатаЗаказа
+                th	Кратность
+                th	МинЗапас
+                th	МинЗаказ
+                th	Статус
+                th	ЦенаЗакупки
+                th	ЦенаПродажи
+                th	РассчетнаСкоростьПродаж
+                th	Остаток
+                th	ВПути
+                th	Заявка
+        tbody
+            tr(ng-repeat="row in Result")
+                td {{row.GrCode}}
+                td {{row.Gr_Name}}
+                td {{row.Ph_ID}}
+                td {{row.Ph_Name}}
+                td {{row.Order}}
+                td {{row.DateRq}}
+                td {{row.Ratio}}
+                td {{row.MinQty}}
+                td {{row.MinReq}}
+                td {{row.Status}}
+                td {{row.PriceIn}}
+                td {{row.PriceOut}}
+                td {{row.CalcVel}}
+                td {{row.Ost}}
+                td {{row.Wait}}
+                td {{row.Req}}
+
+
+
+

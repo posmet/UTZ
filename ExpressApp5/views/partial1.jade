@@ -1,0 +1,7 @@
+﻿
+div(ng-controller='MyCtrl1')
+    h1 Выбор аптеки
+    {{pharmname}}
+    div(align="center" ng-repeat="pharm in Result")
+        li {{pharm.ph_name}}
+        //a(class="btn btn-outline-primary btn-block") {{pharm.ph_name}}

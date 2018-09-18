@@ -1,0 +1,64 @@
+﻿html(ng-app="myApp")
+  head
+    meta(charset='utf8')
+    base(href='/')
+    title Автозаказ
+    link(rel="shortcut icon", href="/favicon.ico")
+    script(src="/js/lib/angular/angular.js")
+    script(src="/js/lib/angular/angular-touch.js")
+    script(src="/js/lib/angular/angular-route.js")
+    script(src="/js/lib/angular/angular-animate.js")
+    script(src="/js/lib/angular/angular-aria.js")
+    link(rel="stylesheet" href="/css/main.css" type="text/css")  
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet',  href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous")
+ body
+  p
+      #user
+        if(user)
+            div(ng-controller='AppCtrl')
+                div(class="user-data"  ng-show="(user.interface == 1)")
+                    nav(class="navbar")
+                        a(class="nav-link" href='view1') Выбор аптеки
+                        a(class="nav-link" href='view4') Обработка заявок
+                        a(class="nav-link" href='view3') Настройка параметров расчета активной матрицы
+                        a(class="nav-link" href='view7') Журнал заявок
+                        Пользователь: {{user.full_name}} Аптека
+                        a(class="nav-link" href="/sign-out") Выйти ←
+                div(class="user-data"  ng-show="(user.interface == 2)")
+                    nav(class="navbar")
+                        a(class="nav-link" href='view11') Аптеки
+                        a(class="nav-link" href='/view12') Матрицы
+                        a(class="nav-link" href='view13') Статистика
+                        a(class="nav-link" href='view14') Отчеты
+                        a(class="nav-link" href='view15') Прочее
+                        Пользователь: {{user.full_name}} Маркетолог
+                        a(class="nav-link" href="/sign-out") Выйти ←
+                div(class="user-data"  ng-show="(user.interface == 4)")
+                    nav(class="navbar")
+                        a(class="nav-link" href='wiew21') Аптеки
+                        a(class="nav-link" href='view22') Пользователи
+                        a(class="nav-link" href='view23') Монитор
+                        a(class="nav-link" href='view24') История
+                        Пользователь: {{user.full_name}} Техподежка 
+                        a(class="nav-link" href="/sign-out") Выйти ←
+            div(ng-view)
+        else
+          h1= title
+          div(class="demo")
+            a(class="permalink", href=".") ← главная
+            h1 Авторизация
+            div(class="auth-form")
+              form(action="/auth" method="post")
+                div
+                 input(type="text" ng-model="userdata" name="username")
+                div
+                 input(type="password" name="password")
+                div(class="buttons")
+                 button(type="submit") Войти
+   
+  script(src='js/jquery.min.js')
+  script(src='js/ng-infinite-scroll.js')
+  script(src='js/app.js')
+  script(src='js/controllers.js')
+  

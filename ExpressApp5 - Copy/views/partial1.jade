@@ -1,0 +1,5 @@
+﻿
+div(ng-controller='MyCtrl1')
+    p. Выбор аптеки
+    div(align="center" ng-repeat="pharm in Result" ng-click="clickph(pharm,$index)")
+        a(class="btn btn-outline-primary btn-block") Button

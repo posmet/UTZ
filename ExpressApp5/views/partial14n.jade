@@ -1,0 +1,4 @@
+﻿div(ng-controller='MyCtrl14')
+    h1 Выбор отчета
+    div(align="center" ng-repeat="row in reports")
+       a(class="btn btn-outline-primary btn-block" ng-click="clickph(pharm,$index)") {{row.name}}

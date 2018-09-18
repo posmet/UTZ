@@ -1,0 +1,29 @@
+﻿div(ng-controller="MyCtrl13")
+    h3 Статистика
+    form
+        div(class="form-row")
+            div(class="col")
+                input(type="text" class="form-control" placeholder="Введите групповой код" ng-model="searchGrp")
+            div(class="col")
+                input(type="text" class="form-control" placeholder="Введите код аптеки" ng-model="searchPh")
+            a(class="btn btn-primary btn-sm" ng-click="onsearch()") Получить
+        div(class="form-row")
+            div(class="col")
+                Позиция: {{Gr_Name}}
+            div(class="col")
+                Аптека: {{Ph_Name}}
+    table(class="table table-bordered table-striped")
+        thead(class="thead-dark")
+            tr
+                th Дата
+                th Количество продаж
+                th Сумма продаж
+                th Остаток
+                th Сумма остатка
+        tbody
+            tr(ng-repeat="row in myData")
+                td {{row.Dat}}
+                td {{row.q}}
+                td {{row.s_in}}
+                td {{row.stock_q}}
+                td {{row.stock_in}}

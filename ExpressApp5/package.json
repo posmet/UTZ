@@ -1,0 +1,40 @@
+{
+  "name": "BEManageStock",
+  "version": "0.0.1",
+  "description": "ManageStock",
+  "main": "app.js",
+  "author": {
+    "name": "PHARMASOFT",
+    "email": "info@pharma-soft.ru"
+  },
+  "dependencies": {
+    "angular-chart.js": "^1.1.1",
+    "angular-fixed-table-header": "*",
+    "angular-smart-table": "^2.1.11",
+    "angular-ui-grid": "^4.6.2",
+    "angular-utils-pagination": "*",
+    "body-parser": "^1.12.2",
+    "bootstrap": "^4.1.1",
+    "connect-flash": "*",
+    "connect-memcached": "*",
+    "connect-timeout": "^1.9.0",
+    "error-handler": "^1.0.0",
+    "express": "3.4.4",
+    "express-session": "*",
+    "jade": "*",
+    "jquery": "^3.3.1",
+    "jquery.js": "0.0.2-security",
+    "method-override": "^2.3.2",
+    "morgan": "^1.5.2",
+    "mssql": "^2.1.1",
+    "nconf": "*",
+    "ngtable": "^0.5.10",
+    "npm": "^6.2.0",
+    "passport": "*",
+    "passport-facebook": "*",
+    "passport-local": "*",
+    "passport-vkontakte": "*",
+    "popper.js": "^1.14.4",
+    "stylus": "*"
+  }
+}

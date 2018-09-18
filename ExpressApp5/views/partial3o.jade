@@ -1,0 +1,79 @@
+﻿div(ng-controller="MyCtrl3")
+    h3 Настройка параметров обработки активной матрицы аптеки
+    {{pharmname}} - 
+    {{pharmid}}
+    br
+    a(class="btn btn-primary btn-sm" ng-click="oncreate()") Добавить
+    {{rsp}}
+    div(ng-show="checkadd")
+     p Введите групповой код:
+     input(type="text" ng-model="newgrpcode")
+    form
+        div(class="form-group")
+            div(class="input-group-addon")
+                i(class="fa fa-search")
+            input(type="text" class="form-control" placeholder="Введите строку" ng-model="searchStr")
+            a(class="btn btn-primary btn-sm" ng-click="onsearch()") Найти
+    div(infinite-scroll='loadMore()' infinite-scroll-distance='15')
+        table(st-table="mtrx" class="table table-bordered table-striped")
+         thead(class="thead-dark")
+             tr
+                 th 
+                     a(href="#" ng-click="sortType = 'Gr_ID'; sortReverse = !sortReverse") ГрКод
+                         span(ng-show="sortType == 'Gr_ID' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'Gr_ID' && sortReverse" class="fa fa-caret-up")
+                 th
+                     a(href="#" ng-click="sortType = 'Gr_Name'; sortReverse = !sortReverse") Наименование
+                        span(ng-show="sortType == 'Gr_Name' && !sortReverse" class="fa fa-caret-down")
+                        span(ng-show="sortType == 'Gr_Name' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'Ratio'; sortReverse = !sortReverse") Кратность
+                         span(ng-show="sortType == 'Ratio' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'Ratio' && sortReverse" class="fa fa-caret-up")
+                 th
+                     a(href="#" ng-click="sortType = 'MinQty'; sortReverse = !sortReverse") МинЗапас
+                        span(ng-show="sortType == 'MinQty' && !sortReverse" class="fa fa-caret-down")
+                        span(ng-show="sortType == 'MinQty' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'MinReq'; sortReverse = !sortReverse") МинЗаказ
+                         span(ng-show="sortType == 'MinReq' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'MinReq' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'CalcVel'; sortReverse = !sortReverse") РСП
+                         span(ng-show="sortType == 'CalcVel' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'CalcVel' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'Ost'; sortReverse = !sortReverse") Ост
+                         span(ng-show="sortType == 'Ost' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'Ost' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'Wait'; sortReverse = !sortReverse") ВП
+                         span(ng-show="sortType == 'Wait' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'Wait' && sortReverse" class="fa fa-caret-up")
+    
+             tr(ng-repeat="row in mtrx | orderBy:sortType:sortReverse")
+                 td {{row.Gr_ID}}
+                 td {{row.Gr_Name}}
+                 td                         
+                   div(class="col-xs-1")
+                       input(type="text" class="form-control" ng-model="row.Ratio") 
+                 td
+                   div(class="col-xs-1")
+                       input(type="text" class="form-control" ng-model="row.MinQty") 
+                 td
+                   div(class="col-xs-1")
+                       input(type="text" class="form-control" ng-model="row.MinReq") 
+                 td {{row.CalcVel30}}
+                 td {{row.Ost}}
+                 td {{row.Wait}}
+                 td
+                    div(ng-show="row.Valid == 1")
+                       a(class="btn btn-success btn-sm" ng-click="onedit(row,$index)") изменить
+                       a(class="btn btn-danger btn-sm" ng-click="ondelete(row,$index)") удалить
+                    div(ng-show="row.Valid == 2") Добавление
+                    div(ng-show="row.Valid == 4") Удаление
+
+             tr
+                td(colspan="9" align="center")
+                  a(class="btn btn-success btn-sm" align="center" ng-click="loadMore()") загрузить еще
+

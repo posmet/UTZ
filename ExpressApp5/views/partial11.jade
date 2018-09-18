@@ -1,0 +1,26 @@
+﻿div(ng-controller="MyCtrl11")
+    h3 Аптеки
+    small
+        table(class="table table-bordered table-striped")
+            thead(class="thead-dark")
+                tr
+                    th Код
+                    th Наименование
+                    th Страховой запас
+                    th Дней поставки
+                    th Дней заказа
+                    th Категория
+                    th Изм
+            tbody
+                tr(ng-repeat="row in myData")
+                    td {{row.Ph_ID}}
+                    td {{row.Ph_Name}}
+                    td 
+                        input(type="text" ng-model="row.D_A")
+                    td 
+                        input(type="text" ng-model="row.D_D")
+                    td 
+                        input(type="text" ng-model="row.D_T")
+                    td {{row.Categories}}
+                    td
+                       a(class="btn btn-success btn-sm" ng-click="onedit(row,$index); editable=false") V

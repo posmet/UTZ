@@ -1,0 +1,90 @@
+﻿div(ng-controller="MyCtrl12")
+    h3 Настройка параметров обработки активных матриц
+        div(ng-show="loading") 
+            i(class="fa fa-spinner fa-spin") 
+            Загрузка ...
+    a(class="btn btn-primary btn-sm" ng-click="oncreate()") Добавить
+    {{rsp}}
+    div(ng-show="checkadd" class="form-row")
+       input(type="text" placeholder="Введите групповой код"  ng-model="newgrpcode")
+       input(type="text" placeholder="Введите код аптеки"  ng-model="newphcode")
+    form
+        div(class="form-row")
+            div(class="col")
+                input(type="text" class="form-control" placeholder="Введите групповой код" ng-model="searchGrp")
+            div(class="col")
+                input(type="text" class="form-control" placeholder="Введите код аптеки" ng-model="searchPh")
+            a(class="btn btn-primary btn-sm" ng-click="onClick()") Получить
+        a(class="btn btn-primary btn-sm" ng-click="onSearch()") Получить для подтверждения
+    div(infinite-scroll='loadMore()' infinite-scroll-distance='15')
+        table(st-table="mtrx" class="table table-bordered table-striped" style="width:100%")
+         thead(class="thead-dark")
+             tr
+                 th 
+                     a(href="#" ng-click="sortType = 'Gr_ID'; sortReverse = !sortReverse") ГрКод
+                         span(ng-show="sortType == 'Gr_ID' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'Gr_ID' && sortReverse" class="fa fa-caret-up")
+                 th
+                     a(href="#" ng-click="sortType = 'Gr_Name'; sortReverse = !sortReverse") Наименование
+                        span(ng-show="sortType == 'Gr_Name' && !sortReverse" class="fa fa-caret-down")
+                        span(ng-show="sortType == 'Gr_Name' && sortReverse" class="fa fa-caret-up")
+                 th
+                     a(href="#" ng-click="sortType = 'Gr_Name'; sortReverse = !sortReverse") Аптека
+                        span(ng-show="sortType == 'Gr_Name' && !sortReverse" class="fa fa-caret-down")
+                        span(ng-show="sortType == 'Gr_Name' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'Ratio'; sortReverse = !sortReverse") Кратность
+                         span(ng-show="sortType == 'Ratio' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'Ratio' && sortReverse" class="fa fa-caret-up")
+                 th
+                     a(href="#" ng-click="sortType = 'MinQty'; sortReverse = !sortReverse") МинЗапас
+                        span(ng-show="sortType == 'MinQty' && !sortReverse" class="fa fa-caret-down")
+                        span(ng-show="sortType == 'MinQty' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'MinReq'; sortReverse = !sortReverse") МинЗаказ
+                         span(ng-show="sortType == 'MinReq' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'MinReq' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'CalcVel'; sortReverse = !sortReverse") РСП
+                         span(ng-show="sortType == 'CalcVel' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'CalcVel' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'Ost'; sortReverse = !sortReverse") Ост
+                         span(ng-show="sortType == 'Ost' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'Ost' && sortReverse" class="fa fa-caret-up")
+                 th 
+                     a(href="#" ng-click="sortType = 'Wait'; sortReverse = !sortReverse") ВП
+                         span(ng-show="sortType == 'Wait' && !sortReverse" class="fa fa-caret-down")
+                         span(ng-show="sortType == 'Wait' && sortReverse" class="fa fa-caret-up")
+                 th Изм
+    
+             tr(ng-repeat="row in mtrx | orderBy:sortType:sortReverse")
+                 td {{row.Gr_ID}}
+                 td {{row.Gr_Name}}
+                 td {{row.Ph_Name}}
+                 td                         
+                   div(class="col-xs-1")
+                       input(type="text" class="form-control" ng-model="row.Ratio") 
+                 td
+                   div(class="col-xs-1")
+                       input(type="text" class="form-control" ng-model="row.MinQty") 
+                 td
+                   div(class="col-xs-1")
+                       input(type="text" class="form-control" ng-model="row.MinReq") 
+                 td {{row.CalcVel30}}
+                 td {{row.Ost}}
+                 td {{row.Wait}}
+                 td
+                    div(ng-show="row.Valid == 1")
+                       a(class="btn btn-success btn-sm" ng-click="onedit(row,$index)") 
+                        i(class="fa fa-check")
+                       a(class="btn btn-danger btn-sm" ng-click="ondelete(row,$index)")
+                        i(class="fa fa-times")
+                    div(ng-show="row.Valid == 2")
+                       a(class="btn btn-success btn-sm" ng-click="onaccept(row,$index)")Подтвердить 
+                    div(ng-show="row.Valid == 4")
+                       a(class="btn btn-danger btn-sm" ng-click="onaccept(row,$index)") Подтвердить
+             tr
+                td(colspan="9" align="center")
+                  a(class="btn btn-success btn-sm" align="center" ng-click="loadMore()") загрузить еще
+

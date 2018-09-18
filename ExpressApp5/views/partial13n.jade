@@ -1,0 +1,20 @@
+﻿div(ng-controller="MyCtrl13")
+    h3 Статистика
+    form
+        div(class="form-row")
+            div(class="col")
+                input(type="text" class="form-control" placeholder="Введите групповой код" ng-model="exchange.grid")
+            div(class="col")
+                input(type="text" class="form-control" placeholder="Введите код аптеки" ng-model="exchange.pharmid")
+            a(class="btn btn-outline-primary btn-sm" ng-click="onsearch()") Получить
+        div(class="form-row")
+            div(class="col")
+                Позиция: {{exchange.grname}}
+            div(class="col")
+                Аптека: {{exchange.phname}}
+        div(ng-show="loading") 
+            i(class="fa fa-spinner fa-spin") 
+            Загрузка ...
+
+        canvas(id="base" class="chart chart-bar" chart-series="series" chart-data="data" chart-labels="labels" chart-colors="colors" chart-dataset-override="datasetOverride" chart-options="options" height="75")
+            
