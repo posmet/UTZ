@@ -21,6 +21,7 @@
     "error-handler": "^1.0.0",
     "express": "3.4.4",
     "express-session": "*",
+    "cors": "^2.8.4",
     "jade": "*",
     "jquery": "^3.3.1",
     "jquery.js": "0.0.2-security",

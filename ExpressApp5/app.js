@@ -4,6 +4,7 @@
  */
 
 var express = require('express'),
+    cors=require('cors'),
   bodyParser = require('body-parser'),
   methodOverride = require('method-override'),
   errorHandler = require('error-handler'),

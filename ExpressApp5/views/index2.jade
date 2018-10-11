@@ -47,6 +47,15 @@ html(ng-app="app")
                         a(class="nav-link" href='view24') История
                         Пользователь: {{user.full_name}} Техподежка 
                         a(class="nav-link" href="/sign-out") Выйти ←
+                div(class="user-data"  ng-show="(user.interface == 8)")
+                    nav(class="navbar")
+                        a(class="nav-link" href='view1') Выбор аптеки
+                        a(class="nav-link" href='view4') Обработка заявок
+                        a(class="nav-link" href='view3') Настройка параметров расчета активной матрицы
+                        a(class="nav-link" href='view7') Журнал заявок
+                        a(class="nav-link" href='view8') Филиал
+                        Пользователь: {{user.full_name}} Директор филиала
+                        a(class="nav-link" href="/sign-out") Выйти ←
             div(ng-view)
         else
           h1= title

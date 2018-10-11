@@ -24,6 +24,11 @@
             user: req.user
         })
     });
+    app.get('/view8', function (req, res) {
+        res.render('index2', {
+            user: req.user
+        })
+    });
     app.get('/view11', function (req, res) {
         res.render('index2', {
             user: req.user

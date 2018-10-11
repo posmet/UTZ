@@ -5,6 +5,7 @@ var passport = require('passport');
 var path = require('path');
 var flash = require('connect-flash');
 var timeout = require('connect-timeout');
+var cors = require('cors');
 
 module.exports = function (app) {
 
@@ -29,6 +30,7 @@ module.exports = function (app) {
     app.use(express.session(sessionOptions));
     app.use(flash());
     app.use(timeout('600s'));
+    app.use(cors());
 
     app.use(passport.initialize());
     app.use(passport.session());

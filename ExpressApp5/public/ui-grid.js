@@ -9787,7 +9787,7 @@ module.service('rowSearcher', ['gridUtil', 'uiGridConstants', function (gridUtil
           regexpFlags += 'i';
         }
 
-        if ( !gridUtil.isNullOrUndefined(filter.term) ) {
+        if (!gridUtil.isNullOrUndefined(filter.term) ) {
           // it is possible to have noTerm.
           if ( filter.rawTerm ) {
             newFilter.term = filter.term;

@@ -9,9 +9,13 @@ module.exports = function (app) {
         password: 'njkcnsq',
         server: 'ga02.5dd.ru',
         database: 'REQUEST',
-        connectionTimeOut: 180000,
-        requestTimeOut: 180000,
-        options: { encrypt: false }
+        connectionTimeout: 180000,
+        requestTimeout: 180000,
+        options: {
+            encrypt: false,
+            connectionTimeout: 180000,
+            requestTimeout: 180000
+}
     };
     app.get('/api/name', function (req, res) {
         var sql = require('mssql');
@@ -169,6 +173,27 @@ module.exports = function (app) {
             });
         });
     });
+    app.post('/api/resultmtrxf/', function (req, res) {
+        var sql = require('mssql');
+        var connection = new sql.Connection(config);
+        connection.connect(function (err) {
+            if (err) { res.status(500).send(err); return; }
+            console.log(req.body);
+            var request = new sql.Request(connection);
+
+            var sqlString = "SELECT * from matrix_cez where Filial ='" + req.body.filial + "'";
+            console.log(sqlString);
+            request.query(sqlString, function (err, rs) {
+                connection.close();
+
+                if (err) { res.status(500).send(err); return; }
+
+                var count = rs;
+                res.status(200);
+                res.json(rs);
+            });
+        });
+    });
     app.post('/api/resultmtrxn/', function (req, res) {
         var sql = require('mssql');
         var connection = new sql.Connection(config);
@@ -179,23 +204,38 @@ module.exports = function (app) {
             var request = new sql.Request(connection);
 
             var sqlString = 'SELECT * from matrix_cez_n';
-            if ((req.body.grid != 0) || (req.body.pharmid != 0)) {
+            if (req.body.conds.length > 0) {
                 sqlString = sqlString + ' where ';
-            }
-            if (req.body.pharmid != 0) {
-                sqlString = sqlString + 'ph_id = ' + req.body.pharmid
-            }
-            if (req.body.grid != 0) {
-                if (req.body.pharmid != 0) {
-                    sqlString = sqlString + ' and ';
-                };
-                if (!Number.isInteger(req.body.grid)) {
-                    req.body.grid = req.body.grid.replace(' ', '%');
-                    sqlString = sqlString + " Gr_Name  Like '%" + req.body.grid + "%'";
-                }
-                else
-                    sqlString = sqlString + ' Gr_ID = ' + req.body.grid;
-            }
+                sqlString = sqlString + req.body.conds.reduce(function (prev, curr) {
+                    var Whr = prev;
+                    if (prev != '')
+                        Whr = Whr + ' and ';
+                    Whr = Whr + curr.field;
+                    switch (curr.cond) {
+                        case 'eq':
+                            Whr = Whr + " = '" + curr.value + "'"
+                            break;
+                        case 'neq':
+                            Whr = Whr + " <> '" + curr.value + "'"
+                            break;
+                        case 'cn':
+                            Whr = Whr + " Like '%" + curr.value + "%'"
+                            break;
+                        case 'ncn':
+                            Whr = Whr + " = '" + curr.value + "'"
+                            break;
+                        case 'nl':
+                            Whr = Whr + " = ''"
+                            break;
+                        case 'nnl':
+                            Whr = Whr + " <> ''"
+                            break;
+                    };
+                    return Whr;
+
+                }, "")
+            };
+
             console.log(sqlString);
             request.query(sqlString, function (err, rs) {
                 connection.close();
@@ -595,7 +635,7 @@ module.exports = function (app) {
             if (err) { res.status(500).send(err); return; }
 
             var request = new sql.Request(connection);
-            var sqlString = "select  from reports";
+            var sqlString = "select * from reports";
             console.log(sqlString);
             request.query(sqlString, function (err, rs) {
                 connection.close();

@@ -574,6 +574,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\partial11n.jade" />
+    <Content Include="views\partial12n - Copy.jade" />
     <Content Include="views\partial12n.jade">
       <SubType>Code</SubType>
     </Content>
@@ -584,6 +585,7 @@
     <Content Include="views\partial13.jade" />
     <Content Include="views\partial14n.jade" />
     <Content Include="views\partial15n.jade" />
+    <Content Include="views\partial8.jade" />
     <Content Include="views\partial3o.jade" />
     <Content Include="views\partial7.jade">
       <SubType>Code</SubType>

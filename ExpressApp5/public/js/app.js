@@ -36,6 +36,10 @@ config(function ($routeProvider, $locationProvider) {
           templateUrl: 'partial7',
           controller: 'MyCtrl7'
       }).
+      when('/view8', {
+          templateUrl: 'partial8',
+          controller: 'MyCtrl8'
+      }).
       when('/view11', {
           templateUrl: 'partial11',
           controller: 'MyCtrl1'
