@@ -8,7 +8,8 @@
                 input(type="text" class="form-control" placeholder="Введите код аптеки" ng-model="exchange.pharmid")
             div(class="col-auto")
                 input(type="text" class="form-control" placeholder="Период" ng-model="exchange.pharmid")
-            a(class="btn btn-outline-primary btn-sm" ng-click="onsearch()") Получить
+            button(class="btn btn-outline-primary btn-sm" ng-click="onsearch()") Получить
+            button(class="btn btn-outline-success btn-sm" ng-disabled="loading" ng-click="onDownloadClick()") Скачать
         div(class="form-row")
             div(class="col")
                 Позиция: {{exchange.grname}}

@@ -3,15 +3,33 @@
     'ui.grid.moveColumns', 'ui.grid.autoResize', 'ui.grid.resizeColumns',
     'ui.grid.selection', 'ui.grid.cellNav', 'ui.grid.expandable',
    'ui.grid.importer','ui.grid.grouping','ngAria', 'chart.js'])
-    .
-    run(function ($rootScope) {
+    .factory('authHttpResponseInterceptor', ['$q', '$rootScope', function ($q, $rootScope) {
+        return {
+          request: function (config) {
+            if (location.hostname === 'localhost' && /^\/api/i.test(config.url)) {
+              config.url = 'https://zakaz.gidapteka.ru' + config.url;
+            }
+            return config || $q.when(config);
+          },
+
+          response: function (response) {
+            return response || $q.when(response);
+          },
+
+          responseError: function (rejection) {
+            return $q.reject(rejection);
+          }
+        };
+    }])
+    .run(function ($rootScope) {
         $rootScope.test = new Date();
         $rootScope.pharmname = '';
         $rootScope.pharmid = 0;
         $rootScope.grname = "";
         $rootScope.grid = 0;
-    }).
-    config(function ($routeProvider, $locationProvider) {
+    })
+    .config(function ($routeProvider, $locationProvider, $httpProvider) {
+        $httpProvider.interceptors.push('authHttpResponseInterceptor');
         $routeProvider.
             when('/view1', {
                 templateUrl: 'partial5',
@@ -1258,37 +1276,78 @@ app.controller('MyCtrl11', ['$scope', '$http', '$interval', 'uiGridConstants', '
 }]);
 app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
     var vm = this;
+    var download = function () {
+      var wb = new ExcelJS.Workbook();
+      var ws = wb.addWorksheet('Статистика');
+      ws.columns = [
+        { header: 'Дата', key: 'dat', width: 10 },
+        { header: 'Остатки', key: 'Ost' },
+        { header: 'Мин. запас', key: 'Qty', width: 11 },
+        { header: 'Продажи', key: 'Sal' },
+        { header: 'Приходы', key: 'Rec' },
+        { header: 'Скорость', key: 'Vel' },
+        { header: 'Автозаказ', key: 'Req', width: 10 },
+        { header: 'Заказ', key: 'Reqa' }
+      ];
+      ws.getRow(1).font = {
+          bold: true
+      };
+      $scope.myData.forEach(function (item) {
+        ws.addRow(item);
+      });
+      wb.xlsx.writeBuffer()
+        .then(function (data) {
+            var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+            saveAs(blob, "Статистика.xlsx");
+          }).catch(function (err) {
+              console.log(err)
+          });
+    };
+
     $scope.exchange = exchange;
     $scope.colors = ['#00ffff', '#007f00', '#0000ff', '#7f7f00', '#ff0000', '#ff0000', '#007f00'];
 
+    $scope.myData = [];
     $scope.labels = [];
     $scope.data = [];
     $scope.data.push([]);
     $scope.data.push([]);
     $scope.data.push([]);
 
-    $scope.onsearch = function () {
+    $scope.onDownloadClick = function () {
+        if (!$scope.myData.length) {
+            $scope.onsearch(true);
+        } else {
+            download();
+        }
+    };
+
+    $scope.onsearch = function (isDownload) {
         $scope.loading = true;
         $http({
             method: 'GET',
             url: '/api/sales/' + $scope.exchange.pharmid + "/" + $scope.exchange.grid
-        }).
-            then(function (response) {
+        })
+            .then(function (response) {
                 $scope.myData = response.data;
-                if ($scope.myData.length > 0) {
+                if (isDownload) {
+                  download();
+                  return false;
+                }
+                  if ($scope.myData.length > 0) {
                     $scope.Ph_Name = $scope.exchange.phname;
                     $scope.Gr_Name = $scope.exchange.grname;
-                }
-                $scope.labels = [];
-                $scope.data = [];
-                $scope.data.push([]);
-                $scope.data.push([]);
-                $scope.data.push([]);
-                $scope.data.push([]);
-                $scope.data.push([]);
-                $scope.data.push([]);
-                $scope.data.push([]);
-                for (var i = 0; i < $scope.myData.length ; i++) {
+                  }
+                  $scope.labels = [];
+                  $scope.data = [];
+                  $scope.data.push([]);
+                  $scope.data.push([]);
+                  $scope.data.push([]);
+                  $scope.data.push([]);
+                  $scope.data.push([]);
+                  $scope.data.push([]);
+                  $scope.data.push([]);
+                  for (var i = 0; i < $scope.myData.length; i++) {
                     $scope.labels.push($scope.myData[i].dat)
                     $scope.data[0].push($scope.myData[i].Ost)
                     $scope.data[1].push($scope.myData[i].Qty)
@@ -1296,21 +1355,19 @@ app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
                     $scope.data[3].push($scope.myData[i].Rec)
                     $scope.data[4].push($scope.myData[i].Vel)
                     if ($scope.myData[i].Req > 0)
-                        $scope.data[5].push(0)
+                      $scope.data[5].push(0)
                     else
-                        $scope.data[5].push(NaN);
-                    $scope.loading = false;
+                      $scope.data[5].push(NaN);
                     if ($scope.myData[i].Reqa > 0)
-                        $scope.data[6].push(0)
+                      $scope.data[6].push(0)
                     else
-                        $scope.data[6].push(NaN);
-                    $scope.loading = false;
-                }
-
+                      $scope.data[6].push(NaN);
+                  }
             }, function (data, status, headers, config) {
                 $scope.result = 'Error!';
-                $scope.loading = false;
-
+            })
+            .finally(function() {
+              $scope.loading = false;
             });
 
     };

@@ -7,6 +7,9 @@
     "name": "PHARMASOFT",
     "email": "info@pharma-soft.ru"
   },
+  "scripts": {
+    "dev": "set NODE_ENV=development&&node app.js"
+  },
   "dependencies": {
     "angular-chart.js": "^1.1.1",
     "angular-fixed-table-header": "*",
@@ -18,10 +21,10 @@
     "connect-flash": "*",
     "connect-memcached": "*",
     "connect-timeout": "^1.9.0",
+    "cors": "^2.8.4",
     "error-handler": "^1.0.0",
     "express": "3.4.4",
     "express-session": "*",
-    "cors": "^2.8.4",
     "jade": "*",
     "jquery": "^3.3.1",
     "jquery.js": "0.0.2-security",
