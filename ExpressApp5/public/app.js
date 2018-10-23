@@ -90,6 +90,7 @@ const fieldsList = [
     { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number' },
     { name: 'Аптека', field: 'Ph_Name', width: '20%', enableCellEdit: false },
     { name: 'Филиал', field: 'Filial', enableCellEdit: false },
+    { name: 'Категория', field: 'Categories', enableCellEdit: false },
     { name: 'Статус', field: 'M', enableCellEdit: false, type: 'number' },
     { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
     { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
@@ -1017,6 +1018,7 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
               { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number', allowCellFocus: false},
               { name: 'Аптека', field: 'Ph_Name', width: '20%', enableCellEdit: false, allowCellFocus: false},
               { name: 'Филиал', field: 'Filial', enableCellEdit: false },
+              { name: 'Категория', field: 'Categories', enableCellEdit: false },
               { name: 'Статус', field: 'M', enableCellEdit: false, type: 'number' },
               { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
               { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
@@ -1226,7 +1228,8 @@ app.controller('MyCtrl11', ['$scope', '$http', '$interval', 'uiGridConstants', '
             { name: "Дней продаж", field: "D_T", type: "number", enableCellEdit: true},
             { name: "Kmin", field: "Kmin", type: "number", enableCellEdit: true },
             { name: "Kmax", field: "Kmax", type: "number", enableCellEdit: true },
-            { name: "Категория", field: "Categories", enableCellEdit: true}
+            { name: "Категория", field: "Categories", enableCellEdit: true},
+            { name: "График", field: "graph", enableCellEdit: true }
         ]
     };
     vm.exchange = exchange;
