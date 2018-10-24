@@ -23,6 +23,8 @@ html(ng-app="app")
     body
        #user
         if(user)
+            script.
+                window.user = JSON.parse('!{JSON.stringify(user)}')
             div(ng-controller='AppCtrl')
                 div(class="user-data"  ng-show="(user.interface == 1)")
                     nav(class="navbar")
@@ -60,6 +62,8 @@ html(ng-app="app")
                         a(class="nav-link" href="/sign-out") Выйти ←
             div(ng-view)
         else
+          script.
+            window.user = {}
           h1= title
           div(class="demo")
             a(class="permalink", href=".") ← главная
