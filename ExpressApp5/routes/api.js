@@ -213,24 +213,30 @@ module.exports = function (app) {
                     Whr = Whr + curr.field;
                     switch (curr.cond) {
                         case 'eq':
-                            Whr = Whr + " = '" + curr.value + "'"
+                            Whr = Whr + " = '" + curr.value + "'";
                             break;
                         case 'neq':
-                            Whr = Whr + " <> '" + curr.value + "'"
+                            Whr = Whr + " <> '" + curr.value + "'";
                             break;
                         case 'cn':
-                            Whr = Whr + " Like '%" + curr.value + "%'"
+                            Whr = Whr + " Like '%" + curr.value + "%'";
                             break;
                         case 'ncn':
-                            Whr = Whr + " = '" + curr.value + "'"
+                            Whr = Whr + " = '" + curr.value + "'";
                             break;
                         case 'nl':
-                            Whr = Whr + " = ''"
+                            Whr = Whr + " = ''";
                             break;
                         case 'nnl':
-                            Whr = Whr + " <> ''"
+                            Whr = Whr + " <> ''";
                             break;
-                    };
+                        case 'gt':
+                            Whr = Whr + " > ''";
+                            break;
+                        case 'lt':
+                            Whr = Whr + " < ''";
+                            break;
+                    }
                     return Whr;
 
                 }, "")

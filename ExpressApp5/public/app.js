@@ -105,7 +105,8 @@ const fieldsList = [
     { name: 'Сезон', field: 'Season', enableCellEdit: true },
     { name: 'Тип товара', field: 'RGT_agg', enableCellEdit: false },
     { name: 'Фармгруппа', field: 'RFG_agg', enableCellEdit: false },
-    { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' }]
+    { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' }
+];
 const compList = [
     {
         val: "eq",
@@ -130,6 +131,14 @@ const compList = [
     {
         val: "nnl",
         label: "не пусто"
+    },
+    {
+        val: "gt",
+        label: "больше"
+    },
+    {
+        val: "lt",
+        label: "меньше"
     }
 ]
 app.controller('AppCtrl', function ($scope, $http, $rootScope) {
@@ -927,13 +936,20 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
 }]);
 app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','save12','$cookies', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange, i18nService,save12,$cookies) {
   var vm = this;
+  var rowTemplate = function() {
+    return '<div ng-class="{green: row.entity.Action}" ' +
+      'ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.uid" ui-grid-one-bind-id-grid="rowRenderIndex + \'-\' + col.uid + \'-cell\'" ' +
+      'class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader}" role="gridcell" ui-grid-cell></div>';
+  };
   vm.msg = {};
   vm.exchange = exchange;
   vm.matrix = false;
   vm.matrixlabel = "Все";
   $scope.checkadd = false;
   i18nService.setCurrentLang('ru');
-  vm.fieldsList = fieldsList;
+  vm.fieldsList = fieldsList.concat(
+    { name: 'Акция', field: 'Action', enableCellEdit: false }
+  );
   vm.compList = compList;
   vm.gridOptions = {
       enableFiltering: true,
@@ -977,26 +993,50 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           restoreState();
     },
     columnDefs: [
-        { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number' },
-      { name: 'Наименование', field:'Gr_Name',width:'30%', enableCellEdit:false },
-      { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type:'number' },
-      { name: 'Аптека', field: 'Ph_Name', width: '20%', enableCellEdit: false },
+      { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number', allowCellFocus: false },
+      { name: 'Наименование', field: 'Gr_Name', width: '30%', enableCellEdit: false, allowCellFocus: false },
+      { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number', allowCellFocus: false},
+      { name: 'Аптека', field: 'Ph_Name', width: '20%', enableCellEdit: false, allowCellFocus: false},
       { name: 'Филиал', field: 'Filial', enableCellEdit: false },
-      { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number'},
-      { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number'},
+      { name: 'Категория', field: 'Categories', enableCellEdit: false },
+      { name: 'Статус', field: 'M', enableCellEdit: false, type: 'number' },
+      { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
+      { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
       { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: true, type: 'number' },
       { name: 'Врем Заказ', field: 'TempReq', enableCellEdit: true, type: 'number' },
-      { name: 'Скорость 30 дн', field: 'CalcVel30', enableCellEdit: false, type: 'number'},
-      { name: 'Остаток', field:'Ost', enableCellEdit: false,type: 'number' },
+      { name: 'Скорость 30 дн', field: 'CalcVel30', enableCellEdit: false, type: 'number' },
+      { name: 'Остаток', field: 'Ost', enableCellEdit: false, type: 'number' },
       { name: 'В пути', field: 'Wait', enableCellEdit: false, type: 'number' },
+      { name: 'Заказано', field: 'Req', enableCellEdit: false, type: 'number' },
       { name: 'Матрица', field: 'Matrix', enableCellEdit: true },
-      { name: 'Рейтинг', field: 'Rating', enableCellEdit: true},
+      { name: 'Рейтинг', field: 'Rating', enableCellEdit: true },
       { name: 'Маркетинг', field: 'Marketing', enableCellEdit: true },
       { name: 'Сезон', field: 'Season', enableCellEdit: true },
       { name: 'Тип товара', field: 'RGT_agg', enableCellEdit: false },
       { name: 'Фармгруппа', field: 'RFG_agg', enableCellEdit: false },
-      { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' }
-  ]
+      { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' },
+      { name: 'Акция', field: 'Action', enableCellEdit: false }
+    ],
+    /*cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+        return 'green';
+        return !row.entity.Action ? 'green' : '';
+    },*/
+    rowTemplate: rowTemplate(),
+  };
+
+  vm.showCondition = function (value, cond) {
+    if (['gt', 'lt'].indexOf(value) === -1 || !cond.field) {
+      return true;
+    }
+    return cond.type === 'number';
+  };
+
+  vm.changeField = function ($index) {
+    var condition = vm.exchange.conditions[$index];
+    var found = vm.fieldsList.filter(function (item) {
+      return item.field === condition.field;
+    })[0];
+    condition.type = found.type;
   };
 
   //$http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
@@ -1012,48 +1052,23 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           vm.exchange.grid = 0;
       }
       $scope.loading = true;
-      vm.gridOptions.columnDefs = [
-              { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number', allowCellFocus: false },
-              { name: 'Наименование', field: 'Gr_Name', width: '30%', enableCellEdit: false, allowCellFocus: false },
-              { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number', allowCellFocus: false},
-              { name: 'Аптека', field: 'Ph_Name', width: '20%', enableCellEdit: false, allowCellFocus: false},
-              { name: 'Филиал', field: 'Filial', enableCellEdit: false },
-              { name: 'Категория', field: 'Categories', enableCellEdit: false },
-              { name: 'Статус', field: 'M', enableCellEdit: false, type: 'number' },
-              { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
-              { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
-              { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: true, type: 'number' },
-              { name: 'Врем Заказ', field: 'TempReq', enableCellEdit: true, type: 'number' },
-              { name: 'Скорость 30 дн', field: 'CalcVel30', enableCellEdit: false, type: 'number' },
-              { name: 'Остаток', field: 'Ost', enableCellEdit: false, type: 'number' },
-              { name: 'В пути', field: 'Wait', enableCellEdit: false, type: 'number' },
-              { name: 'Заказано', field: 'Req', enableCellEdit: false, type: 'number' },
-              { name: 'Матрица', field: 'Matrix', enableCellEdit: true },
-              { name: 'Рейтинг', field: 'Rating', enableCellEdit: true },
-              { name: 'Маркетинг', field: 'Marketing', enableCellEdit: true },
-              { name: 'Сезон', field: 'Season', enableCellEdit: true },
-              { name: 'Тип товара', field: 'RGT_agg', enableCellEdit: false },
-              { name: 'Фармгруппа', field: 'RFG_agg', enableCellEdit: false },
-              { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' }
-          ]
-        $http.post('/api/ResultMtrxn/', {conds:vm.exchange.conditions
-              
-        }).
-            then(function (response) {
+        $http.post('/api/ResultMtrxn/', {
+          conds:vm.exchange.conditions
+        })
+          .then(function (response) {
                 //           var data = response.data;
                 //           for (var i = 0; i < 6; i++) {
                 //               data = data.concat(data);
                 //           }
                 vm.gridOptions.data = response.data;
                 restoreState();
-                $scope.loading = false;
                 // $scope.loadMore();
             }, function (data, status, headers, config) {
                 $scope.Resulta = 'Error!';
-                $scope.loading = false;
-        });
-
-      
+          })
+          .finally(function () {
+            $scope.loading = false;
+          });
   }
   $scope.onedit = function (pharm, $index) {
       //

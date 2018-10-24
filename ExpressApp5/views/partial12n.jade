@@ -3,11 +3,11 @@
         form
             div(class="form-row" ng-repeat="cond in $ctrl.exchange.conditions")
                 div(class="col-auto")
-                    select(class="form-control-sm" ng-model="cond.field")
+                    select(class="form-control-sm" ng-model="cond.field" ng-change="$ctrl.changeField($index)")
                         option(ng-repeat="opt in $ctrl.fieldsList" ng-value="opt.field"){{opt.name}}
                 div(class="col-auto")
                     select(class="form-control-sm" ng-model="cond.cond")
-                        option(ng-repeat="opt in $ctrl.compList"  ng-value="opt.val"){{opt.label}}
+                        option(ng-repeat="opt in $ctrl.compList" ng-if="$ctrl.showCondition(opt.val, cond)" ng-value="opt.val"){{opt.label}}
                 div(class="col-auto")
                     input(type="text" class="form-control-sm" ng-model="cond.value")
                 div(class="col-auto")
