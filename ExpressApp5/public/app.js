@@ -195,22 +195,24 @@ app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableS
         enableRowHeaderSelection: true,
         multiSelect: true,
         showGridFooter: true,
+        enableCellEditOnFocus: true,
         onRegisterApi: function (gridApi) {
             vm.gridApi = gridApi;
             $scope.gridApi = gridApi;
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
+              if (newValue != oldValue) {
                 $http({
-                    method: 'GET',
-                    url: '/api/updatemx/' + rowEntity.Ph_ID + "/" + rowEntity.Gr_ID + "/" + rowEntity.MinQty + "/" + rowEntity.MinReq + "/" + rowEntity.Ratio + "/" + rowEntity.TempReq 
-                }).
-                    then(function (response) {
-                        vm.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
-                        $scope.$apply();
-                        //vm.gridOptions.data = response.data;
-                    }, function (data, status, headers, config) {
-                        $scope.Result = 'Error!';
-                    });
+                  method: 'GET',
+                  url: '/api/updatemx/' + rowEntity.Ph_ID + "/" + rowEntity.Gr_ID + "/" + rowEntity.MinQty + "/" + rowEntity.MinReq + "/" + rowEntity.Ratio + "/" + rowEntity.TempReq
+                }).then(function (response) {
+                  vm.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
+                  $scope.$apply();
+                  //vm.gridOptions.data = response.data;
+                }, function (data, status, headers, config) {
+                  $scope.Result = 'Error!';
+                });
+              }
             });
             gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, 'gridState3', gridApi));
             gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, 'gridState3', gridApi));
@@ -741,22 +743,24 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
         enableRowHeaderSelection: true,
         multiSelect: true,
         showGridFooter: true,
+        enableCellEditOnFocus: true,
         onRegisterApi: function (gridApi) {
             vm.gridApi = gridApi;
             $scope.gridApi = gridApi;
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
+              if (newValue != oldValue) {
                 $http({
-                    method: 'GET',
-                    url: '/api/updatemx/' + rowEntity.Ph_ID + "/" + rowEntity.Gr_ID + "/" + rowEntity.MinQty + "/" + rowEntity.MinReq + "/" + rowEntity.Ratio + "/" + rowEntity.TempReq
-                }).
-                    then(function (response) {
-                        vm.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
-                        $scope.$apply();
-                        //vm.gridOptions.data = response.data;
-                    }, function (data, status, headers, config) {
-                        $scope.Result = 'Error!';
-                    });
+                  method: 'GET',
+                  url: '/api/updatemx/' + rowEntity.Ph_ID + "/" + rowEntity.Gr_ID + "/" + rowEntity.MinQty + "/" + rowEntity.MinReq + "/" + rowEntity.Ratio + "/" + rowEntity.TempReq
+                }).then(function (response) {
+                  vm.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
+                  $scope.$apply();
+                  //vm.gridOptions.data = response.data;
+                }, function (data, status, headers, config) {
+                  $scope.Result = 'Error!';
+                });
+              }
             });
                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
             
@@ -983,15 +987,15 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           $scope.gridApi = gridApi;
           gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
               //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
-              if (newValue != oldValue)
-                  $http.post('/api/updatemx/', rowEntity).
-                      then(function (response) {
-                          vm.msg.lastCellEdited = 'Изменено строка:' + rowEntity.Gr_ID + ' Столбец:' + colDef.name + ' Было:' + oldValue + ' Стало:' + newValue;
-                          $scope.$apply();
-                          //vm.gridOptions.data = response.data;
-                      }, function (data, status, headers, config) {
-                          $scope.Result = 'Error!';
-                      });
+              if (newValue != oldValue) {
+                $http.post('/api/updatemx/', rowEntity).then(function (response) {
+                  vm.msg.lastCellEdited = 'Изменено строка:' + rowEntity.Gr_ID + ' Столбец:' + colDef.name + ' Было:' + oldValue + ' Стало:' + newValue;
+                  $scope.$apply();
+                  //vm.gridOptions.data = response.data;
+                }, function (data, status, headers, config) {
+                  $scope.Result = 'Error!';
+                });
+              }
           });
           gridApi.selection.on.rowSelectionChanged($scope, function (row) {
               
