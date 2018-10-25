@@ -1253,6 +1253,10 @@ app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
       var wb = new ExcelJS.Workbook();
       var ws = wb.addWorksheet('Статистика');
       ws.columns = [
+        { header: 'ГрКод', key: 'Gr_ID', width: 7},
+        { header: 'Наименование', key: 'Gr_Name', width: 15 },
+        { header: 'Код', key: 'Ph_ID', width: 7},
+        { header: 'Аптека', key: 'Ph_Name'},
         { header: 'Дата', key: 'dat', width: 10 },
         { header: 'Остатки', key: 'Ost' },
         { header: 'Мин. запас', key: 'Qty', width: 11 },
