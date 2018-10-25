@@ -6,9 +6,9 @@
     .factory('authHttpResponseInterceptor', ['$q', '$rootScope', function ($q, $rootScope) {
         return {
           request: function (config) {
-            if (location.hostname === 'localhost' && /^\/api/i.test(config.url)) {
-              config.url = 'https://zakaz.gidapteka.ru' + config.url;
-            }
+ //           if (location.hostname === 'localhost' && /^\/api/i.test(config.url)) {
+ //             config.url = 'https://zakaz.gidapteka.ru' + config.url;
+ //           }
             return config || $q.when(config);
           },
 
