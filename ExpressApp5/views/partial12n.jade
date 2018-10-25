@@ -1,23 +1,7 @@
-﻿div(ng-controller="MyCtrl12 as $ctrl")
+﻿div
     div(ui-i18n='ru')
         form
-            div(class="form-row" ng-repeat="cond in $ctrl.exchange.conditions")
-                div(class="col-auto")
-                    select(class="form-control-sm" ng-model="cond.field" ng-change="$ctrl.changeField($index)")
-                        option(ng-repeat="opt in $ctrl.fieldsList" ng-value="opt.field"){{opt.name}}
-                div(class="col-auto")
-                    select(class="form-control-sm" ng-model="cond.cond")
-                        option(ng-repeat="opt in $ctrl.compList" ng-if="$ctrl.showCondition(opt.val, cond)" ng-value="opt.val"){{opt.label}}
-                div(class="col-auto")
-                    input(type="text" class="form-control-sm" ng-model="cond.value")
-                div(class="col-auto")
-                    button(class="btn btn-outline-danger btn-sm" ng-click="ondelcond($index)")
-                        i(class="fa fa-minus")
-                    button(class="btn btn-outline-success btn-sm" ng-click="onaddcond()")
-                        i(class="fa fa-plus")
-            div(class="form-row" ng-show="$ctrl.exchange.conditions.length == 0")
-                button(class="btn btn-outline-success btn-sm" ng-click="onaddcond()")
-                    i(class="fa fa-plus")
+            ph-filter(conditions="$ctrl.exchange.conditions" fields="$ctrl.fieldsList")
             div(class="form-row")
                 div(class="col-auto")
                     a(class="btn btn-outline-primary btn-sm" ng-click="onClick()") Получить

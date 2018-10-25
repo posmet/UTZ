@@ -53,7 +53,7 @@
             }).
             when('/view8', {
                 templateUrl: 'partial8',
-                controller: 'MyCtrl8'
+                controller: 'MyCtrl8 as $ctrl'
             }).
             when('/view11', {
                 templateUrl: 'partial11n',
@@ -61,7 +61,7 @@
             }).
             when('/view12', {
                 templateUrl: 'partial12n',
-                controller: 'MyCtrl12'
+                controller: 'MyCtrl12 as $ctrl'
             }).
             when('/view13', {
                 templateUrl: 'partial13n',
@@ -733,7 +733,25 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
         $scope.ondelete(row.entity, 0);
         vm.gridOptions.data.splice(index, 1);
 
-    }
+    };
+    vm.fieldsList = [
+      { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number' },
+      { name: 'Наименование', field: 'Gr_Name', width: '30%', enableCellEdit: false },
+      { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number' },
+      { name: 'Аптека', field: 'Ph_Name', enableCellEdit: false },
+      { name: 'Статус', field: 'M', enableCellEdit: false, type: 'number' },
+      { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
+      { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
+      { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: true, type: 'number' },
+      { name: 'Врем Заказ', field: 'TempReq', enableCellEdit: true, type: 'number' },
+      { name: 'Скорость 30 дн', field: 'CalcVel30', enableCellEdit: false, type: 'number' },
+      { name: 'Остаток', field: 'Ost', enableCellEdit: false, type: 'number' },
+      { name: 'В пути', field: 'Wait', enableCellEdit: false, type: 'number' },
+      { name: 'Матрица', field: 'Matrix', enableCellEdit: false },
+      { name: 'Маркетинг', field: 'Marketing', enableCellEdit: false },
+      { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number' },
+      { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' }
+    ];
     vm.gridOptions = {
         enableFiltering: true,
         enableEditing: true,
@@ -778,25 +796,9 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
             gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, 'gridState8', gridApi));
           }, 100);
         },
-        columnDefs: [
-            { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number' },
-            { name: 'Наименование', field: 'Gr_Name', width: '30%', enableCellEdit: false },
-            { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number' },
-            { name: 'Аптека', field: 'Ph_Name', enableCellEdit: false },
-            { name: 'Статус', field: 'M', enableCellEdit: false, type: 'number' },
-            { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
-            { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
-            { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: true, type: 'number' },
-            { name: 'Врем Заказ', field: 'TempReq', enableCellEdit: true, type: 'number' },
-            { name: 'Скорость 30 дн', field: 'CalcVel30', enableCellEdit: false, type: 'number' },
-            { name: 'Остаток', field: 'Ost', enableCellEdit: false, type: 'number' },
-            { name: 'В пути', field: 'Wait', enableCellEdit: false, type: 'number' },
-            { name: 'Матрица', field: 'Matrix', enableCellEdit: false },
-            { name: 'Маркетинг', field: 'Marketing', enableCellEdit: false },
-            { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number' },
-            { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' },
+        columnDefs: vm.fieldsList.concat([
             { name: 'X', width: '30', cellTemplate: '<button class="btn btn-outline-danger btn-sm" ng-click="grid.appScope.deleteRow(row)">X</button>' }
-        ]
+        ])
     };
 
     //$http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
@@ -805,31 +807,21 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
     //    });
 
     $scope.onClick = function () {
-        if (!vm.exchange.pharmid) {
-            vm.exchange.pharmid = 0;
-        }
-        if (!vm.exchange.grid) {
-            vm.exchange.grid = 0;
-        }
-        $scope.loading = true;
-        $http({
-            method: 'GET',
-            url: '/api/ResultMtrxf/' + vm.exchange.pharmid + '/' + vm.exchange.grid
-        }).
-            then(function (response) {
-                //           var data = response.data;
-                //           for (var i = 0; i < 6; i++) {
-                //               data = data.concat(data);
-                //           }
-                vm.gridOptions.data = response.data;
-                $scope.loading = false;
-                // $scope.loadMore();
-            }, function (data, status, headers, config) {
-                $scope.Resulta = 'Error!';
-                $scope.loading = false;
-            });
+      $scope.loading = true;
+      $http.post('/api/Resultmtrxn/', { conds: [{ field: 'Filial', cond: 'eq', value: vm.exchange.filial }].concat(vm.exchange.conditions) })
+        .then(function (response) {
+          if (response.data.length > 0) {
+            $scope.sent = response.data[0].sent > 0;
+          }
+          vm.gridOptions.data = response.data;
+        }, function (data, status, headers, config) {
+          $scope.Result = 'Error!';
+        })
+        .finally(function() {
+          $scope.loading = false;
+        });
+    };
 
-    }
     $scope.onaccept = function (pharm, $index) {
         //
         $scope.rsp = '/api/acceptmx/' + pharm.Ph_ID + "/" + pharm.Gr_ID;
@@ -940,20 +932,8 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
                 $scope.Result = 'Error!';
             });
     };
-    $scope.loading = true;
-    $http.post('/api/Resultmtrxn/', { conds: [{ field: 'Filial', cond: 'eq', value: vm.exchange.filial }] }).
-        then(function (response) {
-            if (response.data.length > 0) {
-                $scope.sent = response.data[0].sent > 0;
-                // $scope.pharmname = data[0].ph_name;
-                // $scope.pharmid = data[0].ph_id;
-            };
-            vm.gridOptions.data = response.data;
-            $scope.loading = false;
-        }, function (data, status, headers, config) {
-            $scope.Result = 'Error!';
-            $scope.loading = false;
-       });
+
+    $scope.onClick();
 
 }]);
 app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','save12', 'TableService', '$timeout', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange, i18nService,save12, TableService, $timeout) {
@@ -972,7 +952,6 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
   vm.fieldsList = fieldsList.concat(
     { name: 'Акция', field: 'Action', enableCellEdit: false }
   );
-  vm.compList = compList;
   vm.gridOptions = {
       enableFiltering: true,
       enableEditing: true,
@@ -1040,21 +1019,6 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
       { name: 'Акция', field: 'Action', enableCellEdit: false }
     ],
     rowTemplate: rowTemplate()
-  };
-
-  vm.showCondition = function (value, cond) {
-    if (['gt', 'lt'].indexOf(value) === -1 || !cond.field) {
-      return true;
-    }
-    return cond.type === 'number';
-  };
-
-  vm.changeField = function ($index) {
-    var condition = vm.exchange.conditions[$index];
-    var found = vm.fieldsList.filter(function (item) {
-      return item.field === condition.field;
-    })[0];
-    condition.type = found.type;
   };
 
   //$http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
@@ -1184,12 +1148,6 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
 //      save12.savestate = vm.gridApi.saveState.save();
 //      save12.data = vm.gridOptions.data;
 //  });
-  $scope.ondelcond = function ($index) {
-      vm.exchange.conditions.splice($index, 1); 
-  };
-  $scope.onaddcond = function () {
-      vm.exchange.conditions.push({ field: '', cond: '', val: '' });
-  }
 }]);
 app.controller('MyCtrl11', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','save11','$cookies', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange, i18nService,save11,$cookies) {
     var vm = this;
@@ -1611,4 +1569,84 @@ app.factory('TableService', ['$localStorage', '$timeout', function ($localStorag
             }
         }
     }
+}]);
+app.directive('phFilter', [function () {
+  return {
+    restrict: "E",
+    scope: {
+      conditions: "=",
+      fields: "=",
+      onSelect: "&"
+    },
+    templateUrl: 'filter',
+    link: function (scope, element, attrs) {
+      scope.compList = [
+        {
+          val: "eq",
+          label: "равно"
+        },
+        {
+          val: "neq",
+          label: "не равно"
+        },
+        {
+          val: "cn",
+          label: "содержит"
+        },
+        {
+          val: "ncn",
+          label: "не содержит"
+        },
+        {
+          val: "nl",
+          label: "пусто"
+        },
+        {
+          val: "nnl",
+          label: "не пусто"
+        },
+        {
+          val: "gt",
+          label: "больше"
+        },
+        {
+          val: "lt",
+          label: "меньше"
+        }
+      ];
+      scope.showCondition = function (value, cond) {
+        if (['gt', 'lt'].indexOf(value) === -1 || !cond.field) {
+          return true;
+        }
+        return cond.type === 'number';
+      };
+
+      scope.changeField = function ($index) {
+        var condition = scope.conditions[$index];
+        var found = scope.fields.filter(function (item) {
+          return item.field === condition.field;
+        })[0];
+        condition.type = found.type;
+      };
+
+      scope.changeConditionValue = function (condition) {
+        if (condition.field === 'MinQty' && condition.cond !== 'nl') {
+          var floatValue = parseFloat(condition.value);
+          if (floatValue < 0.5) {
+            floatValue = 0.5;
+            condition.value = floatValue;
+          }
+        }
+      };
+
+      scope.ondelcond = function ($index) {
+        scope.conditions.splice($index, 1);
+      };
+
+      scope.onaddcond = function () {
+        scope.conditions.push({ field: '', cond: '', val: '' });
+      }
+
+    }
+  }
 }]);
