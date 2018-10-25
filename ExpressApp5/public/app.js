@@ -6,9 +6,9 @@
     .factory('authHttpResponseInterceptor', ['$q', '$rootScope', function ($q, $rootScope) {
         return {
           request: function (config) {
- //           if (location.hostname === 'localhost' && /^\/api/i.test(config.url)) {
- //             config.url = 'https://zakaz.gidapteka.ru' + config.url;
- //           }
+           if (window.host && /^\/api/i.test(config.url)) {
+             config.url = window.host + config.url;
+           }
             return config || $q.when(config);
           },
 
@@ -644,6 +644,7 @@ app.controller('MyCtrl5', ['$scope', '$http', '$location', '$rootScope', 'exchan
         url: '/api/result'
     }).
         then(function (response) {
+            console.log(response);
             $scope.pharms = response.data;
             $scope.exchange.filial = $scope.pharms[0].Filial;
         }, function (error) {

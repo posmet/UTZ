@@ -16,6 +16,8 @@ html(ng-app="app")
         script(src="exceljs.min.js")
         script(src="FileSaver.min.js")
         script(src="ui-grid.js")
+        script.
+          window.host = JSON.parse('!{JSON.stringify(host)}');
         link(rel="stylesheet" href="ui-grid.css" type="text/css")
         link(rel="stylesheet" href="main.css" type="text/css")
         link(rel='stylesheet', href='/css/bootstrap.min.css')
@@ -24,7 +26,7 @@ html(ng-app="app")
        #user
         if(user)
             script.
-                window.user = JSON.parse('!{JSON.stringify(user)}')
+                window.user = JSON.parse('!{JSON.stringify(user)}');
             div(ng-controller='AppCtrl')
                 div(class="user-data"  ng-show="(user.interface == 1)")
                     nav(class="navbar")
