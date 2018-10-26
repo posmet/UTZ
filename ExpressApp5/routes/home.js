@@ -1,4 +1,15 @@
 ﻿module.exports = function (app) {
+  app.all('/*', function (req, res, next) {
+    /*req.user = {
+      User_Name: "ella",
+      full_name: "Маркетолог",
+      interface: 2,
+      pwd: "20ella18",
+      userid: 9
+    };*/
+    res.locals.host = process.env.HOST || '';
+    next();
+  });
     app.get('/', function (req, res) {
         res.render('index2', {
             user: req.user

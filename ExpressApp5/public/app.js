@@ -6,9 +6,9 @@
     .factory('authHttpResponseInterceptor', ['$q', '$rootScope', function ($q, $rootScope) {
         return {
           request: function (config) {
- //           if (location.hostname === 'localhost' && /^\/api/i.test(config.url)) {
- //             config.url = 'https://zakaz.gidapteka.ru' + config.url;
- //           }
+           if (window.host && /^\/api/i.test(config.url)) {
+             config.url = window.host + config.url;
+           }
             return config || $q.when(config);
           },
 
@@ -644,6 +644,7 @@ app.controller('MyCtrl5', ['$scope', '$http', '$location', '$rootScope', 'exchan
         url: '/api/result'
     }).
         then(function (response) {
+            console.log(response);
             $scope.pharms = response.data;
             $scope.exchange.filial = $scope.pharms[0].Filial;
         }, function (error) {
@@ -1252,6 +1253,10 @@ app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
       var wb = new ExcelJS.Workbook();
       var ws = wb.addWorksheet('Статистика');
       ws.columns = [
+        { header: 'ГрКод', key: 'Gr_ID', width: 7},
+        { header: 'Наименование', key: 'Gr_Name', width: 15 },
+        { header: 'Код', key: 'Ph_ID', width: 7},
+        { header: 'Аптека', key: 'Ph_Name'},
         { header: 'Дата', key: 'dat', width: 10 },
         { header: 'Остатки', key: 'Ost' },
         { header: 'Мин. запас', key: 'Qty', width: 11 },

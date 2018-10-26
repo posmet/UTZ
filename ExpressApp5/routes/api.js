@@ -231,16 +231,16 @@ module.exports = function (app) {
                             Whr = Whr + " <> ''";
                             break;
                         case 'gt':
-                            Whr = Whr + " > '" + curr.value + "'";
+                            Whr = Whr + " > ''";
                             break;
                         case 'lt':
-                            Whr = Whr + " < '" + curr.value + "'";
+                            Whr = Whr + " < ''";
                             break;
                     }
                     return Whr;
 
                 }, "")
-            };
+            }
 
             console.log(sqlString);
             request.query(sqlString, function (err, rs) {
