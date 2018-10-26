@@ -1,8 +1,8 @@
-﻿div(ng-controller="MyCtrl4 as $ctrl")
+﻿div
     h3 Обработка заявки аптеки 
     {{pharmname}} - 
     {{pharmid}}
     small
         div(ng-show="!sent")
             a(class="btn btn-primary" ng-click="OnSend()") Отправить
-        div(class="grid" ui-grid="$ctrl.gridOptions" ui-grid-move-columns ui-grid-exporter ui-grid-edit ui-grid-resize-columns ui-grid-selection)
+        div(class="grid" ui-grid="$ctrl.gridOptions" ui-grid-move-columns ui-grid-exporter ui-grid-edit ui-grid-resize-columns ui-grid-selection ui-grid-cellnav)

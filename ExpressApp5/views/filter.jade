@@ -6,7 +6,7 @@
 		select(class="form-control-sm" ng-model="cond.cond")
 			option(ng-repeat="opt in compList" ng-if="showCondition(opt.val, cond)" ng-value="opt.val"){{opt.label}}
 	div(class="col-auto")
-		input(type="text" class="form-control-sm" ng-blur="changeConditionValue(cond)" ng-model="cond.value")
+		input(type="text" class="form-control-sm" ng-model="cond.value")
 	div(class="col-auto")
 		button(class="btn btn-outline-danger btn-sm" ng-click="ondelcond($index)")
 			i(class="fa fa-minus")

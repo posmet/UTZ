@@ -41,11 +41,11 @@
             }).
             when('/view3', {
                 templateUrl: 'partial3',
-                controller: 'MyCtrl3'
+                controller: 'MyCtrl3 as $ctrl'
             }).
             when('/view4', {
                 templateUrl: 'partial4',
-                controller: 'MyCtrl4'
+                controller: 'MyCtrl4 as $ctrl'
             }).
             when('/view7', {
                 templateUrl: 'partial7',
@@ -107,40 +107,6 @@ const fieldsList = [
     { name: 'Фармгруппа', field: 'RFG_agg', enableCellEdit: false },
     { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' }
 ];
-const compList = [
-    {
-        val: "eq",
-        label: "равно"
-    },
-    {
-        val: "neq",
-        label: "не равно"
-    },
-    {
-        val: "cn",
-        label: "содержит"
-    },
-    {
-        val: "ncn",
-        label: "не содержит"
-    },
-    {
-        val: "nl",
-        label: "пусто"
-    },
-    {
-        val: "nnl",
-        label: "не пусто"
-    },
-    {
-        val: "gt",
-        label: "больше"
-    },
-    {
-        val: "lt",
-        label: "меньше"
-    }
-]
 app.controller('AppCtrl', function ($scope, $http, $rootScope) {
     //$scope.exfac = exchange;
     $scope.interface1 = false;
@@ -202,6 +168,7 @@ app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableS
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
               if (newValue != oldValue) {
+                TableService.minQty05.apply(null, arguments);
                 $http({
                   method: 'GET',
                   url: '/api/updatemx/' + rowEntity.Ph_ID + "/" + rowEntity.Gr_ID + "/" + rowEntity.MinQty + "/" + rowEntity.MinReq + "/" + rowEntity.Ratio + "/" + rowEntity.TempReq
@@ -420,24 +387,26 @@ app.controller('MyCtrl4', ['$scope', '$http', '$location', '$rootScope', 'exchan
         enableRowHeaderSelection: false,
         multiSelect: false,
         showGridFooter: true,
+        enableCellEditOnFocus: true,
         onRegisterApi: function (gridApi) {
             vm.gridApi = gridApi;
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
+              if (newValue != oldValue) {
                 if (rowEntity.Req < rowEntity.qmin) rowEntity.Req = rowEntity.qmin;
                 if (rowEntity.Req > rowEntity.qmax) rowEntity.Req = rowEntity.qmax;
 
                 $http({
-                    method: 'GET',
-                    url: '/api/updaterq/' + rowEntity.Ph_ID + "/" + rowEntity.GrCode + "/" + rowEntity.Req
-                }).
-                    then(function (response) {
-                        vm.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
-                        $scope.$apply();
-                        //vm.gridOptions.data = response.data;
-                    }, function (data, status, headers, config) {
-                        $scope.Result = 'Error!';
-                    });
+                  method: 'GET',
+                  url: '/api/updaterq/' + rowEntity.Ph_ID + "/" + rowEntity.GrCode + "/" + rowEntity.Req
+                }).then(function (response) {
+                  vm.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
+                  $scope.$apply();
+                  //vm.gridOptions.data = response.data;
+                }, function (data, status, headers, config) {
+                  $scope.Result = 'Error!';
+                });
+              }
             });
          //   gridApi.selection.on.rowSelectionChanged($scope, function (row) {
 //
@@ -769,6 +738,7 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
               if (newValue != oldValue) {
+                TableService.minQty05.apply(null, arguments);
                 $http({
                   method: 'GET',
                   url: '/api/updatemx/' + rowEntity.Ph_ID + "/" + rowEntity.Gr_ID + "/" + rowEntity.MinQty + "/" + rowEntity.MinReq + "/" + rowEntity.Ratio + "/" + rowEntity.TempReq
@@ -951,7 +921,7 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
   $scope.checkadd = false;
   i18nService.setCurrentLang('ru');
   vm.fieldsList = fieldsList.concat(
-    { name: 'Акция', field: 'Action', enableCellEdit: false }
+    { name: 'Акция', field: 'Action', enableCellEdit: true }
   );
   vm.gridOptions = {
       enableFiltering: true,
@@ -968,6 +938,7 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
               //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
               if (newValue != oldValue) {
+                  TableService.minQty05.apply(null, arguments);
                 $http.post('/api/updatemx/', rowEntity).then(function (response) {
                   vm.msg.lastCellEdited = 'Изменено строка:' + rowEntity.Gr_ID + ' Столбец:' + colDef.name + ' Было:' + oldValue + ' Стало:' + newValue;
                   $scope.$apply();
@@ -1017,7 +988,7 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
       { name: 'Тип товара', field: 'RGT_agg', enableCellEdit: false },
       { name: 'Фармгруппа', field: 'RFG_agg', enableCellEdit: false },
       { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' },
-      { name: 'Акция', field: 'Action', enableCellEdit: false }
+      { name: 'Акция', field: 'Action', enableCellEdit: true }
     ],
     rowTemplate: rowTemplate()
   };
@@ -1556,6 +1527,11 @@ app.factory('$localStorage', ['$cookies', function ($cookies) {
 }]);
 app.factory('TableService', ['$localStorage', '$timeout', function ($localStorage, $timeout) {
     return {
+        minQty05: function (rowEntity, colDef) {
+          if (colDef.field === 'MinQty' && rowEntity.Matrix && rowEntity.MinQty < 0.5) {
+            rowEntity.MinQty = 0.5;
+          }
+        },
         saveState: function (stateName, gridApi) {
             const state = gridApi.saveState.save();
             const data = $localStorage.get(stateName) || {};
@@ -1632,16 +1608,6 @@ app.directive('phFilter', [function () {
           return item.field === condition.field;
         })[0];
         condition.type = found.type;
-      };
-
-      scope.changeConditionValue = function (condition) {
-        if (condition.field === 'MinQty' && condition.cond !== 'nl') {
-          var floatValue = parseFloat(condition.value);
-          if (floatValue < 0.5) {
-            floatValue = 0.5;
-            condition.value = floatValue;
-          }
-        }
       };
 
       scope.ondelcond = function ($index) {
