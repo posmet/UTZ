@@ -1244,7 +1244,10 @@ app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
           bold: true
       };
       $scope.myData.forEach(function (item) {
-        ws.addRow(item);
+        var clone = Object.assign({} , item);
+        clone.Gr_Name = exchange.grname;
+        clone.Ph_Name = exchange.phname;
+        ws.addRow(clone);
       });
       wb.xlsx.writeBuffer()
         .then(function (data) {
