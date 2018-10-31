@@ -415,7 +415,31 @@ module.exports = function (app) {
         });
 
     });
-    app.get('/api/acceptmx/:ph_id/:gr_id', function (req, res) {
+    app.post('/api/updateph/', function (req, res) {
+        var sql = require('mssql');
+        var connection = new sql.Connection(config);
+
+        connection.connect(function (err) {
+            if (err) { res.status(500).send(err); return; }
+
+            var request = new sql.Request(connection);
+            var grcode = req.params.gr_id;
+            //grcode = grcode.replace("grp", "");
+            var sqlString = "update pharms set d_d=" + req.body.D_D + ",d_a=" + req.body.D_A + ",d_t=" + req.body.D_T + ",kmin=" + req.body.Kmin + ",kmax=" + req.body.Kmax + ", Categories='" + req.body.Categories + "', graph = '" + req.body.graph +  "' where ph_id=" + req.body.Ph_ID;
+            console.log(sqlString);
+            request.query(sqlString, function (err, rs) {
+                connection.close();
+                 
+                if (err) { res.status(500).send(err); return; }
+
+                //var count = rs;
+                res.status(200).send("ok");
+                res = "ok";
+            });
+        });
+
+    });
+   app.get('/api/acceptmx/:ph_id/:gr_id', function (req, res) {
         var sql = require('mssql');
         var connection = new sql.Connection(config);
 

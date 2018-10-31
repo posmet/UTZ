@@ -1140,10 +1140,7 @@ app.controller('MyCtrl11', ['$scope', '$http', '$interval', 'uiGridConstants', '
             $scope.gridApi = gridApi;
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
-                $http({
-                    method: 'GET',
-                    url: '/api/updateph/' + rowEntity.Ph_ID + "/" + rowEntity.D_D + "/" + rowEntity.D_A + "/" + rowEntity.D_T + "/" + rowEntity.Kmin + "/" + rowEntity.Kmax
-                }).
+                $http.post('/api/updateph/', rowEntity).
                     then(function (response) {
                         vm.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
                         $scope.$apply();
@@ -1151,7 +1148,7 @@ app.controller('MyCtrl11', ['$scope', '$http', '$interval', 'uiGridConstants', '
                     }, function (data, status, headers, config) {
                         $scope.Result = 'Error!';
                     });
-            })
+            });
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                 exchange.phname = row.entity.Ph_Name;
                 exchange.pharmid = row.entity.Ph_ID;
