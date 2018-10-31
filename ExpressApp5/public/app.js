@@ -720,7 +720,9 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
       { name: 'Матрица', field: 'Matrix', enableCellEdit: false },
       { name: 'Маркетинг', field: 'Marketing', enableCellEdit: false },
       { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number' },
-      { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' }
+      { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' },
+      { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
+      { name: 'Продажи60', field: 'Sales60', enableCellEdit: false }
     ];
     vm.gridOptions = {
         enableFiltering: true,
@@ -921,7 +923,9 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
   $scope.checkadd = false;
   i18nService.setCurrentLang('ru');
   vm.fieldsList = fieldsList.concat(
-    { name: 'Акция', field: 'Action', enableCellEdit: true }
+    { name: 'Акция', field: 'Action', enableCellEdit: true },
+    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
+    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false }
   );
   vm.gridOptions = {
       enableFiltering: true,
@@ -988,7 +992,9 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
       { name: 'Тип товара', field: 'RGT_agg', enableCellEdit: false },
       { name: 'Фармгруппа', field: 'RFG_agg', enableCellEdit: false },
       { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' },
-      { name: 'Акция', field: 'Action', enableCellEdit: true }
+      { name: 'Акция', field: 'Action', enableCellEdit: true },
+      { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
+      { name: 'Продажи60', field: 'Sales60', enableCellEdit: false }
     ],
     rowTemplate: rowTemplate()
   };
