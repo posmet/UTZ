@@ -254,6 +254,126 @@ module.exports = function (app) {
             });
         });
     });
+    app.post('/api/overnorm/', function (req, res) {
+        var sql = require('mssql');
+        var connection = new sql.Connection(config);
+
+        connection.connect(function (err) {
+            if (err) { res.status(500).send(err); return; }
+            console.log(req.body);
+            var request = new sql.Request(connection);
+
+            var sqlString = 'SELECT * from overnorm';
+            if (req.body.conds.length > 0) {
+                sqlString = sqlString + ' where ';
+                sqlString = sqlString + req.body.conds.reduce(function (prev, curr) {
+                    var Whr = prev;
+                    if (prev != '')
+                        Whr = Whr + ' and ';
+                    Whr = Whr + curr.field;
+                    switch (curr.cond) {
+                        case 'eq':
+                            Whr = Whr + " = '" + curr.value + "'";
+                            break;
+                        case 'neq':
+                            Whr = Whr + " <> '" + curr.value + "'";
+                            break;
+                        case 'cn':
+                            Whr = Whr + " Like '%" + curr.value + "%'";
+                            break;
+                        case 'ncn':
+                            Whr = Whr + " = '" + curr.value + "'";
+                            break;
+                        case 'nl':
+                            Whr = Whr + " = ''";
+                            break;
+                        case 'nnl':
+                            Whr = Whr + " <> ''";
+                            break;
+                        case 'gt':
+                            Whr = Whr + " > ''";
+                            break;
+                        case 'lt':
+                            Whr = Whr + " < ''";
+                            break;
+                    }
+                    return Whr;
+
+                }, "")
+            }
+
+            console.log(sqlString);
+            request.query(sqlString, function (err, rs) {
+                connection.close();
+
+                if (err) { res.status(500).send(err); return; }
+
+                var count = rs;
+                res.status(200);
+                res.json(rs);
+            });
+        });
+    });
+    app.post('/api/transferto/', function (req, res) {
+        var sql = require('mssql');
+        var connection = new sql.Connection(config);
+
+        connection.connect(function (err) {
+            if (err) { res.status(500).send(err); return; }
+            console.log(req.body);
+            var request = new sql.Request(connection);
+
+            var sqlString = 'SELECT * from transferto';
+            if (req.body.conds.length > 0) {
+                sqlString = sqlString + ' where ';
+                sqlString = sqlString + req.body.conds.reduce(function (prev, curr) {
+                    var Whr = prev;
+                    if (prev != '')
+                        Whr = Whr + ' and ';
+                    Whr = Whr + curr.field;
+                    switch (curr.cond) {
+                        case 'eq':
+                            Whr = Whr + " = '" + curr.value + "'";
+                            break;
+                        case 'neq':
+                            Whr = Whr + " <> '" + curr.value + "'";
+                            break;
+                        case 'cn':
+                            Whr = Whr + " Like '%" + curr.value + "%'";
+                            break;
+                        case 'ncn':
+                            Whr = Whr + " = '" + curr.value + "'";
+                            break;
+                        case 'nl':
+                            Whr = Whr + " = ''";
+                            break;
+                        case 'nnl':
+                            Whr = Whr + " <> ''";
+                            break;
+                        case 'gt':
+                            Whr = Whr + " > ''";
+                            break;
+                        case 'lt':
+                            Whr = Whr + " < ''";
+                            break;
+                    }
+                    return Whr;
+
+                }, "")
+            }
+
+            console.log(sqlString);
+            request.query(sqlString, function (err, rs) {
+                connection.close();
+
+                if (err) { res.status(500).send(err); return; }
+
+                var count = rs;
+                res.status(200);
+                res.json(rs);
+            });
+        });
+    });
     app.get('/api/resultmtrxacc', function (req, res) {
         var sql = require('mssql');
         var connection = new sql.Connection(config);
@@ -425,7 +545,7 @@ module.exports = function (app) {
             var request = new sql.Request(connection);
             var grcode = req.params.gr_id;
             //grcode = grcode.replace("grp", "");
-            var sqlString = "update pharms set d_d=" + req.body.D_D + ",d_a=" + req.body.D_A + ",d_t=" + req.body.D_T + ",kmin=" + req.body.Kmin + ",kmax=" + req.body.Kmax + ", Categories='" + req.body.Categories + "', graph = '" + req.body.graph +  "' where ph_id=" + req.body.Ph_ID;
+            var sqlString = "update pharms set d_d=" + req.body.D_D + ",d_a=" + req.body.D_A + ",d_t=" + req.body.D_T + ",kmin=" + req.body.Kmin + ",kmax=" + req.body.Kmax + ", Categories='" + req.body.Categories + "', graph = '" + req.body.graph + "', [over]=" + req.body.over+" where ph_id=" + req.body.Ph_ID;
             console.log(sqlString);
             request.query(sqlString, function (err, rs) {
                 connection.close();
