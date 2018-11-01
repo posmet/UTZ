@@ -374,7 +374,7 @@ module.exports = function (app) {
             });
         });
     });
-    app.post('/api/transferto/', function (req, res) {
+    app.post('/api/transfer/', function (req, res) {
         var sql = require('mssql');
         var connection = new sql.Connection(config);
 
