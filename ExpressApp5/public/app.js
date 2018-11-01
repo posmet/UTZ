@@ -1529,7 +1529,7 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
     { name: 'Куда Аптека', field: 'toPh_Name', enableCellEdit: false },
     { name: 'Скорость продаж', field: 'CalcVel', type: 'number', enableCellEdit: false },
     { name: 'Остаток', field: 'Ost', type: 'number', enableCellEdit: false },
-    { name: 'Заявка', field: 'Req', enableCellEdit: false }
+    { name: 'Заявка', field: 'Req', enableCellEdit: true }
   ];
   vm.fieldsListDS = fieldsList.concat(
     { name: 'Акция', field: 'Action', enableCellEdit: true },
@@ -1544,8 +1544,21 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
     enableRowHeaderSelection:true,
     exporterMenuCsv: true,
     enableGridMenu: true,
+    enableEditing: true,
+    enableCellEditOnFocus: true,
     onRegisterApi: function (gridApi) {
       vm.gridApiTransfer = gridApi;
+
+      gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+        if (newValue != oldValue && colDef.field === 'Req') {
+            if (newValue <= 0) {
+              rowEntity.Req = 1;
+            } else if (newValue > rowEntity.DS) {
+              rowEntity.Req = rowEntity.DS;
+            }
+        }
+      });
+
       gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
       gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
       gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
