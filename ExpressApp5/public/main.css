@@ -113,6 +113,19 @@
     background-color: lightgreen !important;
 }
 
+.ui-grid-cell.yellow {
+    background-color: lightyellow !important;
+}
+
 .ui-grid-row.ui-grid-row-selected > [ui-grid-row] > .ui-grid-cell {
     background-color: #C9DDE1 !important;
+}
+
+.btn-file {
+    margin-bottom: 0;
+    color: inherit !important;
+}
+
+.btn-file > input {
+    display: none;
 }

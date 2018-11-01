@@ -6,7 +6,8 @@
                 div(class="col-auto")
                     a(class="btn btn-outline-primary btn-sm" ng-click="onClick()") Получить
                     a(class="btn btn-outline-primary btn-sm" ng-click="onSearch()") Получить для подтверждения
-                    a(class="btn btn-outline-primary btn-sm" ng-click="onFile()") Загрузить файл
+                    label(class="btn btn-outline-primary btn-sm btn-file") Загрузить файл
+                        input(type="file" accept=".xls, .xlsx, .csv" custom-on-change="onFile(files)")
                     a(class="btn btn-outline-primary btn-sm" ng-click="onSend()") Отправить
             div(class="form-row")
                 div(class="col")

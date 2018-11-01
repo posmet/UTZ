@@ -912,7 +912,7 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
 app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','save12', 'TableService', '$timeout', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange, i18nService,save12, TableService, $timeout) {
   var vm = this;
   var rowTemplate = function() {
-    return '<div ng-class="{green: row.entity.Action}" ' +
+    return '<div ng-class="{green: row.entity.Action, yellow: row.entity.isLocal}" ' +
       'ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.uid" ui-grid-one-bind-id-grid="rowRenderIndex + \'-\' + col.uid + \'-cell\'" ' +
       'class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader}" role="gridcell" ui-grid-cell></div>';
   };
@@ -927,6 +927,8 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
     { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
     { name: 'Продажи60', field: 'Sales60', enableCellEdit: false }
   );
+  $scope.fileData = [];
+  $scope.serverData = [];
   vm.gridOptions = {
       enableFiltering: true,
       enableEditing: true,
@@ -1020,7 +1022,8 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
                 //           for (var i = 0; i < 6; i++) {
                 //               data = data.concat(data);
                 //           }
-                vm.gridOptions.data = response.data;
+                $scope.serverData = response.data;
+                vm.gridOptions.data = $scope.fileData.concat($scope.serverData);
                 // $scope.loadMore();
             }, function (data, status, headers, config) {
                 $scope.Resulta = 'Error!';
@@ -1028,7 +1031,117 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           .finally(function () {
             $scope.loading = false;
           });
-  }
+  };
+
+  var applyLoading = function (value) {
+      $scope.$apply(function () {
+        $scope.loading = value;
+      });
+  };
+
+  var parseFile = function (rows) {
+    var headers = {};
+    var results = [];
+    var columnKeys = {};
+    vm.gridOptions.columnDefs.forEach(function (item) {
+      columnKeys[item.name] = item.field;
+    });
+    rows[0].forEach(function (name, index) {
+      if (name && columnKeys[name]) {
+        headers[index] = columnKeys[name];
+      }
+    });
+    if (Object.keys(headers).length) {
+      rows.forEach(function (row, index) {
+        if (index > 0) {
+          var json = {};
+          row.forEach(function (value, index) {
+            if (headers[index]) {
+              json[headers[index]] = value;
+            }
+          });
+          if (Object.keys(json).length) {
+            json.isLocal = true;
+            results.push(json);
+          }
+        }
+      });
+      if (results.length) {
+        $scope.fileData = results;
+        vm.gridOptions.data = $scope.fileData.concat($scope.serverData);
+      }
+    }
+  };
+
+  var readCSV = function (file, columnKeys) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      $scope.$apply(function () {
+        parseFile(CSV.parse(event.target.result));
+        $scope.loading = false;
+      });
+    };
+    reader.onerror = function () {
+      applyLoading(false);
+    };
+    $scope.loading = true;
+    reader.readAsText(file);
+  };
+
+  var readXLS = function (file, columnKeys) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+        new ExcelJS.Workbook().xlsx
+          .load(event.target.result)
+          .then(function (workbook) {
+            var rows = [];
+            workbook.worksheets[0].eachRow(function (row, rowNumber) {
+                rows.push(row.values);
+            });
+            return parseFile(rows);
+          })
+          .then(function () {
+            applyLoading(false);
+          });
+    };
+    reader.onerror = function () {
+      $scope.loading = false;
+    };
+    $scope.loading = true;
+    reader.readAsArrayBuffer(file);
+  };
+
+  $scope.onFile = function (files) {
+    if (!files[0]) {
+        return false;
+    }
+    if (!/\.(csv|xls|xlsx)$/.test(files[0].name)) {
+        return false;
+    }
+    if (/\.csv$/.test(files[0].name)) {
+      return readCSV(files[0]);
+    } else {
+      return readXLS(files[0]);
+    }
+  };
+
+  $scope.onSend = function () {
+    if (!$scope.fileData.length) {
+      return false;
+    }
+    alert('отправка ' + $scope.fileData.length + ' записей');
+    $scope.loading = true;
+    $http.post('/api/test/', {items: $scope.fileData})
+        .then(function (response) {
+
+        }, function (data, status, headers, config) {
+            $scope.Result = 'Error!';
+        })
+        .finally(function () {
+            $scope.loading = false;
+        });
+  };
+
   $scope.onedit = function (pharm, $index) {
       //
       $scope.rsp = '/api/updatemx/' + pharm.Ph_ID + "/" + pharm.Gr_ID + "/" + pharm.MinQty + "/" + pharm.MinReq + "/" + pharm.Ratio;
@@ -1627,3 +1740,21 @@ app.directive('phFilter', [function () {
     }
   }
 }]);
+app.directive('customOnChange', function() {
+  return {
+    restrict: 'A',
+    scope: {
+      customOnChange: '&'
+    },
+    link: function (scope, element, attrs) {
+      element.on('change', function (e) {
+          scope.$apply(function () {
+            scope.customOnChange({files: e.target.files});
+          });
+      });
+      element.on('$destroy', function() {
+        element.off();
+      });
+    }
+  };
+});
