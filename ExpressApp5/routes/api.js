@@ -374,6 +374,28 @@ module.exports = function (app) {
             });
         });
     });
+    app.post('/api/transfer/', function (req, res) {
+        var sql = require('mssql');
+        var connection = new sql.Connection(config);
+
+        connection.connect(function (err) {
+            if (err) { res.status(500).send(err); return; }
+            console.log(req.body);
+            var request = new sql.Request(connection);
+
+            var sqlString = 'exec api_addtransfer ' + req.body;
+            console.log(sqlString);
+            request.query(sqlString, function (err, rs) {
+                connection.close();
+
+                if (err) { res.status(500).send(err); return; }
+
+                var count = rs;
+                res.status(200);
+                res.json(rs);
+            });
+        });
+    });
     app.get('/api/resultmtrxacc', function (req, res) {
         var sql = require('mssql');
         var connection = new sql.Connection(config);
