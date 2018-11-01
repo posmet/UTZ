@@ -69,7 +69,7 @@
             }).
             when('/view14', {
                 templateUrl: 'partial14n',
-                controller: 'MyCtrl14'
+                controller: 'MyCtrl14 as vm'
             }).
             when('/view15', {
                 templateUrl: 'partial15n',
@@ -916,6 +916,83 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
       'ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.uid" ui-grid-one-bind-id-grid="rowRenderIndex + \'-\' + col.uid + \'-cell\'" ' +
       'class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader}" role="gridcell" ui-grid-cell></div>';
   };
+  var applyLoading = function (value) {
+    $scope.$apply(function () {
+      $scope.loading = value;
+    });
+  };
+
+  var parseFile = function (rows) {
+    var headers = {};
+    var results = [];
+    var columnKeys = {};
+    vm.gridOptions.columnDefs.forEach(function (item) {
+      columnKeys[item.name] = item.field;
+    });
+    rows[0].forEach(function (name, index) {
+      if (name && columnKeys[name]) {
+        headers[index] = columnKeys[name];
+      }
+    });
+    if (Object.keys(headers).length) {
+      rows.forEach(function (row, index) {
+        if (index > 0) {
+          var json = {};
+          row.forEach(function (value, index) {
+            if (headers[index]) {
+              json[headers[index]] = value;
+            }
+          });
+          if (Object.keys(json).length) {
+            json.isLocal = true;
+            results.push(json);
+          }
+        }
+      });
+      if (results.length) {
+        $scope.fileData = results;
+        vm.gridOptions.data = $scope.fileData.concat($scope.serverData);
+      }
+    }
+  };
+
+  var readCSV = function (file, columnKeys) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      $scope.$apply(function () {
+        parseFile(CSV.parse(event.target.result));
+        $scope.loading = false;
+      });
+    };
+    reader.onerror = function () {
+      applyLoading(false);
+    };
+    $scope.loading = true;
+    reader.readAsText(file);
+  };
+
+  var readXLS = function (file, columnKeys) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      new ExcelJS.Workbook().xlsx
+        .load(event.target.result)
+        .then(function (workbook) {
+          var rows = [];
+          workbook.worksheets[0].eachRow(function (row, rowNumber) {
+            rows.push(row.values);
+          });
+          return parseFile(rows);
+        })
+        .then(function () {
+          applyLoading(false);
+        });
+    };
+    reader.onerror = function () {
+      $scope.loading = false;
+    };
+    $scope.loading = true;
+    reader.readAsArrayBuffer(file);
+  };
   vm.msg = {};
   vm.exchange = exchange;
   vm.matrix = false;
@@ -1031,84 +1108,6 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           .finally(function () {
             $scope.loading = false;
           });
-  };
-
-  var applyLoading = function (value) {
-      $scope.$apply(function () {
-        $scope.loading = value;
-      });
-  };
-
-  var parseFile = function (rows) {
-    var headers = {};
-    var results = [];
-    var columnKeys = {};
-    vm.gridOptions.columnDefs.forEach(function (item) {
-      columnKeys[item.name] = item.field;
-    });
-    rows[0].forEach(function (name, index) {
-      if (name && columnKeys[name]) {
-        headers[index] = columnKeys[name];
-      }
-    });
-    if (Object.keys(headers).length) {
-      rows.forEach(function (row, index) {
-        if (index > 0) {
-          var json = {};
-          row.forEach(function (value, index) {
-            if (headers[index]) {
-              json[headers[index]] = value;
-            }
-          });
-          if (Object.keys(json).length) {
-            json.isLocal = true;
-            results.push(json);
-          }
-        }
-      });
-      if (results.length) {
-        $scope.fileData = results;
-        vm.gridOptions.data = $scope.fileData.concat($scope.serverData);
-      }
-    }
-  };
-
-  var readCSV = function (file, columnKeys) {
-    var reader = new FileReader();
-    reader.onload = function(event) {
-      $scope.$apply(function () {
-        parseFile(CSV.parse(event.target.result));
-        $scope.loading = false;
-      });
-    };
-    reader.onerror = function () {
-      applyLoading(false);
-    };
-    $scope.loading = true;
-    reader.readAsText(file);
-  };
-
-  var readXLS = function (file, columnKeys) {
-    var reader = new FileReader();
-    reader.onload = function(event) {
-        new ExcelJS.Workbook().xlsx
-          .load(event.target.result)
-          .then(function (workbook) {
-            var rows = [];
-            workbook.worksheets[0].eachRow(function (row, rowNumber) {
-                rows.push(row.values);
-            });
-            return parseFile(rows);
-          })
-          .then(function () {
-            applyLoading(false);
-          });
-    };
-    reader.onerror = function () {
-      $scope.loading = false;
-    };
-    $scope.loading = true;
-    reader.readAsArrayBuffer(file);
   };
 
   $scope.onFile = function (files) {
@@ -1514,72 +1513,149 @@ app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
         $scope.onsearch();
     };
 });
-app.controller('MyCtrl14', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService', 'save11', '$cookies', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange, i18nService, save11, $cookies) {
-    var vm = this;
-    vm.msg = {};
-    i18nService.setCurrentLang('ru');
-    vm.gridOptions = {
-        enableSorting: true,
-        enableFiltering: true,
-        MultiSelect: false,
-        enableCellEditOnFocus: true,
-        onRegisterApi: function (gridApi) {
-            $scope.gridApi = gridApi;
-            gridApi.colMovable.on.columnPositionChanged($scope, saveState);
-            gridApi.colResizable.on.columnSizeChanged($scope, saveState);
-            //          gridApi.grouping.on.aggregationChanged($scope, saveState);
-            //          gridApi.grouping.on.groupingChanged($scope, saveState);
-            gridApi.core.on.columnVisibilityChanged($scope, saveState);
-            gridApi.core.on.filterChanged($scope, saveState);
-            gridApi.core.on.sortChanged($scope, saveState);
-            restoreState();
-        },
-        columnDefs: [
-            { name: "Код", field: "Ph_ID", enableCellEdit: false },
-            { name: "Наименование", field: "Ph_Name", width: "30%", enableCellEdit: false },
-            { name: "Филиал", field: "Filial", enableCellEdit: false },
-            { name: "Тип", field: "Type", enableCellEdit: false },
-            { name: "Страховой запас", field: "D_A", type: "number", enableCellEdit: true },
-            { name: "Дней доставки", field: "D_D", type: "number", enableCellEdit: true },
-            { name: "Дней продаж", field: "D_T", type: "number", enableCellEdit: true },
-            { name: "Kmin", field: "Kmin", type: "number", enableCellEdit: true },
-            { name: "Kmax", field: "Kmax", type: "number", enableCellEdit: true },
-            { name: "Категория", field: "Categories", enableCellEdit: true }
-        ]
-    };
-    vm.exchange = exchange;
-    $scope.loading = true;
-    $http.get('/api/reports/').
-        then(function (response) {
-            vm.gridOptions.data = response.data;
-            restoreState();
-            $scope.loading = false;
+app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$rootScope', 'exchange', 'i18nService', 'TableService', function ($scope, $http, $timeout, uiGridConstants, $rootScope, exchange, i18nService, TableService) {
+  var vm = this;
+  i18nService.setCurrentLang('ru');
+  vm.exchange = exchange;
+  vm.selected = null;
+  vm.conditionsTransfer = [];
+  vm.fieldsListTransfer = [
+    { name: 'ГрКод', field: 'Gr_ID', type: 'number', enableCellEdit: false },
+    { name: 'Наименование', field: 'Gr_Name', enableCellEdit: false },
+    { name: 'Код', field: 'Ph_ID', type: 'number', enableCellEdit: false },
+    { name: 'Аптека', field: 'Ph_Name', enableCellEdit: false },
+    { name: 'Сверхнорматив', field: 'DS', type: 'number', enableCellEdit: false },
+    { name: 'Куда Код', field: 'toPh_ID', type: 'number', enableCellEdit: false },
+    { name: 'Куда Аптека', field: 'toPh_Name', enableCellEdit: false },
+    { name: 'Скорость продаж', field: 'CalcVel', type: 'number', enableCellEdit: false },
+    { name: 'Остаток', field: 'Ost', type: 'number', enableCellEdit: false },
+    { name: 'Заявка', field: 'Req', enableCellEdit: false }
+  ];
+  vm.fieldsListDS = fieldsList.concat(
+    { name: 'Акция', field: 'Action', enableCellEdit: true },
+    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
+    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false },
+    { name: 'Сверхнормативы', field: 'DS', enableCellEdit: false }
+  );
+  vm.gridOptionsTransfer = {
+    enableSorting: true,
+    enableFiltering: true,
+    multiSelect: false,
+    enableRowHeaderSelection:true,
+    exporterMenuCsv: true,
+    enableGridMenu: true,
+    onRegisterApi: function (gridApi) {
+      vm.gridApiTransfer = gridApi;
+      gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
+      gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
+      gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
+      gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
+      TableService.restoreState('gridState14-1', gridApi, $scope);
+      $timeout(function () {
+        gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
+      }, 100);
+    },
+    columnDefs: vm.fieldsListTransfer
+  };
+  vm.gridOptionsDS = {
+    enableSorting: true,
+    enableFiltering: true,
+    multiSelect: false,
+    enableRowHeaderSelection:true,
+    exporterMenuCsv: true,
+    enableGridMenu: true,
+    onRegisterApi: function (gridApi) {
+      vm.gridApiDS = gridApi;
+      gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
+      gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
+      gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
+      gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
+      TableService.restoreState('gridState14', gridApi, $scope);
+      $timeout(function () {
+        gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
+      }, 100);
+    },
+    columnDefs: vm.fieldsListDS
+  };
+
+  vm.onGetDS = function () {
+      if (!exchange.conditions.length) {
+          return false;
+      }
+    vm.loading = true;
+    $http.post('/api/overnorm/', {
+      conds: exchange.conditions
+    })
+      .then(function (response) {
+        vm.gridOptionsDS.data = response.data;
+      }, function (data, status, headers, config) {
+        vm.Resulta = 'Error!';
+      })
+      .finally(function () {
+        vm.loading = false;
+      });
+  };
+
+  vm.onGetTransfer = function () {
+    if (!vm.conditionsTransfer.length) {
+      return false;
+    }
+    vm.loading = true;
+    $http.post('/api/transferto/', {
+      conds: vm.conditionsTransfer
+    })
+      .then(function (response) {
+        vm.gridOptionsTransfer.data = response.data;
+      }, function (data, status, headers, config) {
+        vm.Resulta = 'Error!';
+      })
+      .finally(function () {
+        vm.loading = false;
+      });
+  };
+
+  vm.onMove = function () {
+    vm.selected = vm.gridApiDS.selection.getSelectedRows()[0];
+    vm.conditionsTransfer = [];
+    if (vm.selected) {
+      vm.fieldsListTransfer.forEach(function (item) {
+          if (item.type === 'number' && vm.selected[item.field]) {
+            vm.conditionsTransfer.push({
+              cond: 'eq',
+              field: item.field,
+              value: vm.selected[item.field],
+              type: 'number'
+            });
+          }
+      });
+      vm.onGetTransfer();
+    }
+  };
+
+  vm.onTransfer = function () {
+    var selected = vm.gridApiTransfer.selection.getSelectedRows()[0];
+    if (selected) {
+      vm.loading = true;
+      $http.post('/api/transfer/', selected)
+        .then(function (response) {
+          vm.onGetTransfer();
         }, function (data, status, headers, config) {
-            $scope.result = 'Error!';
-            $scope.loading = false;
-
+          vm.Resulta = 'Error!';
+        })
+        .finally(function () {
+          vm.loading = false;
         });
-    //   $scope.$on('$routeChangeStart', function () {
-    //       console.log('location11', $location.path());
-    //   });
-    function saveState() {
-        var state = $scope.gridApi.saveState.save();
-        $cookies.put('gridState11', JSON.stringify(state));
-        //      $scope.rsp = state;
     }
-    function restoreState() {
-        if ($cookies.get('gridState11')) {
-            var restorestate = JSON.parse($cookies.get('gridState11'));
-            if ($scope.gridApi) $scope.gridApi.saveState.restore($scope, restorestate);
-        };
+  };
 
+  vm.onBack = function () {
+    vm.selected = null;
+  };
 
-    }
-    $scope.onrestore = function () {
-        restoreState();
-    }
+  if (exchange.conditions.length) {
+      vm.onGetDS();
+  }
 
-    //    restoreState();
 }]);
 app.factory('exchange', function () {
     return ({
@@ -1756,5 +1832,14 @@ app.directive('customOnChange', function() {
         element.off();
       });
     }
+  };
+});
+app.directive('loading', function() {
+  return {
+    restrict: 'A',
+    scope: {
+      loading: '='
+    },
+    template: '<div ng-if="loading"><i class="fa fa-spinner fa-spin"></i>Загрузка ...</div>'
   };
 });

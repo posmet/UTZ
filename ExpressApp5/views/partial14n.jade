@@ -1,4 +1,23 @@
-﻿div(ng-controller='MyCtrl14')
-    h1 Выбор отчета
-    div(align="center" ng-repeat="row in reports")
-       a(class="btn btn-outline-primary btn-block" ng-click="clickph(pharm,$index)") {{row.name}}
+﻿div
+    div(ui-i18n='ru')
+        div(ng-if="!vm.selected")
+            div
+                ph-filter(conditions="vm.exchange.conditions" fields="vm.fieldsListDS")
+                .form-row
+                    .col-auto
+                        a(class="btn btn-outline-primary btn-sm" ng-click="vm.onGetDS()") Получить
+                        button(class="btn btn-outline-primary btn-sm" ng-click="vm.onMove()") Переместить
+            div(loading="vm.loading")
+            small
+                div(class="grid" ui-grid="vm.gridOptionsDS" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-resize-columns ui-grid-selection ui-grid-cellnav)
+    div(ng-if="vm.selected")
+        div
+            a(href="javascript:void(0)" ng-click="vm.onBack()") Назад
+            ph-filter(conditions="vm.conditionsTransfer" fields="vm.fieldsListTransfer")
+            .form-row
+                .col-auto
+                    a(class="btn btn-outline-primary btn-sm" ng-click="vm.onGetTransfer()") Получить
+                    button(class="btn btn-outline-primary btn-sm" ng-click="vm.onTransfer()") Переместить
+        div(loading="vm.loading")
+        small
+            div(class="grid" ui-grid="vm.gridOptionsTransfer" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-resize-columns ui-grid-selection ui-grid-cellnav)
