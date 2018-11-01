@@ -1551,7 +1551,7 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
 
       gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
         if (newValue != oldValue && colDef.field === 'Req') {
-            if (newValue <= 0) {
+            if (newValue < 1) {
               rowEntity.Req = 1;
             } else if (newValue > rowEntity.DS) {
               rowEntity.Req = rowEntity.DS;
