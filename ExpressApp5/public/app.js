@@ -1618,17 +1618,18 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
     vm.selected = vm.gridApiDS.selection.getSelectedRows()[0];
     vm.conditionsTransfer = [];
     if (vm.selected) {
-      vm.fieldsListTransfer.forEach(function (item) {
-          if (item.type === 'number' && vm.selected[item.field]) {
-            vm.conditionsTransfer.push({
-              cond: 'eq',
-              field: item.field,
-              value: vm.selected[item.field],
-              type: 'number'
-            });
-          }
-      });
-      vm.onGetTransfer();
+        vm.conditionsTransfer = [{
+          cond: 'eq',
+          field: "Ph_ID",
+          value: vm.selected.Ph_ID,
+          type: 'number'
+        }, {
+          cond: 'eq',
+          field: "Gr_ID",
+          value: vm.selected.Gr_ID,
+          type: 'number'
+        }];
+        vm.onGetTransfer();
     }
   };
 
