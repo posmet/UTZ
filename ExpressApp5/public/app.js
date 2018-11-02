@@ -1575,6 +1575,7 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
     enableGridMenu: true,
     enableEditing: true,
     enableCellEditOnFocus: true,
+    showGridFooter: true,
     onRegisterApi: function (gridApi) {
       vm.gridApiTransfer = gridApi;
 
@@ -1606,6 +1607,7 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
     enableRowHeaderSelection:true,
     exporterMenuCsv: true,
     enableGridMenu: true,
+    showGridFooter: true,
     onRegisterApi: function (gridApi) {
       vm.gridApiDS = gridApi;
       gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));

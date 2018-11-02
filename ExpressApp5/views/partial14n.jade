@@ -6,18 +6,19 @@
                 .form-row
                     .col-auto
                         a(class="btn btn-outline-primary btn-sm" ng-click="vm.onGetDS()") Получить
-                        button(class="btn btn-outline-primary btn-sm" ng-click="vm.onMove()") Переместить
+                        button(class="btn btn-outline-primary btn-sm" ng-click="vm.onMove()") Перемещения
             div(loading="vm.loading")
             small
                 div(class="grid" ui-grid="vm.gridOptionsDS" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-resize-columns ui-grid-selection ui-grid-cellnav)
     div(ng-if="vm.selected")
         div
-            a(href="javascript:void(0)" ng-click="vm.onBack()") Назад
+            //a(href="javascript:void(0)" ng-click="vm.onBack()") Назад
             ph-filter(conditions="vm.conditionsTransfer" fields="vm.fieldsListTransfer")
             .form-row
                 .col-auto
                     a(class="btn btn-outline-primary btn-sm" ng-click="vm.onGetTransfer()") Получить
-                    button(class="btn btn-outline-primary btn-sm" ng-click="vm.onTransfer()") Переместить
+                    a(class="btn btn-outline-primary btn-sm" ng-click="vm.onTransfer()") Переместить
+                    button(class="btn btn-outline-primary btn-sm" ng-click="vm.onBack()") Сверхнормативы
         div(loading="vm.loading")
         small
             div(class="grid" ui-grid="vm.gridOptionsTransfer" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-edit ui-grid-resize-columns ui-grid-selection ui-grid-cellnav)
