@@ -383,7 +383,7 @@ module.exports = function (app) {
             console.log(req.body);
             var request = new sql.Request(connection);
 
-            var sqlString = 'exec api_addtransfer ' + req.body;
+            var sqlString = 'exec api_addtransfer ' + req.body.Gr_ID + ',' + req.body.Ph_ID + ',' + req.body.toPh_ID + ',' + req.body.Req;
             console.log(sqlString);
             request.query(sqlString, function (err, rs) {
                 connection.close();
