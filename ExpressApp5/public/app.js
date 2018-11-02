@@ -57,7 +57,7 @@
             }).
             when('/view11', {
                 templateUrl: 'partial11n',
-                controller: 'MyCtrl11'
+                controller: 'MyCtrl11 as $ctrl'
             }).
             when('/view12', {
                 templateUrl: 'partial12n',
@@ -1239,8 +1239,9 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
 //      save12.data = vm.gridOptions.data;
 //  });
 }]);
-app.controller('MyCtrl11', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','save11','$cookies', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange, i18nService,save11,$cookies) {
+app.controller('MyCtrl11', ['$scope', '$http', '$timeout', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','TableService', function ($scope, $http, $timeout, uiGridConstants, $rootScope, $location, exchange, i18nService, TableService) {
     var vm = this;
+    const stateName = 'gridState11';
     vm.msg = { };
     i18nService.setCurrentLang('ru');
     vm.gridOptions = {
@@ -1265,14 +1266,14 @@ app.controller('MyCtrl11', ['$scope', '$http', '$interval', 'uiGridConstants', '
                 exchange.phname = row.entity.Ph_Name;
                 exchange.pharmid = row.entity.Ph_ID;
             });
-            gridApi.colMovable.on.columnPositionChanged($scope, saveState);
-            gridApi.colResizable.on.columnSizeChanged($scope, saveState);
-            //          gridApi.grouping.on.aggregationChanged($scope, saveState);
-            //          gridApi.grouping.on.groupingChanged($scope, saveState);
-            gridApi.core.on.columnVisibilityChanged($scope, saveState);
-            gridApi.core.on.filterChanged($scope, saveState);
-            gridApi.core.on.sortChanged($scope, saveState);
-            restoreState();
+            gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+            gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+            gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+            gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+            TableService.restoreState(stateName, gridApi, $scope);
+            $timeout(function () {
+                gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+            }, 100);
        },
         columnDefs: [
             { name: "Код", field: "Ph_ID" , enableCellEdit:false},
@@ -1285,7 +1286,8 @@ app.controller('MyCtrl11', ['$scope', '$http', '$interval', 'uiGridConstants', '
             { name: "Kmin", field: "Kmin", type: "number", enableCellEdit: true },
             { name: "Kmax", field: "Kmax", type: "number", enableCellEdit: true },
             { name: "Категория", field: "Categories", enableCellEdit: true},
-            { name: "График", field: "graph", enableCellEdit: true }
+            { name: "График", field: "graph", enableCellEdit: true },
+            { name: "Дней сверхнорамтивов", field: "over", enableCellEdit: false }
         ]
     };
     vm.exchange = exchange;
@@ -1304,34 +1306,14 @@ app.controller('MyCtrl11', ['$scope', '$http', '$interval', 'uiGridConstants', '
     }).
         then(function (response) {
             vm.gridOptions.data = response.data;
-            restoreState();
+            TableService.restoreState(stateName, $scope.gridApi, $scope);
             $scope.loading = false;
         }, function (data, status, headers, config) {
             $scope.result = 'Error!';
             $scope.loading = false;
 
         });
- //   $scope.$on('$routeChangeStart', function () {
- //       console.log('location11', $location.path());
- //   });
-    function saveState() {
-        var state = $scope.gridApi.saveState.save();
-        $cookies.put('gridState11', JSON.stringify(state));
-  //      $scope.rsp = state;
-    }
-    function restoreState() {
-        if ($cookies.get('gridState11')) {
-            var restorestate = JSON.parse($cookies.get('gridState11'));
-            if ($scope.gridApi) $scope.gridApi.saveState.restore($scope, restorestate);
-        };
 
-
-    }
-    $scope.onrestore = function () {
-        restoreState();
-    }
-
-//    restoreState();
 }]);
 app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
     var vm = this;
