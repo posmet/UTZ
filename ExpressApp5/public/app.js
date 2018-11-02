@@ -143,6 +143,7 @@ app.controller('MyCtrl1', function ($scope, $http) {
 });
 app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableService', '$timeout', function ($scope, $http, exchange,i18nService, TableService, $timeout) {
     var vm = this;
+    const stateName = 'gridState3';
     vm.msg = {};
     vm.exchange = exchange;
     i18nService.setCurrentLang('ru');
@@ -181,13 +182,13 @@ app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableS
                 });
               }
             });
-            gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, 'gridState3', gridApi));
-            gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, 'gridState3', gridApi));
-            gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, 'gridState3', gridApi));
-            gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, 'gridState3', gridApi));
-            TableService.restoreState('gridState3', gridApi, $scope);
+            gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+            gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+            gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+            gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+            TableService.restoreState(stateName, gridApi, $scope);
             $timeout(function () {
-                gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, 'gridState3', gridApi));
+                gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
             }, 100);
             //   gridApi.selection.on.rowSelectionChanged($scope, function (row) {
             //
@@ -211,6 +212,21 @@ app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableS
             { name: 'Маркетинг', field: 'Marketing',  enableCellEdit: false },
             { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number' },
             { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' },
+            {
+                name: 'Дней дефектуры',
+                field: 'DD',
+                enableCellEdit: false,
+                type: 'number',
+                cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+                  if (row.entity.DD === 0) {
+                    return false;
+                  } else if (row.entity.DD > 10) {
+                    return 'color-red';
+                  } else if (row.entity.DD <= 10) {
+                    return 'color-yellow';
+                  }
+                }
+            },
             { name: 'X',width:'30', cellTemplate: '<button class="btn btn-outline-danger btn-sm" ng-click="grid.appScope.deleteRow(row)">X</button>'}
         ]
     };
@@ -434,7 +450,22 @@ app.controller('MyCtrl4', ['$scope', '$http', '$location', '$rootScope', 'exchan
             { name: 'Остаток', field: 'Ost', enableCellEdit: false, type: 'number' },
             { name: 'В пути', field: 'Wait', enableCellEdit: false, type: 'number' },
             { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number' },
-            { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' }
+            { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' },
+          {
+            name: 'Дней дефектуры',
+            field: 'DD',
+            enableCellEdit: false,
+            type: 'number',
+            cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+              if (row.entity.DD === 0) {
+                  return false;
+              } else if (row.entity.DD > 10) {
+                return 'color-red';
+              } else if (row.entity.DD <= 10) {
+                return 'color-yellow';
+              }
+            }
+          }
         ]
     };
 
@@ -695,6 +726,7 @@ app.controller('MyCtrl7', ['$scope', '$http', '$interval', 'uiGridConstants', '$
 }]);
 app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nService', 'TableService', '$timeout', function ($scope, $http,$location, exchange, i18nService, TableService, $timeout) {
     var vm = this;
+    const stateName = 'gridState8';
     vm.msg = {};
     vm.exchange = exchange;
     i18nService.setCurrentLang('ru');
@@ -722,7 +754,22 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
       { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number' },
       { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' },
       { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
-      { name: 'Продажи60', field: 'Sales60', enableCellEdit: false }
+      { name: 'Продажи60', field: 'Sales60', enableCellEdit: false },
+      {
+        name: 'Дней дефектуры',
+        field: 'DD',
+        enableCellEdit: false,
+        type: 'number',
+        cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+          if (row.entity.DD === 0) {
+            return false;
+          } else if (row.entity.DD > 10) {
+            return 'color-red';
+          } else if (row.entity.DD <= 10) {
+            return 'color-yellow';
+          }
+        }
+      },
     ];
     vm.gridOptions = {
         enableFiltering: true,
@@ -760,13 +807,13 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
                             exchange.phname = row.entity.Ph_Name;
                             exchange.pharmid = row.entity.Ph_ID;
                         });
-          gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, 'gridState8', gridApi));
-          gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, 'gridState8', gridApi));
-          gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, 'gridState8', gridApi));
-          gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, 'gridState8', gridApi));
-          TableService.restoreState('gridState8', gridApi, $scope);
+          gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+          gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+          gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+          gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
+          TableService.restoreState(stateName, gridApi, $scope);
           $timeout(function () {
-            gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, 'gridState8', gridApi));
+            gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, stateName, gridApi));
           }, 100);
         },
         columnDefs: vm.fieldsList.concat([
