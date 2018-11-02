@@ -223,7 +223,7 @@ app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableS
                   } else if (row.entity.DD > 10) {
                     return 'color-red';
                   } else if (row.entity.DD <= 10) {
-                    return 'color-yellow';
+                    return 'color-orange';
                   }
                 }
             },
@@ -462,7 +462,7 @@ app.controller('MyCtrl4', ['$scope', '$http', '$location', '$rootScope', 'exchan
               } else if (row.entity.DD > 10) {
                 return 'color-red';
               } else if (row.entity.DD <= 10) {
-                return 'color-yellow';
+                return 'color-orange';
               }
             }
           }
@@ -766,7 +766,7 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
           } else if (row.entity.DD > 10) {
             return 'color-red';
           } else if (row.entity.DD <= 10) {
-            return 'color-yellow';
+            return 'color-orange';
           }
         }
       },
@@ -1300,14 +1300,15 @@ app.controller('MyCtrl11', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
             $scope.gridApi = gridApi;
             gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                 //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
-                $http.post('/api/updateph/', rowEntity).
-                    then(function (response) {
-                        vm.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
-                        $scope.$apply();
-                        //vm.gridOptions.data = response.data;
-                    }, function (data, status, headers, config) {
-                        $scope.Result = 'Error!';
-                    });
+                if (newValue != oldValue) {
+                  $http.post('/api/updateph/', rowEntity).then(function (response) {
+                    vm.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
+                    $scope.$apply();
+                    //vm.gridOptions.data = response.data;
+                  }, function (data, status, headers, config) {
+                    $scope.Result = 'Error!';
+                  });
+                }
             });
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                 exchange.phname = row.entity.Ph_Name;
@@ -1334,7 +1335,7 @@ app.controller('MyCtrl11', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
             { name: "Kmax", field: "Kmax", type: "number", enableCellEdit: true },
             { name: "Категория", field: "Categories", enableCellEdit: true},
             { name: "График", field: "graph", enableCellEdit: true },
-            { name: "Дней сверхнорамтивов", field: "over", enableCellEdit: false }
+            { name: "Дней сверхнорамтивов", field: "over", enableCellEdit: true }
         ]
     };
     vm.exchange = exchange;
