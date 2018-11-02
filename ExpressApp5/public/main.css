@@ -117,6 +117,14 @@
     background-color: lightyellow !important;
 }
 
+.ui-grid-cell.color-red {
+    color: red;
+}
+
+.ui-grid-cell.color-yellow {
+    color: yellow;
+}
+
 .ui-grid-row.ui-grid-row-selected > [ui-grid-row] > .ui-grid-cell {
     background-color: #C9DDE1 !important;
 }
