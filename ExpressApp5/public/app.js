@@ -1565,7 +1565,8 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
     { name: 'Акция', field: 'Action', enableCellEdit: true },
     { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
     { name: 'Продажи60', field: 'Sales60', enableCellEdit: false },
-    { name: 'Сверхнормативы', field: 'DS', enableCellEdit: false }
+    { name: 'Сверхнормативы', field: 'DS', enableCellEdit: false },
+    { name: 'Перемещений', field: 'Tr', enableCellEdit: false }
   );
   vm.gridOptionsTransfer = {
     enableSorting: true,
