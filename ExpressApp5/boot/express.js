@@ -1,11 +1,16 @@
-﻿var config = require("nconf");
-var express = require('express');
-var session = require('express-session');
-var passport = require('passport');
-var path = require('path');
-var flash = require('connect-flash');
-var timeout = require('connect-timeout');
-var cors = require('cors');
+﻿const config = require("nconf");
+const express = require('express');
+const morgan = require('morgan'); //был express.logger('dev')
+const methodOverride = require('method-override'); //был express.methodOverride()
+const cookieParser = require('cookie-parser'); //был express.cookieParser()
+const session = require('express-session');
+const errorhandler = require('errorhandler'); //был express.errorHandler()
+const passport = require('passport');
+const path = require('path');
+const flash = require('connect-flash');
+const timeout = require('connect-timeout');
+const cors = require('cors');
+const bodyParser = require('body-parser'); //был express.json()
 
 module.exports = function (app) {
 
@@ -13,21 +18,21 @@ module.exports = function (app) {
     app.set('views', path.join(__dirname + "/..", 'views'));
     app.set('view engine', 'jade');
 
-    var sessionOptions = config.get("session");
-    if ('production' == app.get('env')) {
-        var MemcachedStore = require('connect-memcached')(session);
+    const sessionOptions = config.get("session");
+    if ('production' === app.get('env')) {
+        const MemcachedStore = require('connect-memcached')(session);
         sessionOptions.store = new MemcachedStore(config.get("memcached"));
     }
 
     //if behind a reverse proxy such as Varnish or Nginx
     app.enable('trust proxy');
-    app.use(express.logger('dev'));
+    app.use(morgan('dev'));
     app.use(express.static(path.join(__dirname + "/..", 'public')));
-    app.use(express.json());
-    app.use(express.urlencoded());
-    app.use(express.methodOverride());
-    app.use(express.cookieParser('secret'));
-    app.use(express.session(sessionOptions));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(methodOverride());
+    app.use(cookieParser('secret'));
+    app.use(session(sessionOptions));
     app.use(flash());
     app.use(timeout('600s'));
     app.use(cors());
@@ -35,9 +40,8 @@ module.exports = function (app) {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    app.use(app.router);
-
-    if ('development' == app.get('env')) {
-        app.use(express.errorHandler());
+    if ('development' === app.get('env')) {
+        app.use(errorhandler());
     }
+
 };

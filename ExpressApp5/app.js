@@ -3,65 +3,43 @@
  * Module dependencies
  */
 
-var express = require('express'),
-    cors=require('cors'),
-  bodyParser = require('body-parser'),
-  methodOverride = require('method-override'),
-  errorHandler = require('error-handler'),
-  morgan = require('morgan'),
-  api = require('./routes/api'),
-  http = require('http'),
-  path = require('path');
-  config = require("nconf");
-  passport = require('passport');
-  flash = require('connect-flash');
+const express = require('express');
+const app = module.exports = express();
+const nconf = require("nconf");
+const http = require("http");
+const messageManager = require('./services/Message');
+require('./config');
+require('./boot')(app);
+require('./routes')(app);
 
-var app = module.exports = express();
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-require('./boot/index')(app);
-require('./routes/index')(app);
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    return messageManager.sendMessage(res, "Неверный токен авторизации", 401);
+  }
+  if (req.xhr || req.headers['content-type'].indexOf('json') > -1) {
+    messageManager.sendMessage(res, err);
+  } else {
+    next(err);
+  }
+});
 
 /**
  * Configuration
  */
 
-// all environments
-
-
-
-var env = process.env.NODE_ENV || 'development';
-
-// development only
-if (env === 'development') {
-  app.use(express.errorHandler());
-}
+const env = nconf.get('NODE_ENV') || 'development';
 
 // production only
 if (env === 'production') {
   // TODO
 }
 
-
-/**
- * Routes
- */
-
-// serve index and view partials
-//app.get('/', routes.index);
-//app.get('/partials/:name', routes.partials);
-
-// JSON API
-//app.get('/api/name', api.name);
-//app.get('/api/Result', api.Result);  // data get in json formate from mssql database
-// redirect all others to the index (HTML5 history)
-//app.get('*', routes.index);
-
 /**
  * Start Server
  */
 
 http.createServer(app).listen(app.get('port'), function () {
-    if ('development' == app.get('env')) {
+    if ('development' === app.get('env')) {
         console.log('Express server listening on port ' + app.get('port'));
     }
 });
