@@ -8,7 +8,8 @@
     "email": "info@pharma-soft.ru"
   },
   "scripts": {
-    "dev": "set NODE_ENV=development&&set HOST=https://zakaz.gidapteka.ru&&node app.js"
+    "start": "cross-env NODE_ENV=production HOST=https://zakaz.gidapteka.ru node app.js",
+    "dev": "cross-env NODE_ENV=development HOST=https://zakaz.gidapteka.ru node app.js"
   },
   "dependencies": {
     "angular-chart.js": "^1.1.1",
@@ -16,21 +17,27 @@
     "angular-smart-table": "^2.1.11",
     "angular-ui-grid": "^4.6.2",
     "angular-utils-pagination": "*",
-    "body-parser": "^1.12.2",
+    "async": "^2.6.1",
+    "body-parser": "^1.18.3",
     "bootstrap": "^4.1.1",
+    "composable-middleware": "^0.3.0",
     "connect-flash": "*",
     "connect-memcached": "*",
     "connect-timeout": "^1.9.0",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
-    "error-handler": "^1.0.0",
-    "express": "3.4.4",
-    "express-session": "*",
+    "errorhandler": "^1.5.0",
+    "express": "4.16.4",
+    "express-jwt": "^5.3.1",
+    "express-session": "^1.15.6",
     "jade": "*",
     "jquery": "^3.3.1",
     "jquery.js": "0.0.2-security",
-    "method-override": "^2.3.2",
-    "morgan": "^1.5.2",
-    "mssql": "^2.1.1",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.11",
+    "method-override": "^2.3.10",
+    "morgan": "^1.9.1",
+    "mssql": "^4.2.2",
     "nconf": "*",
     "ngtable": "^0.5.10",
     "npm": "^6.2.0",
@@ -39,6 +46,10 @@
     "passport-local": "*",
     "passport-vkontakte": "*",
     "popper.js": "^1.14.4",
-    "stylus": "*"
+    "stylus": "*",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0"
   }
 }
