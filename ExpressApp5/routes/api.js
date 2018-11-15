@@ -15,7 +15,7 @@ module.exports = function (app) {
             encrypt: false,
             connectionTimeout: 180000,
             requestTimeout: 180000
-}
+        }
     };
     app.get('/api/name', function (req, res) {
         var sql = require('mssql');
@@ -89,7 +89,7 @@ module.exports = function (app) {
 
             var request = new sql.Request(connection);
 
-            var sqlString = 'SELECT *, ROUND(CalcVel*30000,0)/1000 as CalcVel30 from matrix where ph_id=' + req.params.pharmid + ' order by Gr_Name';
+            var sqlString = 'SELECT *, ROUND(CalcVel*30000,0)/1000 as CalcVel30 from matrix_view_e where ph_id=' + req.params.pharmid + ' order by Gr_Name';
             console.log(sqlString);
             request.query(sqlString, function (err, rs) {
                 connection.close();
@@ -203,44 +203,7 @@ module.exports = function (app) {
             console.log(req.body);
             var request = new sql.Request(connection);
 
-            var sqlString = 'SELECT * from matrix_cez_n';
-            if (req.body.conds.length > 0) {
-                sqlString = sqlString + ' where ';
-                sqlString = sqlString + req.body.conds.reduce(function (prev, curr) {
-                    var Whr = prev;
-                    if (prev != '')
-                        Whr = Whr + ' and ';
-                    Whr = Whr + curr.field;
-                    switch (curr.cond) {
-                        case 'eq':
-                            Whr = Whr + " = '" + curr.value + "'";
-                            break;
-                        case 'neq':
-                            Whr = Whr + " <> '" + curr.value + "'";
-                            break;
-                        case 'cn':
-                            Whr = Whr + " Like '%" + curr.value + "%'";
-                            break;
-                        case 'ncn':
-                            Whr = Whr + " = '" + curr.value + "'";
-                            break;
-                        case 'nl':
-                            Whr = Whr + " = ''";
-                            break;
-                        case 'nnl':
-                            Whr = Whr + " <> ''";
-                            break;
-                        case 'gt':
-                            Whr = Whr + " > ''";
-                            break;
-                        case 'lt':
-                            Whr = Whr + " < ''";
-                            break;
-                    }
-                    return Whr;
-
-                }, "")
-            }
+            var sqlString = 'SELECT * from matrix_cez_n'+addwhere(req.body.conds);
 
             console.log(sqlString);
             request.query(sqlString, function (err, rs) {
@@ -263,44 +226,7 @@ module.exports = function (app) {
             console.log(req.body);
             var request = new sql.Request(connection);
 
-            var sqlString = 'SELECT * from overnorm';
-            if (req.body.conds.length > 0) {
-                sqlString = sqlString + ' where ';
-                sqlString = sqlString + req.body.conds.reduce(function (prev, curr) {
-                    var Whr = prev;
-                    if (prev != '')
-                        Whr = Whr + ' and ';
-                    Whr = Whr + curr.field;
-                    switch (curr.cond) {
-                        case 'eq':
-                            Whr = Whr + " = '" + curr.value + "'";
-                            break;
-                        case 'neq':
-                            Whr = Whr + " <> '" + curr.value + "'";
-                            break;
-                        case 'cn':
-                            Whr = Whr + " Like '%" + curr.value + "%'";
-                            break;
-                        case 'ncn':
-                            Whr = Whr + " = '" + curr.value + "'";
-                            break;
-                        case 'nl':
-                            Whr = Whr + " = ''";
-                            break;
-                        case 'nnl':
-                            Whr = Whr + " <> ''";
-                            break;
-                        case 'gt':
-                            Whr = Whr + " > ''";
-                            break;
-                        case 'lt':
-                            Whr = Whr + " < ''";
-                            break;
-                    }
-                    return Whr;
-
-                }, "")
-            }
+            var sqlString = 'SELECT * from overnorm' + addwhere(req.body.conds);
 
             console.log(sqlString);
             request.query(sqlString, function (err, rs) {
@@ -323,44 +249,30 @@ module.exports = function (app) {
             console.log(req.body);
             var request = new sql.Request(connection);
 
-            var sqlString = 'SELECT * from transferto';
-            if (req.body.conds.length > 0) {
-                sqlString = sqlString + ' where ';
-                sqlString = sqlString + req.body.conds.reduce(function (prev, curr) {
-                    var Whr = prev;
-                    if (prev != '')
-                        Whr = Whr + ' and ';
-                    Whr = Whr + curr.field;
-                    switch (curr.cond) {
-                        case 'eq':
-                            Whr = Whr + " = '" + curr.value + "'";
-                            break;
-                        case 'neq':
-                            Whr = Whr + " <> '" + curr.value + "'";
-                            break;
-                        case 'cn':
-                            Whr = Whr + " Like '%" + curr.value + "%'";
-                            break;
-                        case 'ncn':
-                            Whr = Whr + " = '" + curr.value + "'";
-                            break;
-                        case 'nl':
-                            Whr = Whr + " = ''";
-                            break;
-                        case 'nnl':
-                            Whr = Whr + " <> ''";
-                            break;
-                        case 'gt':
-                            Whr = Whr + " > ''";
-                            break;
-                        case 'lt':
-                            Whr = Whr + " < ''";
-                            break;
-                    }
-                    return Whr;
+            var sqlString = 'SELECT * from transferto' + addwhere(req.body.conds);
 
-                }, "")
-            }
+            console.log(sqlString);
+            request.query(sqlString, function (err, rs) {
+                connection.close();
+
+                if (err) { res.status(500).send(err); return; }
+
+                var count = rs;
+                res.status(200);
+                res.json(rs);
+            });
+        });
+    });
+    app.post('/api/resulttrans/', function (req, res) {
+        var sql = require('mssql');
+        var connection = new sql.Connection(config);
+
+        connection.connect(function (err) {
+            if (err) { res.status(500).send(err); return; }
+            console.log(req.body);
+            var request = new sql.Request(connection);
+
+            var sqlString = 'SELECT * from transfers_view' + addwhere(req.body.conds);
 
             console.log(sqlString);
             request.query(sqlString, function (err, rs) {
@@ -844,5 +756,47 @@ module.exports = function (app) {
         });
 
     });
+    function addwhere(conds) {
+        var sqlString = '';
+        if (conds.length > 0) {
+            sqlString = sqlString + ' where ';
+            sqlString = sqlString + conds.reduce(function (prev, curr) {
+                var Whr = prev;
+                if (prev != '')
+                    Whr = Whr + ' and ';
+                Whr = Whr + curr.field;
+                switch (curr.cond) {
+                    case 'eq':
+                        Whr = Whr + " = '" + curr.value + "'";
+                        break;
+                    case 'neq':
+                        Whr = Whr + " <> '" + curr.value + "'";
+                        break;
+                    case 'cn':
+                        Whr = Whr + " Like '%" + curr.value + "%'";
+                        break;
+                    case 'ncn':
+                        Whr = Whr + " = '" + curr.value + "'";
+                        break;
+                    case 'nl':
+                        Whr = Whr + " = ''";
+                        break;
+                    case 'nnl':
+                        Whr = Whr + " <> ''";
+                        break;
+                    case 'gt':
+                        Whr = Whr + " > ''";
+                        break;
+                    case 'lt':
+                        Whr = Whr + " < ''";
+                        break;
+                }
+                return Whr;
+
+            }, "");
+            return sqlString;
+        }
+
+    };
 };
 

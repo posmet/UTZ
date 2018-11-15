@@ -49,7 +49,7 @@
             }).
             when('/view7', {
                 templateUrl: 'partial7',
-                controller: 'MyCtrl7'
+                controller: 'MyCtrl7 as $ctrl'
             }).
             when('/view8', {
                 templateUrl: 'partial8',
@@ -91,7 +91,7 @@ const fieldsList = [
     { name: 'Аптека', field: 'Ph_Name', width: '20%', enableCellEdit: false },
     { name: 'Филиал', field: 'Filial', enableCellEdit: false },
     { name: 'Категория', field: 'Categories', enableCellEdit: false },
-    { name: 'Статус', field: 'M', enableCellEdit: false, type: 'number' },
+    { name: 'Статус', field: 'M', enableCellEdit: false },
     { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
     { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
     { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: true, type: 'number' },
@@ -105,7 +105,7 @@ const fieldsList = [
     { name: 'Сезон', field: 'Season', enableCellEdit: true },
     { name: 'Тип товара', field: 'RGT_agg', enableCellEdit: false },
     { name: 'Фармгруппа', field: 'RFG_agg', enableCellEdit: false },
-    { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' }
+    { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false }
 ];
 app.controller('AppCtrl', function ($scope, $http, $rootScope) {
     //$scope.exfac = exchange;
@@ -442,7 +442,7 @@ app.controller('MyCtrl4', ['$scope', '$http', '$location', '$rootScope', 'exchan
                     }
                 }
             },
-            { name: 'Диапазон', field: 'Range', enableCellEdit: false, type: 'number' },
+            { name: 'Диапазон', field: 'Range', enableCellEdit: false },
             { name: 'Кратность', field: 'Ratio', enableCellEdit: false, type: 'number' },
             { name: 'Мин Запас', field: 'MinQty', enableCellEdit: false, type: 'number' },
             { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: false, type: 'number' },
@@ -688,18 +688,18 @@ app.controller('MyCtrl7', ['$scope', '$http', '$interval', 'uiGridConstants', '$
  //           });
         },
         columnDefs: [
-            { name: "Код", field: "Request_ID", grouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'desc' } },
+            { name: "Код", field: "Request_ID", type: 'number', typegrouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'desc' } },
             { name: "Статус", field: "State_Name"},
             { name: "Дата", field: "R_date",grouping: { groupPriority: 0 }, sort: { priority: 0, direction: 'desc' } },
             { name: "Источник", field: "Request_Generation_Method" },
             { name: "Комментарий", field: "Comments", type: 'number' },
             { name: 'Наименование', field:'Gr_Name' },
-            { name: 'Количество', field:'RequestB_Quantity' },
-            { name: 'В заказе' ,field:'OrderB_Quantity'},
+            { name: 'Количество', field:'RequestB_Quantity', type: 'number' },
+            { name: 'В заказе' ,field:'OrderB_Quantity', type: 'number'},
             { name: "Поставщик", field:'Contractor_Name' },
-            { name: "В накладной", field:'Invoice_Number'},
-            { name: "В отказе", field: 'Refuse_Qty'},
-            { name: "Оприходовано", field: 'Receive_id'}
+            { name: "В накладной", field:'Invoice_Number', type: 'number'},
+            { name: "В отказе", field: 'Refuse_Qty', type: 'number'},
+            { name: "Оприходовано", field: 'Receive_id', type: 'number'}
        ]
     };
     vm.exchange = exchange;
@@ -741,7 +741,7 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
       { name: 'Наименование', field: 'Gr_Name', width: '30%', enableCellEdit: false },
       { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number' },
       { name: 'Аптека', field: 'Ph_Name', enableCellEdit: false },
-      { name: 'Статус', field: 'M', enableCellEdit: false, type: 'number' },
+      { name: 'Статус', field: 'M', enableCellEdit: false },
       { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
       { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
       { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: true, type: 'number' },
@@ -753,8 +753,8 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
       { name: 'Маркетинг', field: 'Marketing', enableCellEdit: false },
       { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number' },
       { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' },
-      { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
-      { name: 'Продажи60', field: 'Sales60', enableCellEdit: false },
+      { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number' },
+      { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number' },
       {
         name: 'Дней дефектуры',
         field: 'DD',
@@ -1048,8 +1048,8 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
   i18nService.setCurrentLang('ru');
   vm.fieldsList = fieldsList.concat(
     { name: 'Акция', field: 'Action', enableCellEdit: true },
-    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
-    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false }
+    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number' },
+    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number' }
   );
   $scope.fileData = [];
   $scope.serverData = [];
@@ -1102,7 +1102,7 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
       { name: 'Аптека', field: 'Ph_Name', width: '20%', enableCellEdit: false, allowCellFocus: false},
       { name: 'Филиал', field: 'Filial', enableCellEdit: false },
       { name: 'Категория', field: 'Categories', enableCellEdit: false },
-      { name: 'Статус', field: 'M', enableCellEdit: false, type: 'number' },
+      { name: 'Статус', field: 'M', enableCellEdit: false },
       { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
       { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
       { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: true, type: 'number' },
@@ -1119,8 +1119,8 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
       { name: 'Фармгруппа', field: 'RFG_agg', enableCellEdit: false },
       { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false, type: 'number' },
       { name: 'Акция', field: 'Action', enableCellEdit: true },
-      { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
-      { name: 'Продажи60', field: 'Sales60', enableCellEdit: false }
+      { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number' },
+      { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number' }
     ],
     rowTemplate: rowTemplate()
   };
@@ -1324,7 +1324,7 @@ app.controller('MyCtrl11', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
             }, 100);
        },
         columnDefs: [
-            { name: "Код", field: "Ph_ID" , enableCellEdit:false},
+            { name: "Код", field: "Ph_ID" , enableCellEdit:false, type: 'number'},
             { name: "Наименование", field: "Ph_Name", width: "30%", enableCellEdit: false },
             { name: "Филиал", field: "Filial", enableCellEdit: false},
             { name: "Тип", field: "Type", enableCellEdit: false},
@@ -1335,7 +1335,7 @@ app.controller('MyCtrl11', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
             { name: "Kmax", field: "Kmax", type: "number", enableCellEdit: true },
             { name: "Категория", field: "Categories", enableCellEdit: true},
             { name: "График", field: "graph", enableCellEdit: true },
-            { name: "Дней сверхнорамтивов", field: "over", enableCellEdit: true }
+            { name: "Дней сверхнорамтивов", field: "over", enableCellEdit: true, type: 'number' }
         ]
     };
     vm.exchange = exchange;
@@ -1543,11 +1543,16 @@ app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
         $scope.onsearch();
     };
 });
-app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$rootScope', 'exchange', 'i18nService', 'TableService', function ($scope, $http, $timeout, uiGridConstants, $rootScope, exchange, i18nService, TableService) {
+app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$rootScope', 'exchange', 'i18nService', 'TableService', '$filter', function ($scope, $http, $timeout, uiGridConstants, $rootScope, exchange, i18nService, TableService, $filter) {
   var vm = this;
+  const DSState = 'gridState14';
+  const transferState = 'gridState14-1';
+  const readyState = 'gridState14-2';
   i18nService.setCurrentLang('ru');
+  vm.step = 'ds';
   vm.exchange = exchange;
   vm.selected = null;
+  vm.conditionsReady = [];
   vm.conditionsTransfer = [];
   vm.fieldsListTransfer = [
     { name: 'ГрКод', field: 'Gr_ID', type: 'number', enableCellEdit: false },
@@ -1563,11 +1568,22 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
   ];
   vm.fieldsListDS = fieldsList.concat(
     { name: 'Акция', field: 'Action', enableCellEdit: true },
-    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false },
-    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false },
-    { name: 'Сверхнормативы', field: 'DS', enableCellEdit: false },
-    { name: 'Перемещений', field: 'Tr', enableCellEdit: false }
+    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number' },
+    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number' },
+    { name: 'Сверхнормативы', field: 'DS', enableCellEdit: false, type: 'number' },
+    { name: 'Перемещений', field: 'Tr', enableCellEdit: false, type: 'number' }
   );
+  vm.fieldsListReady = [
+    { name: 'Дата', field: 'Dat', grouping: { groupPriority: 0 }},
+    { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number' },
+    { name: 'Аптека', field: 'Ph_Name', grouping: { groupPriority: 1 } },
+    { name: 'Код Куда', field: 'toPh_ID', enableCellEdit: false, type: 'number' },
+    { name: 'Аптека Куда', field: 'toPh_Name', enableCellEdit: false },
+    { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number' },
+    { name: 'Наименование', field: 'Gr_Name', enableCellEdit: false },
+    { name: 'Количество', field: 'Req', enableCellEdit: false, type: 'number' },
+    { name: 'Отправлено', field: 'Sent', enableCellEdit: false, type: 'number' }
+  ];
   vm.gridOptionsTransfer = {
     enableSorting: true,
     enableFiltering: true,
@@ -1591,13 +1607,13 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
         }
       });
 
-      gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
-      gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
-      gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
-      gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
-      TableService.restoreState('gridState14-1', gridApi, $scope);
+      gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, transferState, gridApi));
+      gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, transferState, gridApi));
+      gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, transferState, gridApi));
+      gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, transferState, gridApi));
+      TableService.restoreState(transferState, gridApi, $scope);
       $timeout(function () {
-        gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, 'gridState14-1', gridApi));
+        gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, transferState, gridApi));
       }, 100);
     },
     columnDefs: vm.fieldsListTransfer
@@ -1612,16 +1628,35 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
     showGridFooter: true,
     onRegisterApi: function (gridApi) {
       vm.gridApiDS = gridApi;
-      gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
-      gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
-      gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
-      gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
-      TableService.restoreState('gridState14', gridApi, $scope);
+      gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, DSState, gridApi));
+      gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, DSState, gridApi));
+      gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, DSState, gridApi));
+      gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, DSState, gridApi));
+      TableService.restoreState(DSState, gridApi, $scope);
       $timeout(function () {
-        gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, 'gridState14', gridApi));
+        gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, DSState, gridApi));
       }, 100);
     },
     columnDefs: vm.fieldsListDS
+  };
+  vm.gridOptionsReady = {
+    enableSorting: true,
+    enableFiltering: true,
+    exporterMenuCsv: true,
+    enableGridMenu: true,
+    showGridFooter: true,
+    onRegisterApi: function (gridApi) {
+      vm.gridApiReady = gridApi;
+      gridApi.colMovable.on.columnPositionChanged($scope, TableService.saveState.bind(null, readyState, gridApi));
+      gridApi.colResizable.on.columnSizeChanged($scope, TableService.saveState.bind(null, readyState, gridApi));
+      gridApi.core.on.filterChanged($scope, TableService.saveState.bind(null, readyState, gridApi));
+      gridApi.core.on.sortChanged($scope, TableService.saveState.bind(null, readyState, gridApi));
+      TableService.restoreState(readyState, gridApi, $scope);
+      $timeout(function () {
+        gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, readyState, gridApi));
+      }, 100);
+    },
+    columnDefs: vm.fieldsListReady
   };
 
   vm.onGetDS = function () {
@@ -1634,6 +1669,29 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
     })
       .then(function (response) {
         vm.gridOptionsDS.data = response.data;
+      }, function (data, status, headers, config) {
+        vm.Resulta = 'Error!';
+      })
+      .finally(function () {
+        vm.loading = false;
+      });
+  };
+
+  vm.onGetReady = function () {
+    /*if (!vm.conditionsReady.length) {
+      return false;
+    }*/
+    vm.loading = true;
+    $http.post('/api/resulttrans/', {
+      conds: vm.conditionsReady
+    })
+      .then(function (response) {
+        vm.gridOptionsReady.data = response.data.map(function (item) {
+          if (item.Dat) {
+            item.Dat = $filter('date')(item.Dat, 'dd.MM.yyyy');
+          }
+          return item;
+        });
       }, function (data, status, headers, config) {
         vm.Resulta = 'Error!';
       })
@@ -1660,8 +1718,15 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
       });
   };
 
+  vm.onReady = function () {
+    vm.conditionsReady = vm.exchange.conditions.slice();
+    vm.step = 'ready';
+    vm.onGetReady();
+  };
+
   vm.onMove = function () {
     vm.selected = vm.gridApiDS.selection.getSelectedRows()[0];
+    vm.step = 'move';
     vm.conditionsTransfer = [];
     if (vm.selected) {
         vm.conditionsTransfer = [{
@@ -1696,6 +1761,7 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
   };
 
   vm.onBack = function () {
+    vm.step = 'ds';
     vm.selected = null;
   };
 
