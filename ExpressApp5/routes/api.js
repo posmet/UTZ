@@ -1,7 +1,8 @@
-﻿/*
- * Serve JSON to our AngularJS client
- */
-
+﻿var sql = require('mssql');
+const pool = require('../boot/sql');
+const middleware = require('../services/Middleware');
+const authService = require('../services/Auth');
+const messageManager = require('../services/Message');
 
 module.exports = function (app) {
     const config = {
@@ -17,69 +18,45 @@ module.exports = function (app) {
             requestTimeout: 180000
         }
     };
-    app.get('/api/name', function (req, res) {
-        var sql = require('mssql');
 
+  app.get('/api/name', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+    const request = new sql.Request(pool);
+    const sqlString = `SELECT * from ref_users where userid=${req.user.id}`;
+    const rs = await request.query(sqlString);
+    if (!rs.recordset.length) {
+      return messageManager.sendMessage(res, "Пользователь не найден", 401);
+    }
+    res.json(rs.recordset[0]);
+  }));
 
-        var connection = new sql.Connection(config);
-
-        connection.connect(function (err) {
-            if (err) { res.status(500).send(err); return; }
-
-            var request = new sql.Request(connection);
-            if (!req.user) { res.redirect('/'); return; };
-            if (!("username" in req.user)) { res.redirect('/'); return; };
-            var sqlString = "SELECT * from ref_users where User_Name='" + req.user.username + "'";
-            console.log(sqlString);
-            request.query(sqlString, function (err, rs) {
-                connection.close();
-
-                if (err) { res.status(500).send(err); return; }
-
-                var count = rs;
-                res.status(200);
-               // if (length(rs) > 0) {
-                    res.json(rs[0]);
-               // }
-            });
-        });
+  app.get('/api/sentupdate', function(req,res) {
+    res.json({
+      name: 'test'
     });
+  });
 
-    app.get('/api/sentupdate', function(req,res) {
-        res.json({
-            name: 'test'
-        });
-    });
-    /*
-     * Connect to mssql database 
-     */
+  app.get('/api/result', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+    const request = new sql.Request(pool);
+    const sqlString = "SELECT * from pharmsByUser where userid=" + req.user.id;
+    const rs = await request.query(sqlString);
+    res.json(rs.recordset);
+  }));
 
 
-    app.get('/api/result', function (req, res) {
-        var sql = require('mssql');
+  app.get('/api/resultrq/:pharmid', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+    const request = new sql.Request(pool);
+    const sqlString = "SELECT * from matrix_view_e where [Ph_ID]=" + req.params.pharmid + " and Req>0 order by Gr_Name";
+    const rs = await request.query(sqlString);
+    res.json(rs.recordset);
+  }));
 
-       var connection = new sql.Connection(config);
+  app.get('/api/send/:pharmid', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+    const request = new sql.Request(pool);
+    const sqlString = 'update pharms set sent=1 where ph_id=' + req.params.pharmid;
+    await request.query(sqlString);
+    res.json({success: true});
+  }));
 
-        connection.connect(function (err) {
-            if (err) { res.status(500).send(err); return; }
-
-            var request = new sql.Request(connection);
-            if (!req.user) { res.redirect('/'); return; };
-            if (!("username" in req.user)) { res.redirect('/'); return; };
-            var sqlString = "SELECT * from pharmsByUser where User_Name='" + req.user.username + "'";
-//            var sqlString = "SELECT * from pharmsByUser where User_Name='ella'";
-            console.log(sqlString);
-            request.query(sqlString, function (err, rs) {
-                connection.close();
-
-                if (err) { res.status(500).send(err); return; }
-
-                var count = rs;
-                res.status(200);
-                res.json(rs);
-            });
-        });
-    });
     app.get('/api/resultmtrx/:pharmid', function (req, res) {
         var sql = require('mssql');
         var connection = new sql.Connection(config);
@@ -330,51 +307,8 @@ module.exports = function (app) {
             });
         });
     });
-    app.get('/api/resultrq/:pharmid', function (req, res) {
-        var sql = require('mssql');
-        var connection = new sql.Connection(config);
 
-        connection.connect(function (err) {
-            if (err) { res.status(500).send(err); return; }
 
-            var request = new sql.Request(connection);
-
-            var sqlString = "SELECT * from matrix_view_e where [Ph_ID]=" + req.params.pharmid + " and Req>0 order by Gr_Name";
-            console.log(sqlString);
-            request.query(sqlString, function (err, rs) {
-                connection.close();
-
-                if (err) { res.status(500).send(err); return; }
-
-                var count = rs;
-                res.status(200);
-                res.json(rs);
-            });
-        });
-    });
-    app.get('/api/send/:pharmid', function (req,res) {
-        var sql = require('mssql');
-        var connection = new sql.Connection(config);
-
-        connection.connect(function (err) {
-            if (err) { res.status(500).send(err); return; }
-
-            var request = new sql.Request(connection);
-
-            var sqlString = 'update pharms set sent=1 where ph_id=' + req.params.pharmid;
-            console.log(sqlString);
-            request.query(sqlString, function (err, rs) {
-                connection.close();
-
-                if (err) { res.status(500).send(err); return; }
-
-                //var count = rs;
-                res.status(200).send("ok");
-                res = "ok";
-            });
-        });
-
-    });
     app.get('/api/updaterq/:ph_id/:gr_id/:req', function (req, res) {
         var sql = require('mssql');
         var connection = new sql.Connection(config);
