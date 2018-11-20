@@ -1,0 +1,15 @@
+<!doctype html>
+<html ng-app="UTZ" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title ng-bind="currentState.title || 'Заказ.Gidapteka'"></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
+</head>
+<body>
+  <div class="overflow" ng-show="busy">
+    <div class="spinner"></div>
+  </div>
+  <div ui-view=""></div>
+</body>
+</html>

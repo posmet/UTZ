@@ -1,0 +1,6 @@
+<div>
+    <div>Выбор аптеки</div>
+    <div ng-repeat="pharm in $ctrl.pharms">
+        <a class="btn btn-outline-primary btn-block" ng-click="$ctrl.clickph(pharm,$index)">{{pharm.Ph_Name}}</a>
+    </div>
+</div>

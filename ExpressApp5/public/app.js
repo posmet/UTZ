@@ -107,7 +107,7 @@ const fieldsList = [
     { name: 'Фармгруппа', field: 'RFG_agg', enableCellEdit: false },
     { name: 'ПКУ', field: 'PKU_agg', enableCellEdit: false }
 ];
-app.controller('AppCtrl', function ($scope, $http, $rootScope) {
+/*app.controller('AppCtrl', function ($scope, $http, $rootScope) {
     //$scope.exfac = exchange;
     $scope.interface1 = false;
     $scope.interface2 = false;
@@ -122,8 +122,8 @@ app.controller('AppCtrl', function ($scope, $http, $rootScope) {
             $scope.name = 'Error!';
         });
 
-});
-app.controller('MyCtrl1', function ($scope, $http) {
+});*/
+/*app.controller('MyCtrl1', function ($scope, $http) {
     //$scope.exfac = exchange;
     $scope.pharmname = 'Тестовая аптека';
     $scope.pharmid = 1;
@@ -140,7 +140,7 @@ app.controller('MyCtrl1', function ($scope, $http) {
             $scope.result = 'Error!';
         });
 
-});
+});*/
 app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableService', '$timeout', function ($scope, $http, exchange,i18nService, TableService, $timeout) {
     var vm = this;
     const stateName = 'gridState3';
@@ -296,7 +296,7 @@ app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableS
                 function (data, status, headers, config) {
                     $scope.Result = 'Error!';
                 });
-        
+
     };
     $scope.oncreate = function (pharm, $index) {
         //
@@ -389,7 +389,7 @@ app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableS
         });
 
 }]);
-app.controller('MyCtrl4', ['$scope', '$http', '$location', '$rootScope', 'exchange', 'i18nService', function ($scope, $http, $location, $rootScope, exchange,i18nService) {
+/*app.controller('MyCtrl4', ['$scope', '$http', '$location', '$rootScope', 'exchange', 'i18nService', function ($scope, $http, $location, $rootScope, exchange,i18nService) {
     var vm = this;
     vm.msg = {};
     vm.exchange = exchange;
@@ -575,7 +575,7 @@ app.controller('MyCtrl4', ['$scope', '$http', '$location', '$rootScope', 'exchan
         //   exchange.phname = 'testph';
         //   exchange.grname = 'testgr';
         $location.path('/view13');
-    }      
+    }
     $scope.OnSend = function () {
         $http({
             method: 'GET',
@@ -623,7 +623,7 @@ app.controller('MyCtrl4', ['$scope', '$http', '$location', '$rootScope', 'exchan
             $scope.Result = 'Error!';
         });
 
-}]);
+}]);*/
 app.controller('MyCtrl5', ['$scope', '$http', '$location', '$rootScope', 'exchange', 'i18nService', function ($scope, $http, $location, $rootScope, exchange,i18nService) {
     //$scope.exfac = exchange;
     $scope.pharmname = 'Тестовая аптека';
@@ -801,7 +801,7 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
               }
             });
                gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            
+
                           exchange.grid = row.entity.Gr_ID;
                             exchange.grname = row.entity.Gr_Name;
                             exchange.phname = row.entity.Ph_Name;
@@ -1079,7 +1079,7 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
               }
           });
           gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-              
+
               exchange.grid = row.entity.Gr_ID;
               exchange.grname = row.entity.Gr_Name;
               exchange.phname = row.entity.Ph_Name;
@@ -1240,7 +1240,7 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           $http.post('/api/addmx/',  exchange.entity).
               then(function (response) {
                   vm.gridOptions.data[vm.gridOptions.data.indexOf(exchange.entity)] = response.data;
-                  
+
               },
               function (data, status, headers, config) {
                   $scope.Result = 'Error!';

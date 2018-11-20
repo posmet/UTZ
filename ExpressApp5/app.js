@@ -16,7 +16,8 @@ app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
     return messageManager.sendMessage(res, "Неверный токен авторизации", 401);
   }
-  if (req.xhr || req.headers['content-type'].indexOf('json') > -1) {
+  const contentType = req.headers['content-type'];
+  if (req.xhr || (!contentType || contentType && contentType.indexOf('json') > -1)) {
     messageManager.sendMessage(res, err);
   } else {
     next(err);
