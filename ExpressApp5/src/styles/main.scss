@@ -86,48 +86,43 @@
   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  .input {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    color: #555555;
+    display: inline-block;
+    font-size: 13px;
+    height: 18px;
+    line-height: 18px;
+    margin-bottom: 9px;
+    padding: 4px 4px 4px 23px;
+    width: 210px;
+  }
+  .buttons {
+    text-align: right;
+    span {
+      float: left;
+      margin-top: 6px;
+    }
+  }
+  button {
+    background-color: #575A82;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 6px;
+    &:hover {
+      background-color: #FF875E;
+    }
+  }
 }
 
 .error-msg {
   padding: 5px;
   border: 1px solid red;
   margin-bottom: 8px;
-}
-
-.auth-form .input {
-  background-color: #FFFFFF;
-  border: 1px solid #CCCCCC;
-  border-radius: 3px;
-  color: #555555;
-  display: inline-block;
-  font-size: 13px;
-  height: 18px;
-  line-height: 18px;
-  margin-bottom: 9px;
-  padding: 4px 4px 4px 23px;
-  width: 210px;
-}
-
-.auth-form .buttons {
-  text-align: right;
-}
-
-.auth-form .buttons span {
-  float: left;
-  margin-top: 6px;
-}
-
-.auth-form button {
-  background-color: #575A82;
-  border: none;
-  color: #FFFFFF;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 6px;
-}
-
-.auth-form button:hover {
-  background-color: #FF875E;
 }
 
 .soc-auth, .sign-out {
