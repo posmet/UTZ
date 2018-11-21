@@ -785,10 +785,10 @@ module.exports = function (app) {
                         Whr = Whr + " <> ''";
                         break;
                     case 'gt':
-                        Whr = Whr + " > ''";
+                        Whr = Whr + " > '" + curr.value + "'";
                         break;
                     case 'lt':
-                        Whr = Whr + " < ''";
+                        Whr = Whr + " < '" + curr.value + "'";
                         break;
                 }
                 return Whr;

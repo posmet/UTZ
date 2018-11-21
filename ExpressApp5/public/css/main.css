@@ -78,11 +78,11 @@ a:hover {
 }
 
 .auth-form .user {
-    background: url("/images/ico-user.png") 4px no-repeat;
+    background: url("ico-user.png") 4px no-repeat;
 }
 
 .auth-form .password {
-    background: url("/images/ico-lock.png") 4px no-repeat;
+    background: url("ico-lock.png") 4px no-repeat;
 }
 
 .auth-form .buttons {
