@@ -17,7 +17,7 @@ module.exports = (env, argv) => {
     output: {
       path: __dirname + '/dist',
       publicPath: '/',
-      filename: 'bundle.js'
+      filename: env === 'production' ? '[name].[hash].js' : '[name].bundle.js',
     },
     module: {
       noParse: /excel-builder/gi,
@@ -64,7 +64,7 @@ module.exports = (env, argv) => {
     resolve: {
       extensions: ['.js', '.jsx', '.json', '.css', '.scss'],
       alias: {
-        CSV: 'csv.js',
+        CSV: path.resolve(__dirname, 'src', 'public', 'js', 'csv.js'),
         '@components': path.resolve(__dirname, 'src', 'components'),
         '@stores': path.resolve(__dirname, 'src', 'stores'),
         '@utils': path.resolve(__dirname, 'src', 'utils'),

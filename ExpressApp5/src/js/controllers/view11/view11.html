@@ -1,0 +1,12 @@
+<absolute-loading ng-if="busy"></absolute-loading>
+<div>
+    <h3>Аптеки</h3>
+    <small>
+        <form>
+            <div class="form-row">
+                <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onMatrix()">Матрица</a>
+            </div>
+        </form>
+        <div class="grid" id="gridSaveState" ui-grid="$ctrl.gridOptions" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-edit ui-grid-resize-columns ui-grid-selection ui-grid-cellnav ng-dblclick="$ctrl.onMatrix()"></div>
+    </small>
+</div>

@@ -1,29 +1,9 @@
 <div>
     <div class="user-data">
         <nav class="navbar">
-            <a class="nav-link" href="/view1" ng-if-start="currentUser.interface == 1" >Выбор аптеки</a>
-            <a class="nav-link" href="/view4">Обработка заявок</a>
-            <a class="nav-link" href="/view3">Настройка параметров расчета активной матрицы</a>
-            <a class="nav-link" href="/view7" ng-if-end >Журнал заявок</a>
+            <a class="nav-link" href="{{link.href}}" ng-class="{active: $ctrl.$state.current.url === link.href}" ng-repeat="link in $ctrl.interface[currentUser.interface].menu" >{{link.name}}</a>
 
-            <a class="nav-link" href="/view11" ng-if-start="currentUser.interface == 2">Аптеки</a>
-            <a class="nav-link" href="/view12">Матрицы</a>
-            <a class="nav-link" href="/view13">Статистика</a>
-            <a class="nav-link" href="/view14">Перебросы</a>
-            <a class="nav-link" href="/view15" ng-if-end>Прочее</a>
-
-            <a class="nav-link" href="/view21" ng-if-start="currentUser.interface == 4">Аптеки</a>
-            <a class="nav-link" href="/view22">Пользователи</a>
-            <a class="nav-link" href="/view23">Монитор</a>
-            <a class="nav-link" href="/view24" ng-if-end>История</a>
-
-            <a class="nav-link" href="/view1" ng-if-start="currentUser.interface == 8">Выбор аптеки</a>
-            <a class="nav-link" href="/view4">Обработка заявок</a>
-            <a class="nav-link" href="/view3">Настройка параметров расчета активной матрицы</a>
-            <a class="nav-link" href="/view7">Журнал заявок</a>
-            <a class="nav-link" href="/view8" ng-if-end>Филиал</a>
-
-            Пользователь: {{currentUser.full_name}} {{ $ctrl.roles[currentUser.interface] || '' }}
+            Пользователь: {{currentUser.full_name}} {{ $ctrl.interface[currentUser.interface].name || '' }}
             <a class="nav-link" href="javascript:void(0)" ng-click="logout()">Выйти ←</a>
         </nav>
     </div>

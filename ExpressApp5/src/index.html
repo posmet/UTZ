@@ -7,9 +7,7 @@
   <base href="/">
 </head>
 <body>
-  <div class="overflow" ng-show="busy">
-    <div class="spinner"></div>
-  </div>
+  <absolute-loading ng-if="globalBusy"></absolute-loading>
   <div ui-view=""></div>
 </body>
 </html>

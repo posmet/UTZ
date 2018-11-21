@@ -1,3 +1,4 @@
+@import "~@fortawesome/fontawesome-free/css/all.css";
 @import "~angular-toastr/dist/angular-toastr.css";
 @import '~bootstrap/scss/bootstrap';
 @import '~angular-ui-grid/ui-grid.min.css';
@@ -24,6 +25,12 @@
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both
+  }
+}
+
+.nav-link {
+  &.active {
+    color: #b400ff;
   }
 }
 

@@ -1,0 +1,49 @@
+<absolute-loading ng-if="busy || loading"></absolute-loading>
+<div>
+    <div ui-i18n="ru">
+        <form>
+            <ph-filter conditions="$ctrl.exchange.conditions" fields="$ctrl.fieldsList"></ph-filter>
+            <div class="form-row">
+                <div class="col-auto">
+                    <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onClick()">Получить</a>
+                    <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onSearch()">Получить для подтверждения</a>
+                    <label class="btn btn-outline-primary btn-sm btn-file">
+                        Загрузить файл <input type="file" accept=".xls, .xlsx, .csv" custom-on-change="$ctrl.onFile(files)"/>
+                    </label>
+                    <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onSend()">Отправить</a>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    Позиция: {{$ctrl.exchange.grname}}
+                </div>
+                <div class="col">
+                    Аптека: {{$ctrl.exchange.phname}}
+                </div>
+                <div class="col"></div>
+            </div>
+        </form>
+        <form>
+            <div class="form-row">
+                <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onAdd()">Добавить</a>
+                <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onAdd1()">Добавить по коду</a>
+                <a class="btn btn-outline-danger btn-sm" ng-click="$ctrl.onDelete()">Удалить</a>
+                <a class="btn btn-outline-success btn-sm" ng-click="$ctrl.onAccept()">Подтвердить</a>
+                <a class="btn btn-outline-secondary btn-sm" ng-click="$ctrl.onCancel()">Отменить</a>
+                <a class="btn btn-outline-info btn-sm" ng-click="$ctrl.onStat()">Статистика</a>
+                <a class="btn btn-outline-info btn-sm" ng-click="$ctrl.onSaveState()">Сохранить</a>
+                {{$ctrl.rsp}}
+            </div>
+        </form>
+        <div ng-show="$ctrl.checkadd">
+            <p>Введите групповой код:</p>
+            <input type="text" ng-model="newgrpcode" />
+            <p>Введите код аптеки:</p>
+            <input type="text" ng-model="newphcode" />
+        </div>
+        {{$ctrl.msg.lastCellEdited}}
+        <small>
+            <div class="grid" ui-grid="$ctrl.gridOptions" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-edit ui-grid-resize-columns ui-grid-selection ui-grid-cellnav ng-dblclick="$ctrl.onStat()"></div>
+        </small>
+    </div>
+</div>

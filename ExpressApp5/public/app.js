@@ -141,7 +141,7 @@ const fieldsList = [
         });
 
 });*/
-app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableService', '$timeout', function ($scope, $http, exchange,i18nService, TableService, $timeout) {
+/*app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableService', '$timeout', function ($scope, $http, exchange,i18nService, TableService, $timeout) {
     var vm = this;
     const stateName = 'gridState3';
     vm.msg = {};
@@ -388,7 +388,7 @@ app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableS
             $scope.Result = 'Error!';
         });
 
-}]);
+}]);*/
 /*app.controller('MyCtrl4', ['$scope', '$http', '$location', '$rootScope', 'exchange', 'i18nService', function ($scope, $http, $location, $rootScope, exchange,i18nService) {
     var vm = this;
     vm.msg = {};
@@ -624,7 +624,7 @@ app.controller('MyCtrl3', ['$scope', '$http', 'exchange', 'i18nService', 'TableS
         });
 
 }]);*/
-app.controller('MyCtrl5', ['$scope', '$http', '$location', '$rootScope', 'exchange', 'i18nService', function ($scope, $http, $location, $rootScope, exchange,i18nService) {
+/*app.controller('MyCtrl5', ['$scope', '$http', '$location', '$rootScope', 'exchange', 'i18nService', function ($scope, $http, $location, $rootScope, exchange,i18nService) {
     //$scope.exfac = exchange;
     $scope.pharmname = 'Тестовая аптека';
     $scope.pharmid = 1;
@@ -651,8 +651,8 @@ app.controller('MyCtrl5', ['$scope', '$http', '$location', '$rootScope', 'exchan
             $scope.result = 'Error!';
         });
 
-}]);
-app.controller('MyCtrl7', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange,i18nService) {
+}]);*/
+/*app.controller('MyCtrl7', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange,i18nService) {
     var vm = this;
     vm.msg = {};
     i18nService.setCurrentLang('ru');
@@ -662,30 +662,8 @@ app.controller('MyCtrl7', ['$scope', '$http', '$interval', 'uiGridConstants', '$
         MultiSelect: false,
         exporterMenuCsv: true,
         enableGridMenu: true,
-//        expandableRowTemplate: 'expandableRowTemplate.html',
-//        expandableRowHeight: 450,
        onRegisterApi: function (gridApi) {
               vm.gridApi = gridApi;
-//            gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
-//                if (row.isExpanded) {
-//                    row.entity.subGridOptions = {
-//                        columnDefs: [
-//                            { name: 'Наименование', field:'RGG_Name' },
-//                            { name: 'Количество', field:'RequestB_Quantity' },
-//                            { name: 'В заказе' ,field:'OrderB_Quantity'},
-//                            { name: "Поставщик", field:'Contractor_Name' },
-//                            { name: "В накладной", field:'Invoice_Number'},
-//                            { name: "В отказе", field: 'Refuse_Qty'},
-//                            { name: "Оприходовано", field: 'Receive_id'}
-//                        ]
-//                    };
-//
- //                   $http.get('/api/request/' + row.entity.Request_ID)
-  //                      .then(function (response) {
- //                           row.entity.subGridOptions.data = response.data;
- //                       });
- //               }
- //           });
         },
         columnDefs: [
             { name: "Код", field: "Request_ID", type: 'number', typegrouping: { groupPriority: 1 }, sort: { priority: 1, direction: 'desc' } },
@@ -723,8 +701,8 @@ app.controller('MyCtrl7', ['$scope', '$http', '$interval', 'uiGridConstants', '$
         });
 
 
-}]);
-app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nService', 'TableService', '$timeout', function ($scope, $http,$location, exchange, i18nService, TableService, $timeout) {
+}]);*/
+/*app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nService', 'TableService', '$timeout', function ($scope, $http,$location, exchange, i18nService, TableService, $timeout) {
     var vm = this;
     const stateName = 'gridState8';
     vm.msg = {};
@@ -955,8 +933,8 @@ app.controller('MyCtrl8', ['$scope', '$http','$location', 'exchange', 'i18nServi
 
     $scope.onClick();
 
-}]);
-app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','save12', 'TableService', '$timeout', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange, i18nService,save12, TableService, $timeout) {
+}]);*/
+/*app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','save12', 'TableService', '$timeout', function ($scope, $http, $interval, uiGridConstants, $rootScope, $location, exchange, i18nService,save12, TableService, $timeout) {
   var vm = this;
   var rowTemplate = function() {
     return '<div ng-class="{green: row.entity.Action, yellow: row.entity.isLocal}" ' +
@@ -1058,7 +1036,6 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
       enableEditing: true,
       exporterMenuCsv: true,
       enableGridMenu: true,
-//      enableRowSelection: true,
       enableRowHeaderSelection:true,
       multiSelect: false,
       showGridFooter: true,
@@ -1072,7 +1049,6 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
                 $http.post('/api/updatemx/', rowEntity).then(function (response) {
                   vm.msg.lastCellEdited = 'Изменено строка:' + rowEntity.Gr_ID + ' Столбец:' + colDef.name + ' Было:' + oldValue + ' Стало:' + newValue;
                   $scope.$apply();
-                  //vm.gridOptions.data = response.data;
                 }, function (data, status, headers, config) {
                   $scope.Result = 'Error!';
                 });
@@ -1125,11 +1101,6 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
     rowTemplate: rowTemplate()
   };
 
-  //$http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
-  //  .then(function(response) {
-  //    vm.gridOptions.data = response.data;
-  //    });
-
   $scope.onClick = function () {
       if (!vm.exchange.pharmid) {
           vm.exchange.pharmid = 0;
@@ -1142,13 +1113,8 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           conds:vm.exchange.conditions
         })
           .then(function (response) {
-                //           var data = response.data;
-                //           for (var i = 0; i < 6; i++) {
-                //               data = data.concat(data);
-                //           }
                 $scope.serverData = response.data;
                 vm.gridOptions.data = $scope.fileData.concat($scope.serverData);
-                // $scope.loadMore();
             }, function (data, status, headers, config) {
                 $scope.Resulta = 'Error!';
           })
@@ -1189,7 +1155,6 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
   };
 
   $scope.onedit = function (pharm, $index) {
-      //
       $scope.rsp = '/api/updatemx/' + pharm.Ph_ID + "/" + pharm.Gr_ID + "/" + pharm.MinQty + "/" + pharm.MinReq + "/" + pharm.Ratio;
       pharm.MinQty = pharm.MinQty.replace(",", ".");
       $http({
@@ -1203,7 +1168,6 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           });
   };
   $scope.onaccept = function (phаrm, $index) {
-      //
       $scope.rsp = '/api/acceptmx/' + pharm.Ph_ID + "/" + pharm.Gr_ID;
       $http({
           method: 'GET',
@@ -1217,10 +1181,7 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           });
   };
   $scope.onDelete = function () {
-
-      //
       $scope.rsp = "удаление" + vm.exchange.Gr_Name;
-     // $scope.rsp = '/api/deletemx/' + exchange.Ph_ID + "/" + exchange.Gr_ID;
       $http.post('/api/deletemx/' ,exchange.entity).
           then(function (response) {
              vm.gridOptions.data[vm.gridOptions.data.indexOf(exchange.entity)] = response.data;
@@ -1228,12 +1189,9 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
           function (data, status, headers, config) {
               $scope.Result = 'Error!';
           });
-  //    vm.GridOptions.data.splice(GridOptions.data.splice.indexOf(vm.exchange.entity), 1);
   };
   $scope.onAdd = function (pharm, $index) {
-      //
       $scope.rsp = "добавление";
- //     $scope.checkadd = !$scope.checkadd;
       console.log(vm.gridOptions.data.indexOf(exchange.entity));
       console.log(vm.gridOptions.data[vm.gridOptions.data.indexOf(exchange.entity)])
       if (exchange.entity.M == 'Н') {
@@ -1261,17 +1219,12 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
       }).
           then(function (response) {
               vm.gridOptions.data = response.data;
-              // $scope.loadMore();
           }, function (data, status, headers, config) {
               $scope.Resulta = 'Error!';
           });
 
   }
   $scope.onstat = function () {
-   //   exchange.pharmid = 1;
-   //   exchange.grid = 1;
-   //   exchange.phname = 'testph';
-   //   exchange.grname = 'testgr';
       $location.path('/view13');
   }
   if ((vm.exchange.conditions.length > 0)) {
@@ -1280,13 +1233,9 @@ app.controller('MyCtrl12', ['$scope', '$http', '$interval', 'uiGridConstants', '
   $scope.onCheck = function () {
       vm.matrixlabel = vm.matrix ? "Все":"Матрица" ;
   }
-//  $scope.$on('$routeChangeStart', function () {
-//      console.log('location12', $location.path());
-//      save12.savestate = vm.gridApi.saveState.save();
-//      save12.data = vm.gridOptions.data;
-//  });
-}]);
-app.controller('MyCtrl11', ['$scope', '$http', '$timeout', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','TableService', function ($scope, $http, $timeout, uiGridConstants, $rootScope, $location, exchange, i18nService, TableService) {
+
+}]);*/
+/*app.controller('MyCtrl11', ['$scope', '$http', '$timeout', 'uiGridConstants', '$rootScope', '$location', 'exchange', 'i18nService','TableService', function ($scope, $http, $timeout, uiGridConstants, $rootScope, $location, exchange, i18nService, TableService) {
     var vm = this;
     const stateName = 'gridState11';
     vm.msg = { };
@@ -1362,8 +1311,8 @@ app.controller('MyCtrl11', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
 
         });
 
-}]);
-app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
+}]);*/
+/*app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
     var vm = this;
     var download = function () {
       var wb = new ExcelJS.Workbook();
@@ -1542,8 +1491,8 @@ app.controller('MyCtrl13', function ($scope, $http,$rootScope,exchange,save13) {
     if (($scope.exchange.pharmid != 0) && ($scope.exchange.entity.Gr_ID != 0)) {
         $scope.onsearch();
     };
-});
-app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$rootScope', 'exchange', 'i18nService', 'TableService', '$filter', function ($scope, $http, $timeout, uiGridConstants, $rootScope, exchange, i18nService, TableService, $filter) {
+});*/
+/*app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$rootScope', 'exchange', 'i18nService', 'TableService', '$filter', function ($scope, $http, $timeout, uiGridConstants, $rootScope, exchange, i18nService, TableService, $filter) {
   var vm = this;
   const DSState = 'gridState14';
   const transferState = 'gridState14-1';
@@ -1678,9 +1627,9 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
   };
 
   vm.onGetReady = function () {
-    /*if (!vm.conditionsReady.length) {
+    /!*if (!vm.conditionsReady.length) {
       return false;
-    }*/
+    }*!/
     vm.loading = true;
     $http.post('/api/resulttrans/', {
       conds: vm.conditionsReady
@@ -1769,7 +1718,7 @@ app.controller('MyCtrl14', ['$scope', '$http', '$timeout', 'uiGridConstants', '$
       vm.onGetDS();
   }
 
-}]);
+}]);*/
 app.factory('exchange', function () {
     return ({
         pharmid: 0,

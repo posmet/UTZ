@@ -10,6 +10,20 @@ export default function config($httpProvider, $stateProvider, $urlRouterProvider
   });
   $urlRouterProvider.otherwise('/view1');
 
+  const views = [
+    1, 3, 4, 7, 8, 11, 12, 13, 14, 15
+  ];
+
+  views.forEach(name => {
+    $stateProvider
+      .state(`app.view${name}`, {
+        url: `/view${name}`,
+        controller: `View${name}Ctrl as $ctrl`,
+        template: require(`./controllers/view${name}/view${name}.html`),
+        authentication: true
+      })
+  });
+
   $stateProvider
     .state('app', {
       abstract: true,
@@ -37,18 +51,6 @@ export default function config($httpProvider, $stateProvider, $urlRouterProvider
           return defer.promise;
         }]
       }
-    })
-    .state('app.view1', {
-      url: '/view1',
-      controller: 'View1Ctrl as $ctrl',
-      template: require('./controllers/view1/view1.html'),
-      authentication: true
-    })
-    .state('app.view4', {
-      url: '/view4',
-      controller: 'View4Ctrl as $ctrl',
-      template: require('./controllers/view4/view4.html'),
-      authentication: true
     })
     .state('access', {
       url: '',

@@ -1,3 +1,4 @@
+LoginCtrl.$inject = ['$rootScope', '$http', '$notify', '$state'];
 function LoginCtrl($rootScope, $http, $notify, $state) {
   this.login = (username, password) => {
     let message = null;
@@ -9,6 +10,7 @@ function LoginCtrl($rootScope, $http, $notify, $state) {
     if (message) {
       return $notify.warning(message);
     }
+    $rootScope.globalBusy = true;
     $http({
       method: 'POST',
       url: '/api/auth',
@@ -16,17 +18,18 @@ function LoginCtrl($rootScope, $http, $notify, $state) {
     }).
     then(function (response) {
       $rootScope.login(response.data);
-      $rootScope.getCurrentUser()
+      return $rootScope.getCurrentUser()
         .catch(() => {})
         .then(() => {
           $state.go('app.view1');
         });
     }, function (data) {
       $notify.errors(data);
+    })
+    .then(() => {
+      $rootScope.globalBusy = false;
     });
   }
 }
-
-LoginCtrl.$inject = ['$rootScope', '$http', '$notify', '$state'];
 
 export default LoginCtrl;

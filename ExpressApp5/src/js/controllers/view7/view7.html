@@ -1,0 +1,8 @@
+<absolute-loading ng-if="busy"></absolute-loading>
+<div>
+    <h3>Журнал заявок</h3>
+    {{$ctrl.exchange.phname}}
+    <small>
+        <div class="grid" ui-grid="$ctrl.gridOptions" ui-grid-grouping ui-grid-move-columns ui-grid-exporter ui-grid-resize-columns ui-grid-selection></div>
+    </small>
+</div>

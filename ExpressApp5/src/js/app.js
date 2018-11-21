@@ -53,17 +53,17 @@ angular.module(MODULE_NAME, [
     };
 
     $rootScope.getCurrentUser = () => {
-      $rootScope.busy = true;
+      $rootScope.globalBusy = true;
       return $http({
           method: 'GET',
           url: '/api/name'
         })
         .then(function (response) {
           $rootScope.currentUser = response.data;
-          $rootScope.busy = false;
+          $rootScope.globalBusy = false;
         }, function (err) {
           $notify.errors(err);
-          $rootScope.busy = false;
+          $rootScope.globalBusy = false;
           return Promise.reject(err);
         });
     };
