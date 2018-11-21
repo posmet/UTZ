@@ -503,6 +503,7 @@
     <Content Include="public\css\main1.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="public\gid-apteka-300x80.png" />
     <Content Include="public\images\ico-lock.png" />
     <Content Include="public\images\ico-user.png" />
     <Content Include="public\js\lib\angular\angular-animate.min.js.map" />
