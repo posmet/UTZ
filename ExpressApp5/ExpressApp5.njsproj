@@ -503,8 +503,9 @@
     <Content Include="public\css\main1.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="public\images\ico-lock.png" />
-    <Content Include="public\images\ico-user.png" />
+    <Content Include="public\gid-apteka-300x80.png" />
+    <Content Include="public\ico-lock.png" />
+    <Content Include="public\ico-user.png" />
     <Content Include="public\js\lib\angular\angular-animate.min.js.map" />
     <Content Include="public\js\lib\angular\angular-aria.min.js.map" />
     <Content Include="public\js\lib\angular\angular-cookies.min.js.map" />
