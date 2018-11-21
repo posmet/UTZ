@@ -1,4 +1,5 @@
-function Ctrl($http, $notify, exchange, $state) {
+Ctrl.$inject = ['$rootScope', '$http', '$notify', 'exchange', '$state'];
+function Ctrl($rootScope, $http, $notify, exchange, $state) {
   this.clickph = (pharm, $index) => {
     exchange.pharmid = this.pharms[$index].Ph_ID;
     exchange.phname = this.pharms[$index].Ph_Name;
@@ -16,7 +17,5 @@ function Ctrl($http, $notify, exchange, $state) {
     $notify.errors(err);
   });
 }
-
-Ctrl.$inject = ['$http', '$notify', 'exchange', '$state'];
 
 export default Ctrl;

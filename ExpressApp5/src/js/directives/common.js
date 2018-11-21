@@ -98,4 +98,11 @@ let Loading = () => {
   };
 };
 
-module.exports = {PhFilter, CustomOnChange, Loading};
+let AbsoluteLoading = () => {
+  return {
+    restrict: 'E',
+    template: require('./absolute-loading.html')
+  };
+};
+
+module.exports = {PhFilter, CustomOnChange, Loading, AbsoluteLoading};

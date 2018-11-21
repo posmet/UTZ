@@ -1,3 +1,4 @@
+<absolute-loading ng-if="busy"></absolute-loading>
 <div>
     <h3>Обработка заявки аптеки </h3>
     {{$ctrl.exchange.phname}} -
@@ -6,6 +7,6 @@
         <div ng-show="!$ctrl.sent">
             <a class="btn btn-primary" ng-click="$ctrl.onSend()">Отправить</a>
         </div>
-        <div class="grid" ui-grid="$ctrl.gridOptions" ui-grid-move-columns="ui-grid-move-columns" ui-grid-exporter="ui-grid-exporter" ui-grid-edit="ui-grid-edit" ui-grid-resize-columns="ui-grid-resize-columns" ui-grid-selection="ui-grid-selection" ui-grid-cellnav="ui-grid-cellnav"></div>
+        <div class="grid" ui-grid="$ctrl.gridOptions" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-edit ui-grid-resize-columns ui-grid-selection ui-grid-cellnav></div>
     </small>
 </div>

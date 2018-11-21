@@ -27,7 +27,7 @@ module.exports = function (app) {
     //if behind a reverse proxy such as Varnish or Nginx
     app.enable('trust proxy');
     app.use(morgan('dev'));
-    app.use(express.static(path.join(__dirname + "/..", 'public')));
+    app.use('/', express.static(path.join(__dirname + "/..", 'dist')));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(methodOverride());

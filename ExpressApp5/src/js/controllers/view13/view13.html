@@ -1,0 +1,28 @@
+<absolute-loading ng-if="busy"></absolute-loading>
+<div>
+    <h3>Статистика</h3>
+    <form>
+        <div class="form-row">
+            <div class="col">
+                <input class="form-control" type="text" placeholder="Введите групповой код" ng-model="$ctrl.exchange.grid" />
+            </div>
+            <div class="col">
+                <input class="form-control" type="text" placeholder="Введите код аптеки" ng-model="$ctrl.exchange.pharmid" />
+            </div>
+            <div class="col-auto">
+                <input class="form-control" type="text" placeholder="Период" ng-model="$ctrl.exchange.pharmid" />
+            </div>
+            <button class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onSearch()">Получить</button>
+            <button class="btn btn-outline-success btn-sm" ng-click="$ctrl.onDownloadClick()">Скачать</button>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                Позиция: {{$ctrl.exchange.grname}}
+            </div>
+            <div class="col">
+                Аптека: {{$ctrl.exchange.phname}}
+            </div>
+        </div>
+        <canvas class="chart chart-bar" id="base" chart-series="$ctrl.series" chart-data="$ctrl.data" chart-labels="$ctrl.labels" chart-colors="$ctrl.colors" chart-dataset-override="$ctrl.datasetOverride" chart-options="$ctrl.options" height="75"></canvas>
+    </form>
+</div>

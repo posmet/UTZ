@@ -20,6 +20,10 @@ exports.buildMessage = (err) => {
   }
 };
 
+exports.buildSuccess = () => {
+  return {success: true};
+};
+
 exports.sendMessage = (res, err, httpStatus) => {
   res.status(httpStatus || 500).json(this.buildMessage(err));
 };
