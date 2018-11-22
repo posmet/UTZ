@@ -39,7 +39,7 @@ module.exports = function (app) {
       if (!user) return messageService.sendMessage(res, "Неверный логин или пароль");
 
       res.json({
-        token: authService.signToken(user.userid)
+        token: authService.signToken(user)
       });
     })(req, res, next);
   });
