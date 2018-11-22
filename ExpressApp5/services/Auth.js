@@ -25,6 +25,6 @@ exports.isAuthenticated = () => {
     });
 };
 
-exports.signToken = (id) => {
-  return jwt.sign({ id: id }, config.secret, { expiresIn: config.expire}); //expiresIn in seconds, 30 days
+exports.signToken = (user) => {
+  return jwt.sign({ id: user.userid, username: user.username }, config.secret, { expiresIn: config.expire}); //expiresIn in seconds, 30 days
 };
