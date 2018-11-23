@@ -31,7 +31,7 @@ const fn = async () => {
     let query = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE'";
     await fs.writeFileSync(file, "");
     let rs = await request.query(query);
-    for(const table of rs.recordset) {
+    for (const table of rs.recordset) {
       const selectQuery = `SELECT TOP ${count} * from ${table.TABLE_NAME}`;
       const selectRs = await request.query(selectQuery);
       if (selectRs.recordset.length) {
@@ -42,11 +42,10 @@ const fn = async () => {
         await fs.writeFileSync(file, data);
       }
     }
-    process.exit(0);
   } catch (e) {
     console.log(e);
-    process.exit(0);
   }
+  process.exit(0);
 };
 
 fn();
