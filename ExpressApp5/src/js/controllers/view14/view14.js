@@ -28,7 +28,22 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
     { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number' },
     { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number' },
     { name: 'Сверхнормативы', field: 'DS', enableCellEdit: false, type: 'number' },
-    { name: 'Перемещений', field: 'Tr', enableCellEdit: false, type: 'number' }
+    { name: 'Перемещений', field: 'Tr', enableCellEdit: false, type: 'number' },
+    {
+      name: 'Дней дефектуры',
+      field: 'DD',
+      enableCellEdit: false,
+      type: 'number',
+      cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+        if (row.entity.DD === 0) {
+          return false;
+        } else if (row.entity.DD > 10) {
+          return 'color-red';
+        } else if (row.entity.DD <= 10) {
+          return 'color-orange';
+        }
+      }
+    },
   ]);
   $ctrl.fieldsListReady = [
     { name: 'Дата', field: 'Dat', grouping: { groupPriority: 0 }},
