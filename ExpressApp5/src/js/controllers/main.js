@@ -21,7 +21,7 @@ function AppCtrl($scope, $http, $notify, $state) {
       ],
       name: 'Маркетолог'
     },
-    3: {
+    4: {
       menu: [
         {href: '/view21', name: 'Аптеки'},
         {href: '/view22', name: 'Пользователи'},
@@ -30,7 +30,7 @@ function AppCtrl($scope, $http, $notify, $state) {
       ],
       name: 'Техподежка'
     },
-    4: {
+    8: {
       menu: [
         {href: '/view1', name: 'Выбор аптеки'},
         {href: '/view4', name: 'Обработка заявок'},
