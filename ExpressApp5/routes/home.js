@@ -5,4 +5,7 @@ module.exports = function (app) {
   app.get('/view*', function (req, res, next) {
     res.sendFile(path.join(dist, 'index.html'));
   });
+  app.get('/login', function (req, res, next) {
+    res.sendFile(path.join(dist, 'index.html'));
+  });
 };

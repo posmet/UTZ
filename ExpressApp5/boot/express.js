@@ -18,11 +18,11 @@ module.exports = function (app) {
     app.set('views', path.join(__dirname + "/..", 'views'));
     app.set('view engine', 'jade');
 
-    const sessionOptions = config.get("session");
-    if ('production' === app.get('env')) {
-        const MemcachedStore = require('connect-memcached')(session);
-        sessionOptions.store = new MemcachedStore(config.get("memcached"));
-    }
+    // const sessionOptions = config.get("session");
+    // if ('production' === app.get('env')) {
+    //     const MemcachedStore = require('connect-memcached')(session);
+    //     sessionOptions.store = new MemcachedStore(config.get("memcached"));
+    // }
 
     //if behind a reverse proxy such as Varnish or Nginx
     app.enable('trust proxy');
@@ -32,7 +32,7 @@ module.exports = function (app) {
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(methodOverride());
     app.use(cookieParser('secret'));
-    app.use(session(sessionOptions));
+    // app.use(session(sessionOptions));
     app.use(flash());
     app.use(timeout('600s'));
     app.use(cors());
