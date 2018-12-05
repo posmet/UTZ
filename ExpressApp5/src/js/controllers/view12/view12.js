@@ -95,6 +95,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
   $ctrl.matrixlabel = "Все";
   $ctrl.checkadd = false;
   $ctrl.fieldsList = TableService.fieldList().concat([
+    { name: 'Заказано', field: 'Req', enableCellEdit: false, type: 'number' },
     { name: 'Акция', field: 'Action', enableCellEdit: true },
     { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number' },
     { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number' },
