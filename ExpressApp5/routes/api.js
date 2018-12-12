@@ -223,7 +223,7 @@ module.exports = function (app) {
 
   app.get('/api/resultmtrx/:pharmid', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
     const request = new sql.Request(pool);
-    const sqlString = 'SELECT *, ROUND(CalcVel*30000,0)/1000 as CalcVel30 from matrix_view_e where ph_id=' + req.params.pharmid + ' order by Gr_Name';
+    const sqlString = 'SELECT * from matrix_view_e where ph_id=' + req.params.pharmid + ' order by Gr_Name';
     console.log(sqlString);
     const rs = await request.query(sqlString);
     res.json(rs.recordset);
@@ -331,6 +331,32 @@ module.exports = function (app) {
     await request.query(sqlString);
     res.json(messageManager.buildSuccess());
   }));
+	app.post('/api/sendfile/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+		const request = new sql.Request(pool);
+		var response = '';
+		var sqlString = '';
+		req.body.items.forEach(function(rec,i,arr) {
+			if (rec.M === 'Н') {
+				sqlString = "exec api_deletematrix " + rec.Ph_ID + " , " + rec.Gr_ID + ",'" + req.user.username + "' ";
+			    request.query(sqlString);
+			} else {
+				sqlString = "exec api_addmatrix " + rec.Ph_ID + ", " + rec.Gr_ID + ",'" + req.user.username + "'";
+				console.log(sqlString);
+			    request.query(sqlString);
+				var sqlUpdate = 'update matrix set valid = 1';
+				req.body.cols.forEach(function(col,j,arrc) {
+					if (col.enableCellEdit && rec[col.field]) sqlUpdate = sqlUpdate + ",[" + col.field + "] = '" + rec[col.field] + "'";
+				});
+				sqlString = sqlUpdate + " where Ph_ID = " + rec.Ph_ID + " and Gr_ID = " + rec.Gr_ID;
+   			    request.query(sqlString);
+			}
+			sqlString = "SELECT * from matrix_cez_n where Gr_ID= " + rec.Gr_ID + " and Ph_ID = " + rec.Ph_ID + ";";
+			console.log(sqlString);
+			//const rs = await request.query(sqlString);
+		})
+		res.json(response);
+
+	}));
 
 };
 

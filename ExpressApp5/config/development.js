@@ -1,12 +1,8 @@
 module.exports = {
   mssql: {
-    user: 'sa',
-    password: '123456',
-    server: '192.168.1.35',
+    user: 'online',
+    password: 'njkcnsq',
+    server: 'ga02.5dd.ru',
     database: 'REQUEST',
-    options: {
-      instanceName: 'SQLEXPRESS',
-      database: 'REQUEST',
-    },
   }
 };

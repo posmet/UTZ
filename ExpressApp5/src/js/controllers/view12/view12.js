@@ -197,7 +197,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
       return false;
     }
     alert('отправка ' + $ctrl.fileData.length + ' записей');
-    $http.post('/api/test/', {items: $ctrl.fileData})
+    $http.post('/api/sendfile/', {items: $ctrl.gridOptions.data,cols:$ctrl.gridOptions.columnDefs})
       .then(function (response) {
         $notify.success('Записи успешно отправлены');
       }, function (err) {
