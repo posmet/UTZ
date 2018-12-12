@@ -36,18 +36,18 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
       }, 100);
     },
     columnDefs: [
-      { name: "Код", field: "Ph_ID" , enableCellEdit:false, type: 'number'},
-      { name: "Наименование", field: "Ph_Name", width: "30%", enableCellEdit: false },
-      { name: "Филиал", field: "Filial", enableCellEdit: false},
-      { name: "Тип", field: "Type", enableCellEdit: false},
-      { name: "Страховой запас", field: "D_A", type: "number",  enableCellEdit: true},
-      { name: "Дней доставки", field: "D_D", type: "number", enableCellEdit: true },
-      { name: "Дней продаж", field: "D_T", type: "number", enableCellEdit: true},
-      { name: "Kmin", field: "Kmin", type: "number", enableCellEdit: true },
-      { name: "Kmax", field: "Kmax", type: "number", enableCellEdit: true },
-      { name: "Категория", field: "Categories", enableCellEdit: true},
-      { name: "График", field: "graph", enableCellEdit: true },
-      { name: "Дней сверхнорамтивов", field: "over", enableCellEdit: true, type: 'number' }
+      { name: "Код", field: "Ph_ID" , enableCellEdit:false, type: 'number', headerTooltip: true, cellTooltip: true},
+      { name: "Наименование", field: "Ph_Name", width: "30%", enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+      { name: "Филиал", field: "Filial", enableCellEdit: false, headerTooltip: true, cellTooltip: true},
+      { name: "Тип", field: "Type", enableCellEdit: false, headerTooltip: true, cellTooltip: true},
+      { name: "Страховой запас", field: "D_A", type: "number",  enableCellEdit: true, headerTooltip: true, cellTooltip: true},
+      { name: "Дней доставки", field: "D_D", type: "number", enableCellEdit: true, headerTooltip: true, cellTooltip: true },
+      { name: "Дней продаж", field: "D_T", type: "number", enableCellEdit: true, headerTooltip: true, cellTooltip: true},
+      { name: "Kmin", field: "Kmin", type: "number", enableCellEdit: true, headerTooltip: true, cellTooltip: true },
+      { name: "Kmax", field: "Kmax", type: "number", enableCellEdit: true, headerTooltip: true, cellTooltip: true },
+      { name: "Категория", field: "Categories", enableCellEdit: true, headerTooltip: true, cellTooltip: true},
+      { name: "График", field: "graph", enableCellEdit: true, headerTooltip: true, cellTooltip: true },
+      { name: "Дней сверхнорамтивов", field: "over", enableCellEdit: true, type: 'number', headerTooltip: true, cellTooltip: true }
     ]
   };
 

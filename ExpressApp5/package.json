@@ -11,6 +11,7 @@
     "start": "cross-env NODE_ENV=production node app.js",
     "dev": "cross-env NODE_ENV=development node app.js",
     "dev-front": "cross-env HOST=http://localhost:3000 webpack-dev-server --config ./webpack.config.js --mode development",
+    "dev-front-remote": "cross-env HOST=https://zakaz.gidapteka.ru webpack-dev-server --config ./webpack.config.js --mode development",
     "build": "cross-env webpack --config ./webpack.config.js --mode production",
     "export": "cross-env NODE_ENV=production EXPORT=500 node utils/export.js",
     "import": "cross-env NODE_ENV=development node utils/import.js"
