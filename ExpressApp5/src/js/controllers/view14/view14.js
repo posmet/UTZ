@@ -180,13 +180,11 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
 
   $ctrl.onReady = function () {
     $ctrl.conditionsReady = $ctrl.exchange.conditions.slice();
-    $ctrl.step = 'ready';
     $ctrl.onGetReady();
   };
 
   $ctrl.onMove = function () {
     $ctrl.selected = $ctrl.gridApiDS.selection.getSelectedRows()[0];
-    $ctrl.step = 'move';
     $ctrl.conditionsTransfer = $ctrl.selected ? [{
       cond: 'eq',
       field: "Ph_ID",
@@ -199,6 +197,24 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
       type: 'number'
     }] : $ctrl.exchange.conditions.slice();
     $ctrl.onGetTransfer();
+  };
+
+  $ctrl.onSelectTab = function (tab) {
+    if (tab === $ctrl.step) {
+      return false;
+    }
+    $ctrl.step = tab;
+    switch (tab) {
+      case 'ds':
+        $ctrl.onBack();
+        break;
+      case 'move':
+        $ctrl.onMove();
+        break;
+      case 'ready':
+        $ctrl.onReady();
+        break;
+    }
   };
 
   $ctrl.onTransfer = function () {
@@ -214,7 +230,6 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
   };
 
   $ctrl.onBack = function () {
-    $ctrl.step = 'ds';
     $ctrl.selected = null;
   };
 

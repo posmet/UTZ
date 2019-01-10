@@ -2,7 +2,7 @@
 <div ui-i18n="ru">
     <h2>Перебросы</h2>
     <uib-tabset active="$ctrl.step">
-        <uib-tab index="'ds'" heading="Сверхнормативы" ng-click="$ctrl.onBack()">
+        <uib-tab index="'ds'" heading="Сверхнормативы" select="$ctrl.onSelectTab('ds')">
             <div ng-if="$ctrl.step === 'ds'">
                 <div>
                     <ph-filter conditions="$ctrl.exchange.conditions" fields="$ctrl.fieldsListDS"></ph-filter>
@@ -17,7 +17,7 @@
                 </small>
             </div>
         </uib-tab>
-        <uib-tab index="'move'" heading="Перемещения" ng-click="$ctrl.onMove()">
+        <uib-tab index="'move'" heading="Перемещения" select="$ctrl.onSelectTab('move')">
             <div ng-if="$ctrl.step === 'move'">
                 <div>
                     <ph-filter conditions="$ctrl.conditionsTransfer" fields="$ctrl.fieldsListTransfer"></ph-filter>
@@ -33,7 +33,7 @@
                 </small>
             </div>
         </uib-tab>
-        <uib-tab index="'ready'" heading="Готовые перемещения" ng-click="$ctrl.onReady()">
+        <uib-tab index="'ready'" heading="Готовые перемещения" select="$ctrl.onSelectTab('ready')">
             <div ng-if="$ctrl.step === 'ready'">
                 <div>
                     <ph-filter conditions="$ctrl.conditionsReady" fields="$ctrl.fieldsListReady"></ph-filter>
