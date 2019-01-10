@@ -12,23 +12,23 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
   $ctrl.conditionsReady = [];
   $ctrl.conditionsTransfer = [];
   $ctrl.fieldsListTransfer = [
-    { name: 'ГрКод', field: 'Gr_ID', type: 'number', enableCellEdit: false },
-    { name: 'Наименование', field: 'Gr_Name', enableCellEdit: false },
-    { name: 'Код', field: 'Ph_ID', type: 'number', enableCellEdit: false },
-    { name: 'Аптека', field: 'Ph_Name', enableCellEdit: false },
-    { name: 'Сверхнорматив', field: 'DS', type: 'number', enableCellEdit: false },
-    { name: 'Куда Код', field: 'toPh_ID', type: 'number', enableCellEdit: false },
-    { name: 'Куда Аптека', field: 'toPh_Name', enableCellEdit: false },
-    { name: 'Скорость продаж', field: 'CalcVel', type: 'number', enableCellEdit: false },
-    { name: 'Остаток', field: 'Ost', type: 'number', enableCellEdit: false },
-    { name: 'Заявка', field: 'Req', enableCellEdit: true }
+    { name: 'ГрКод', field: 'Gr_ID', type: 'number', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Наименование', field: 'Gr_Name', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Код', field: 'Ph_ID', type: 'number', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Аптека', field: 'Ph_Name', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Сверхнорматив', field: 'DS', type: 'number', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Куда Код', field: 'toPh_ID', type: 'number', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Куда Аптека', field: 'toPh_Name', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Скорость продаж', field: 'CalcVel', type: 'number', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Остаток', field: 'Ost', type: 'number', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Заявка', field: 'Req', enableCellEdit: true, headerTooltip: true, cellTooltip: true }
   ];
   $ctrl.fieldsListDS = TableService.fieldList().concat([
-    { name: 'Акция', field: 'Action', enableCellEdit: true },
-    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number' },
-    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number' },
-    { name: 'Сверхнормативы', field: 'DS', enableCellEdit: false, type: 'number' },
-    { name: 'Перемещений', field: 'Tr', enableCellEdit: false, type: 'number' },
+    { name: 'Акция', field: 'Action', enableCellEdit: true, headerTooltip: true, cellTooltip: true },
+    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+    { name: 'Сверхнормативы', field: 'DS', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+    { name: 'Перемещений', field: 'Tr', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
     {
       name: 'Дней дефектуры',
       field: 'DD',
@@ -43,18 +43,19 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
           return 'color-orange';
         }
       }
+      , headerTooltip: true, cellTooltip: true
     },
   ]);
   $ctrl.fieldsListReady = [
-    { name: 'Дата', field: 'Dat', grouping: { groupPriority: 0 }},
-    { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number' },
-    { name: 'Аптека', field: 'Ph_Name', grouping: { groupPriority: 1 } },
-    { name: 'Код Куда', field: 'toPh_ID', enableCellEdit: false, type: 'number' },
-    { name: 'Аптека Куда', field: 'toPh_Name', enableCellEdit: false },
-    { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number' },
-    { name: 'Наименование', field: 'Gr_Name', enableCellEdit: false },
-    { name: 'Количество', field: 'Req', enableCellEdit: false, type: 'number' },
-    { name: 'Отправлено', field: 'Sent', enableCellEdit: false, type: 'number' }
+    { name: 'Дата', field: 'Dat', grouping: { groupPriority: 0 }, headerTooltip: true, cellTooltip: true},
+    { name: 'Код', field: 'Ph_ID', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+    { name: 'Аптека', field: 'Ph_Name', grouping: { groupPriority: 1 }, headerTooltip: true, cellTooltip: true },
+    { name: 'Код Куда', field: 'toPh_ID', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+    { name: 'Аптека Куда', field: 'toPh_Name', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+    { name: 'Наименование', field: 'Gr_Name', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+    { name: 'Количество', field: 'Req', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+    { name: 'Отправлено', field: 'Sent', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true }
   ];
   $ctrl.gridOptionsTransfer = {
     enableSorting: true,
@@ -88,7 +89,8 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
         gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, transferState, gridApi));
       }, 100);
     },
-    columnDefs: $ctrl.fieldsListTransfer
+    columnDefs: $ctrl.fieldsListTransfer,
+    headerTemplate: require('../../directives/uiGridHeader.html')
   };
   $ctrl.gridOptionsDS = {
     enableSorting: true,
@@ -109,7 +111,8 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
         gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, DSState, gridApi));
       }, 100);
     },
-    columnDefs: $ctrl.fieldsListDS
+    columnDefs: $ctrl.fieldsListDS,
+    headerTemplate: require('../../directives/uiGridHeader.html')
   };
   $ctrl.gridOptionsReady = {
     enableSorting: true,
@@ -128,7 +131,8 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
         gridApi.core.on.columnVisibilityChanged($scope, TableService.saveState.bind(null, readyState, gridApi));
       }, 100);
     },
-    columnDefs: $ctrl.fieldsListReady
+    columnDefs: $ctrl.fieldsListReady,
+    headerTemplate: require('../../directives/uiGridHeader.html')
   };
 
   $ctrl.onGetDS = function () {

@@ -45,19 +45,19 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
       }, 100);
     },
     columnDefs: [
-      { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number' },
+      { name: 'ГрКод', field: 'Gr_ID', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
       { name: 'Наименование', field: 'Gr_Name', width: '30%', enableCellEdit: false },
-      { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number' },
-      { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number' },
-      { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: true, type: 'number' },
-      { name: 'Врем Заказ', field: 'TempReq', enableCellEdit: true, type: 'number' },
-      { name: 'Скорость 30 дн', field: 'CalcVel30', enableCellEdit: false, type: 'number' },
-      { name: 'Остаток', field: 'Ost', enableCellEdit: false, type: 'number' },
-      { name: 'В пути', field: 'Wait', enableCellEdit: false, type: 'number' },
-      { name: 'Матрица', field: 'Matrix',  enableCellEdit: false },
-      { name: 'Маркетинг', field: 'Marketing',  enableCellEdit: false },
-      { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number' },
-      { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' },
+      { name: 'Кратность', field: 'Ratio', enableCellEdit: true, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Мин Запас', field: 'MinQty', enableCellEdit: true, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: true, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Врем Заказ', field: 'TempReq', enableCellEdit: true, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Скорость 30 дн', field: 'CalcVel30', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Остаток', field: 'Ost', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'В пути', field: 'Wait', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Матрица', field: 'Matrix',  enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+      { name: 'Маркетинг', field: 'Marketing',  enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+      { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
       {
         name: 'Дней дефектуры',
         field: 'DD',
@@ -72,9 +72,11 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
             return 'color-orange';
           }
         }
+        , headerTooltip: true, cellTooltip: true
       },
       { name: 'X',width:'30', cellTemplate: '<button class="btn btn-outline-danger btn-sm" ng-click="grid.appScope.deleteRow(row)">X</button>'}
-    ]
+    ],
+    headerTemplate: require('../../directives/uiGridHeader.html')
   };
 
   $scope.deleteRow = function (row) {

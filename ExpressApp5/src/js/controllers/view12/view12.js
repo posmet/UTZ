@@ -95,10 +95,10 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
   $ctrl.matrixlabel = "Все";
   $ctrl.checkadd = false;
   $ctrl.fieldsList = TableService.fieldList().concat([
-    { name: 'Заказано', field: 'Req', enableCellEdit: false, type: 'number' },
-    { name: 'Акция', field: 'Action', enableCellEdit: true },
-    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number' },
-    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number' },
+    { name: 'Заказано', field: 'Req', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+    { name: 'Акция', field: 'Action', enableCellEdit: true, headerTooltip: true, cellTooltip: true },
+    { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+    { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
     {
       name: 'Дней дефектуры',
       field: 'DD',
@@ -113,6 +113,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
           return 'color-orange';
         }
       }
+      , headerTooltip: true, cellTooltip: true
     },
   ]);
   $ctrl.fileData = [];
@@ -157,7 +158,8 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
       }, 100);
     },
     columnDefs: $ctrl.fieldsList,
-    rowTemplate: rowTemplate()
+    rowTemplate: rowTemplate(),
+    headerTemplate: require('../../directives/uiGridHeader.html')
   };
 
   $ctrl.onClick = function () {

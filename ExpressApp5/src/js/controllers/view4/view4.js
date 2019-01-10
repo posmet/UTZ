@@ -44,24 +44,29 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
       }, 100);
     },
     columnDefs: [
-      { name: 'ГрКод', field: 'GrCode', enableCellEdit: false, type: 'number' },
-      { name: 'Наименование', field: 'Gr_Name', width: '30%', enableCellEdit: false },
+      { name: 'ГрКод', field: 'GrCode', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Наименование', field: 'Gr_Name', width: '30%', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
       {
-        name: 'Заявка', field: 'Req', enableCellEdit: true, type: 'number', cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
-        if (row.entity.MP === 0) {
-          return 'red';
+        name: 'Заявка',
+        field: 'Req',
+        enableCellEdit: true,
+        type: 'number',
+        cellClass: function (grid, row, col, rowRenderIndex, colRenderIndex) {
+          if (row.entity.MP === 0) {
+            return 'red';
+          }
         }
-      }
+        , headerTooltip: true, cellTooltip: true
       },
-      { name: 'Диапазон', field: 'Range', enableCellEdit: false },
-      { name: 'Кратность', field: 'Ratio', enableCellEdit: false, type: 'number' },
-      { name: 'Мин Запас', field: 'MinQty', enableCellEdit: false, type: 'number' },
-      { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: false, type: 'number' },
-      { name: 'Скорость 30 дн', field: 'CalcVel30', enableCellEdit: false, type: 'number' },
-      { name: 'Остаток', field: 'Ost', enableCellEdit: false, type: 'number' },
-      { name: 'В пути', field: 'Wait', enableCellEdit: false, type: 'number' },
-      { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number' },
-      { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number' },
+      { name: 'Диапазон', field: 'Range', enableCellEdit: false, headerTooltip: true, cellTooltip: true },
+      { name: 'Кратность', field: 'Ratio', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Мин Запас', field: 'MinQty', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Мин Заказ', field: 'MinReq', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Скорость 30 дн', field: 'CalcVel30', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Остаток', field: 'Ost', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'В пути', field: 'Wait', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Цена закупки', field: 'PriceIn', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Цена продажи', field: 'PriceOut', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
       {
         name: 'Дней дефектуры',
         field: 'DD',
@@ -76,8 +81,10 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
             return 'color-orange';
           }
         }
+        , headerTooltip: true, cellTooltip: true
       }
-    ]
+    ],
+    headerTemplate: require('../../directives/uiGridHeader.html')
   };
 
   $ctrl.onSend = function () {

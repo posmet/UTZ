@@ -48,7 +48,8 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
       { name: "Категория", field: "Categories", enableCellEdit: true, headerTooltip: true, cellTooltip: true},
       { name: "График", field: "graph", enableCellEdit: true, headerTooltip: true, cellTooltip: true },
       { name: "Дней сверхнорамтивов", field: "over", enableCellEdit: true, type: 'number', headerTooltip: true, cellTooltip: true }
-    ]
+    ],
+    headerTemplate: require('../../directives/uiGridHeader.html')
   };
 
   $ctrl.onMatrix = function () {
