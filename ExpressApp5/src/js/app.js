@@ -8,6 +8,7 @@ import uiGrid from 'angular-ui-grid';
 import toastr from 'angular-toastr';
 import config from './app.config';
 import chartJS from 'angular-chart.js';
+import uiBootstrapTabs from 'angular-ui-bootstrap/src/tabs';
 
 import controllers from './app.controllers';
 import directives from './app.directives';
@@ -30,7 +31,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 const MODULE_NAME = 'UTZ';
 
 angular.module(MODULE_NAME, [
-    uiRouter, ngCookies, ngAnimate, ngAria, toastr, controllers, directives, services, chartJS,
+    uiRouter, ngCookies, ngAnimate, ngAria, toastr, controllers, directives, services, chartJS, uiBootstrapTabs,
     uiGrid, 'ui.grid.saveState', 'ui.grid.edit', 'ui.grid.exporter', 'ui.grid.moveColumns',
     'ui.grid.autoResize', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav',
     'ui.grid.expandable', 'ui.grid.importer','ui.grid.grouping',

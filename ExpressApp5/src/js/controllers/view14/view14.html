@@ -1,6 +1,55 @@
 <absolute-loading ng-if="busy"></absolute-loading>
 <div ui-i18n="ru">
-    <div ng-if="$ctrl.step === 'ds'">
+    <h2>Перебросы</h2>
+    <uib-tabset active="$ctrl.step">
+        <uib-tab index="'ds'" heading="Сверхнормативы" ng-click="$ctrl.onBack()">
+            <div ng-if="$ctrl.step === 'ds'">
+                <div>
+                    <ph-filter conditions="$ctrl.exchange.conditions" fields="$ctrl.fieldsListDS"></ph-filter>
+                    <div class="form-row">
+                        <div class="col-auto">
+                            <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onGetDS()">Получить</a>
+                        </div>
+                    </div>
+                </div>
+                <small>
+                    <div class="grid" ui-grid="$ctrl.gridOptionsDS" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-resize-columns ui-grid-selection ui-grid-cellnav></div>
+                </small>
+            </div>
+        </uib-tab>
+        <uib-tab index="'move'" heading="Перемещения" ng-click="$ctrl.onMove()">
+            <div ng-if="$ctrl.step === 'move'">
+                <div>
+                    <ph-filter conditions="$ctrl.conditionsTransfer" fields="$ctrl.fieldsListTransfer"></ph-filter>
+                    <div class="form-row">
+                        <div class="col-auto">
+                            <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onGetTransfer()">Получить</a>
+                            <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onTransfer()">Переместить</a>
+                        </div>
+                    </div>
+                </div>
+                <small>
+                    <div class="grid" ui-grid="$ctrl.gridOptionsTransfer" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-edit ui-grid-resize-columns ui-grid-selection ui-grid-cellnav></div>
+                </small>
+            </div>
+        </uib-tab>
+        <uib-tab index="'ready'" heading="Готовые перемещения" ng-click="$ctrl.onReady()">
+            <div ng-if="$ctrl.step === 'ready'">
+                <div>
+                    <ph-filter conditions="$ctrl.conditionsReady" fields="$ctrl.fieldsListReady"></ph-filter>
+                    <div class="form-row">
+                        <div class="col-auto">
+                            <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onGetReady()">Получить</a>
+                        </div>
+                    </div>
+                </div>
+                <small>
+                    <div class="grid" ui-grid="$ctrl.gridOptionsReady" ui-grid-grouping ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-resize-columns ui-grid-cellnav></div>
+                </small>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+    <!--<div ng-if="$ctrl.step === 'ds'">
         <h2>Сверхнормативы</h2>
         <div>
             <ph-filter conditions="$ctrl.exchange.conditions" fields="$ctrl.fieldsListDS"></ph-filter>
@@ -48,5 +97,5 @@
         <small>
             <div class="grid" ui-grid="$ctrl.gridOptionsTransfer" ui-grid-save-state ui-grid-move-columns ui-grid-exporter ui-grid-edit ui-grid-resize-columns ui-grid-selection ui-grid-cellnav></div>
         </small>
-    </div>
+    </div>-->
 </div>

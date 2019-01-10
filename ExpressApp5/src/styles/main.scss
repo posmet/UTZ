@@ -3,6 +3,52 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~angular-ui-grid/ui-grid.min.css';
 
+.toast {
+  &.toast-success {
+    background-color: #51A351 !important;
+  }
+  &.toast-error {
+    background-color: #BD362F !important;
+  }
+  &.toast-info {
+    background-color: #2F96B4 !important;
+  }
+  &.toast-warning {
+    background-color: #F89406 !important;
+  }
+}
+
+.nav-tabs {
+  & > li {
+    &.active {
+      & > a {
+        color: #555;
+        cursor: default;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-bottom-color: transparent !important;
+        &:hover {
+          color: #555;
+          cursor: default;
+          background-color: #fff;
+          border: 1px solid #ddd;
+        }
+      }
+    }
+    & > a {
+      margin-right: 2px;
+      line-height: 1.42857143;
+      border: 1px solid transparent;
+      border-radius: 4px 4px 0 0;
+      &:hover {
+        border-color: #eee #eee #ddd;
+        text-decoration: none;
+        background-color: #eee;
+      }
+    }
+  }
+}
+
 .overflow {
   position: absolute;
   width: 100%;
