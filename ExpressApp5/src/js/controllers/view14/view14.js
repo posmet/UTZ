@@ -1,5 +1,5 @@
-Ctrl.$inject = ['$scope', '$http', '$notify', 'exchange', '$state', '$timeout', 'TableService'];
-function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) {
+Ctrl.$inject = ['$scope', '$http', '$notify', 'exchange', '$state', '$timeout', 'TableService', '$filter'];
+function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, $filter) {
 
   const $ctrl = this;
   const DSState = 'gridState14';
@@ -187,21 +187,18 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
   $ctrl.onMove = function () {
     $ctrl.selected = $ctrl.gridApiDS.selection.getSelectedRows()[0];
     $ctrl.step = 'move';
-    $ctrl.conditionsTransfer = [];
-    if ($ctrl.selected) {
-      $ctrl.conditionsTransfer = [{
-        cond: 'eq',
-        field: "Ph_ID",
-        value: $ctrl.selected.Ph_ID,
-        type: 'number'
-      }, {
-        cond: 'eq',
-        field: "Gr_ID",
-        value: $ctrl.selected.Gr_ID,
-        type: 'number'
-      }];
-      $ctrl.onGetTransfer();
-    }
+    $ctrl.conditionsTransfer = $ctrl.selected ? [{
+      cond: 'eq',
+      field: "Ph_ID",
+      value: $ctrl.selected.Ph_ID,
+      type: 'number'
+    }, {
+      cond: 'eq',
+      field: "Gr_ID",
+      value: $ctrl.selected.Gr_ID,
+      type: 'number'
+    }] : $ctrl.exchange.conditions.slice();
+    $ctrl.onGetTransfer();
   };
 
   $ctrl.onTransfer = function () {

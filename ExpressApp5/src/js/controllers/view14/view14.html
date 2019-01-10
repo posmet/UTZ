@@ -1,13 +1,14 @@
 <absolute-loading ng-if="busy"></absolute-loading>
 <div ui-i18n="ru">
     <div ng-if="$ctrl.step === 'ds'">
+        <h2>Сверхнормативы</h2>
         <div>
             <ph-filter conditions="$ctrl.exchange.conditions" fields="$ctrl.fieldsListDS"></ph-filter>
             <div class="form-row">
                 <div class="col-auto">
                     <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onGetDS()">Получить</a>
                     <button class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onMove()">Перемещения</button>
-                    <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onReady()">Готовые</a>
+                    <button class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onReady()">Готовые</button>
                 </div>
             </div>
         </div>
@@ -16,12 +17,14 @@
         </small>
     </div>
     <div ng-if="$ctrl.step === 'ready'">
+        <h2>Готовые перемещения</h2>
         <div>
             <ph-filter conditions="$ctrl.conditionsReady" fields="$ctrl.fieldsListReady"></ph-filter>
             <div class="form-row">
                 <div class="col-auto">
                     <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onGetReady()">Получить</a>
                     <button class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onBack()">Сверхнормативы</button>
+                    <button class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onMove()">Перемещения</button>
                 </div>
             </div>
         </div>
@@ -30,6 +33,7 @@
         </small>
     </div>
     <div ng-if="$ctrl.step === 'move'">
+        <h2>Перемещения</h2>
         <div>
             <ph-filter conditions="$ctrl.conditionsTransfer" fields="$ctrl.fieldsListTransfer"></ph-filter>
             <div class="form-row">
@@ -37,6 +41,7 @@
                     <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onGetTransfer()">Получить</a>
                     <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onTransfer()">Переместить</a>
                     <button class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onBack()">Сверхнормативы</button>
+                    <button class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onReady()">Готовые</button>
                 </div>
             </div>
         </div>
