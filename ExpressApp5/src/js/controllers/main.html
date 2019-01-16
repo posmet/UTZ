@@ -4,11 +4,14 @@
             <a class="navbar-brand" href="javascript:void(0)">
                 <img src="/img/gid-apteka-300x80.png" width="112" height="30"/>
             </a>
-            <a class="nav-link" href="{{link.href}}" ng-class="{active: $ctrl.$state.current.url === link.href}" ng-repeat="link in $ctrl.interface[currentUser.interface].menu" >{{link.name}}</a>
+            <a ng-if="!currentUser.blocked" class="nav-link" href="{{link.href}}" ng-class="{active: $ctrl.$state.current.url === link.href}" ng-repeat="link in $ctrl.interface[currentUser.interface].menu" >{{link.name}}</a>
 
             Пользователь: {{currentUser.full_name}} {{ $ctrl.interface[currentUser.interface].name || '' }}
             <a class="nav-link" href="javascript:void(0)" ng-click="logout()">Выйти ←</a>
         </nav>
     </div>
-    <div ui-view=""></div>
+    <div ng-if="!currentUser.blocked" ui-view=""></div>
+    <div ng-if="currentUser.blocked">
+        <h2 style="text-align: center; margin-top: 50px;">Ведутся регламентные расчеты. Попробуйте позже.</h2>
+    </div>
 </div>
