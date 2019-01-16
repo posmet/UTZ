@@ -51,7 +51,7 @@ module.exports = function (app) {
 
   app.get('/api/name', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
     const request = new sql.Request(pool);
-    const sqlString = `SELECT * from ref_users where userid=${req.user.id}`;
+	  const sqlString = `SELECT ref_users.*,params.blocked from ref_users,params where userid=${req.user.id}`;
     const rs = await request.query(sqlString);
     if (!rs.recordset.length) {
       return messageManager.sendMessage(res, "Пользователь не найден", 401);
@@ -350,7 +350,7 @@ module.exports = function (app) {
 				sqlString = sqlUpdate + " where Ph_ID = " + rec.Ph_ID + " and Gr_ID = " + rec.Gr_ID;
    			    request.query(sqlString);
 			}
-			sqlString = "SELECT * from matrix_cez_n where Gr_ID= " + rec.Gr_ID + " and Ph_ID = " + rec.Ph_ID + ";";
+			//sqlString = "SELECT * from matrix_cez_n where Gr_ID= " + rec.Gr_ID + " and Ph_ID = " + rec.Ph_ID + ";";
 			console.log(sqlString);
 			//const rs = await request.query(sqlString);
 		})
