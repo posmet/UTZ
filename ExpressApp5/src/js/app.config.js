@@ -1,3 +1,4 @@
+export const otherwise = 'view1';
 config.$inject = ['$httpProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 export default function config($httpProvider, $stateProvider, $urlRouterProvider, $locationProvider) {
@@ -8,19 +9,29 @@ export default function config($httpProvider, $stateProvider, $urlRouterProvider
     enabled: true,
     requireBase: false
   });
-  $urlRouterProvider.otherwise('/view1');
+  $urlRouterProvider.otherwise(`/${otherwise}`);
 
   const views = [
-    1, 3, 4, 7, 8, 11, 12, 13, 14, 15
+    {id: 1, roles: []},
+    {id: 3, roles: [1, 8]},
+    {id: 4, roles: []},
+    {id: 7, roles: [1, 8]},
+    {id: 8, roles: [8]},
+    {id: 11, roles: [2, 4, 8]},
+    {id: 12, roles: [2, 4, 8]},
+    {id: 13, roles: [2, 4, 8]},
+    {id: 14, roles: [2, 4, 8]},
+    {id: 15, roles: [2, 4, 8]},
   ];
 
-  views.forEach(name => {
+  views.forEach(view => {
     $stateProvider
-      .state(`app.view${name}`, {
-        url: `/view${name}`,
-        controller: `View${name}Ctrl as $ctrl`,
-        template: require(`./controllers/view${name}/view${name}.html`),
-        authentication: true
+      .state(`app.view${view.id}`, {
+        url: `/view${view.id}`,
+        controller: `View${view.id}Ctrl as $ctrl`,
+        template: require(`./controllers/view${view.id}/view${view.id}.html`),
+        authentication: true,
+        roles: view.roles
       })
   });
 

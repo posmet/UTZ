@@ -1,15 +1,23 @@
 <div>
-    <div class="user-data">
-        <nav class="navbar">
-            <a class="navbar-brand" href="javascript:void(0)">
-                <img src="/img/gid-apteka-300x80.png" width="112" height="30"/>
-            </a>
-            <a ng-if="!currentUser.blocked" class="nav-link" href="{{link.href}}" ng-class="{active: $ctrl.$state.current.url === link.href}" ng-repeat="link in $ctrl.interface[currentUser.interface].menu" >{{link.name}}</a>
+    <nav class="navbar">
+        <a class="navbar-brand" href="javascript:void(0)">
+            <img src="/img/gid-apteka-300x80.png" width="112" height="30"/>
+        </a>
+        <div ng-if="!currentUser.blocked" ng-class="{active: $ctrl.$state.current.url === link.href}" ng-repeat="link in $ctrl.interface[currentUser.interface].menu" >
+            <a ng-if="!link.menu" href="{{link.href}}" class="nav-link" >{{link.name}}</a>
+            <span uib-dropdown ng-if="link.menu" class="nav-link">
+                <span uib-dropdown-toggle>{{link.name}}</span>
+                <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                    <li ng-repeat="submenu in link.menu">
+                      <a href="{{submenu.href}}">{{submenu.name}}</a>
+                    </li>
+                </ul>
+            </span>
+        </div>
 
-            Пользователь: {{currentUser.full_name}} {{ $ctrl.interface[currentUser.interface].name || '' }}
-            <a class="nav-link" href="javascript:void(0)" ng-click="logout()">Выйти ←</a>
-        </nav>
-    </div>
+        Пользователь: {{currentUser.full_name}} {{ $ctrl.interface[currentUser.interface].name || '' }}
+        <a class="nav-link" href="javascript:void(0)" ng-click="logout()">Выйти ←</a>
+    </nav>
     <div ng-if="!currentUser.blocked" ui-view=""></div>
     <div ng-if="currentUser.blocked">
         <h2 style="text-align: center; margin-top: 50px;">Ведутся регламентные расчеты. Попробуйте позже.</h2>
