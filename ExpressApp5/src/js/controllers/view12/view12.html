@@ -1,4 +1,12 @@
 <absolute-loading ng-if="busy || loading"></absolute-loading>
+<script type="text/ng-template" id="popovers/status-submit.html">
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="$ctrl.popovers.status" placeholder="">
+        <div class="input-group-append">
+            <button class="btn btn-outline-info" ng-click="$ctrl.onPopoverStatusSubmit($ctrl.popovers.status)" type="button">Получить</button>
+        </div>
+    </div>
+</script>
 <div>
     <div ui-i18n="ru">
         <form>
@@ -6,6 +14,15 @@
             <div class="form-row">
                 <div class="col-auto">
                     <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onClick()">Получить</a>
+                    <a class="btn btn-outline-primary btn-sm"
+                       ng-click="popoverStatusOpened = !popoverStatusOpened"
+                       popover-is-open="popoverStatusOpened"
+                       popover-class="bs-popover-bottom popover-value-submit"
+                       popover-animation="false"
+                       popover-append-to-body="true"
+                       popover-placement="bottom-left"
+                       popover-trigger="'outsideClick'"
+                       uib-popover-template="'popovers/status-submit.html'">Получить статус по всем</a>
                     <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onSearch()">Получить для подтверждения</a>
                     <label class="btn btn-outline-primary btn-sm btn-file">
                         Загрузить файл <input type="file" accept=".xls, .xlsx, .csv" custom-on-change="$ctrl.onFile(files)"/>
