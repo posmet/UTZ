@@ -1,0 +1,36 @@
+<div class="modal-body">
+    <button type="button" class="close" ng-click="$dismiss()" aria-label="Close"></button>
+    <div class="form-group row">
+        <label for="username" class="col-sm-2 col-form-label">Username</label>
+        <div class="col-sm-10">
+            <input type="text" ng-readonly="$resolve.user.userid > 0" class="form-control" id="username" ng-model="$resolve.user.User_Name" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="full_name" class="col-sm-2 col-form-label">full_name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="full_name" placeholder="" ng-model="$resolve.user.full_name">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="roles" class="col-sm-2 col-form-label">Аптеки</label>
+        <div class="col-sm-10">
+            <ui-select multiple ng-model="$resolve.user.roles" theme="bootstrap" id="roles">
+                <ui-select-match placeholder="Выберите аптеку...">{{$item.Ph_Name}}</ui-select-match>
+                <ui-select-choices repeat="pharms in $ctrl.pharms">
+                    <div ng-bind-html="pharms.Ph_Name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="blocked" class="col-sm-2 col-form-label">Blocked</label>
+        <div class="col-sm-10" style="display: flex;align-items: center;">
+            <input type="checkbox" id="blocked" ng-model="$resolve.user.blocked" ng-true-value="1" ng-false-value="0" />
+        </div>
+    </div>
+    <div class="button-group">
+        <button type="button" class="btn" ng-click="$dismiss()">Отменить</button>
+        <button type="button" class="btn btn-outline-primary" ng-click="$ctrl.save($resolve.user)">{{$resolve.user.userid ? 'Сохранить' : 'Создать'}}</button>
+    </div>
+</div>

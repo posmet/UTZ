@@ -2,8 +2,11 @@
 @import "~angular-toastr/dist/angular-toastr.css";
 @import '~bootstrap/scss/bootstrap';
 @import '~angular-ui-grid/ui-grid.min.css';
+@import "~ui-select/dist/select.css";
 @import 'nav';
 @import 'popover';
+@import 'modal';
+@import 'select';
 
 .toast {
   &.toast-success {
@@ -73,12 +76,6 @@
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both
-  }
-}
-
-.nav-link {
-  &.active {
-    color: #b400ff;
   }
 }
 
@@ -203,4 +200,8 @@
 
 .btn-file > input {
   display: none;
+}
+
+.modal-backdrop {
+  opacity: .5;
 }

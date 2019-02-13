@@ -8,6 +8,9 @@
   .nav-link {
     cursor: pointer;
     color: #007bff;
+    &.active {
+      color: #b400ff;
+    }
   }
   .dropdown {
     &.open {

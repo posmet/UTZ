@@ -3,8 +3,8 @@
         <a class="navbar-brand" href="javascript:void(0)">
             <img src="/img/gid-apteka-300x80.png" width="112" height="30"/>
         </a>
-        <div ng-if="!currentUser.blocked" ng-class="{active: $ctrl.$state.current.url === link.href}" ng-repeat="link in $ctrl.interface[currentUser.interface].menu" >
-            <a ng-if="!link.menu" href="{{link.href}}" class="nav-link" >{{link.name}}</a>
+        <div ng-if="!currentUser.blocked" ng-repeat="link in $ctrl.interface[currentUser.interface].menu" >
+            <a ng-if="!link.menu" ng-class="{active: $ctrl.$state.current.url === link.href}" href="{{link.href}}" class="nav-link" >{{link.name}}</a>
             <span uib-dropdown ng-if="link.menu" class="nav-link">
                 <span uib-dropdown-toggle>{{link.name}}</span>
                 <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">

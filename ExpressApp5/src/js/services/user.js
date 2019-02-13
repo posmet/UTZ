@@ -1,4 +1,4 @@
-function UserService($rootScope, $localStorage) {
+function UserService($rootScope, $localStorage, $http) {
 
   const nav = {
     1: {
@@ -53,10 +53,40 @@ function UserService($rootScope, $localStorage) {
   };
 
   return {
-    nav: () => nav
+    nav: () => nav,
+    userList: () => {
+      return $http({
+        method: 'GET',
+        url: '/api/users'
+      });
+    },
+    userInfo: (user) => {
+      return $http({
+        method: 'GET',
+        url: `/api/users/${user.userid}`
+      });
+    },
+    userDelete: (user) => {
+      return $http({
+        method: 'DELETE',
+        url: `/api/users/${user.userid}`
+      });
+    },
+    userUpdate: (user) => {
+      const opts = user.userid ? {
+        method: 'PUT',
+        url: `/api/users/${user.userid}`,
+        data: user
+      } : {
+        method: 'POST',
+        url: `/api/users`,
+        data: user
+      };
+      return $http(opts)
+    }
   };
 }
 
-UserService.$inject = ['$rootScope', '$localStorage'];
+UserService.$inject = ['$rootScope', '$localStorage', '$http'];
 
 export default UserService;

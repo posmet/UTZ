@@ -3,6 +3,7 @@ import jQuery from 'jquery';
 import uiRouter from 'angular-ui-router';
 import ngCookies from 'angular-cookies';
 import ngAnimate from 'angular-animate';
+import ngSanitize from 'angular-sanitize';
 import ngAria from 'angular-aria';
 import uiGrid from 'angular-ui-grid';
 import toastr from 'angular-toastr';
@@ -11,10 +12,13 @@ import chartJS from 'angular-chart.js';
 import uiBootstrapTabs from 'angular-ui-bootstrap/src/tabs';
 import uiBootstrapDropdown from 'angular-ui-bootstrap/src/dropdown';
 import uiBootstrapPopover from 'angular-ui-bootstrap/src/popover';
+import uiBootstrapModal from 'angular-ui-bootstrap/src/modal';
+import uiSelect from 'ui-select';
 
 import controllers from './app.controllers';
 import directives from './app.directives';
 import services from './app.services';
+import filters from './app.filters';
 
 //styles
 import '../styles/main.scss';
@@ -33,7 +37,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 const MODULE_NAME = 'UTZ';
 
 angular.module(MODULE_NAME, [
-    uiRouter, ngCookies, ngAnimate, ngAria, toastr, controllers, directives, services, chartJS, uiBootstrapTabs, uiBootstrapDropdown, uiBootstrapPopover,
+    uiRouter, ngCookies, ngAnimate, ngSanitize, ngAria, toastr, controllers, directives, services, filters,
+    chartJS, uiSelect, uiBootstrapTabs, uiBootstrapDropdown, uiBootstrapPopover, uiBootstrapModal,
     uiGrid, 'ui.grid.saveState', 'ui.grid.edit', 'ui.grid.exporter', 'ui.grid.moveColumns',
     'ui.grid.autoResize', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav',
     'ui.grid.expandable', 'ui.grid.importer','ui.grid.grouping',
