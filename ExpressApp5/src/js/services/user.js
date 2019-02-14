@@ -22,7 +22,7 @@ function UserService($rootScope, $localStorage, $http) {
     },
     4: {
       menu: [
-        {href: '/view21', name: 'Аптеки'},
+        {href: '/view1', name: 'Аптеки'},
         {href: '/view22', name: 'Пользователи'},
         {href: '/view23', name: 'Монитор'},
         {href: '/view24', name: 'История'},

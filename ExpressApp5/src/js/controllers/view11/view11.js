@@ -1,5 +1,5 @@
-Ctrl.$inject = ['$scope', '$http', '$notify', 'exchange', '$state', '$timeout', 'TableService'];
-function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) {
+Ctrl.$inject = ['$scope', '$http', '$notify', 'exchange', '$state', '$timeout', 'TableService', 'PharmService'];
+function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, PharmService) {
 
   const $ctrl = this;
   const stateName = 'gridState11';
@@ -63,15 +63,12 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
     $state.go('app.view12');
   };
 
-  $http({
-    method: 'GET',
-    url: '/api/Result'
-  })
-  .then(function (response) {
-    $ctrl.gridOptions.data = response.data;
-  }, function (err) {
-    $notify.errors(err);
-  });
+  PharmService.pharmList()
+    .then(function (response) {
+      $ctrl.gridOptions.data = response.data;
+    }, function (err) {
+      $notify.errors(err);
+    });
 }
 
 export default Ctrl;
