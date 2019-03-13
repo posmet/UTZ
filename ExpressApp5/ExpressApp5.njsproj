@@ -41,6 +41,9 @@
     <Compile Include="boot\passport.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="config\development.js" />
+    <Compile Include="config\index.js" />
+    <Compile Include="config\production.js" />
     <Compile Include="public\angular-chart.js" />
     <Compile Include="public\appO.js" />
     <Compile Include="public\app.js" />
@@ -655,6 +658,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="boot\" />
+    <Folder Include="config\" />
     <Folder Include="public\" />
     <Folder Include="public\css\" />
     <Folder Include="public\images\" />
