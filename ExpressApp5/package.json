@@ -24,6 +24,7 @@
     "angular-chart.js": "^1.1.1",
     "angular-cookies": "^1.7.5",
     "angular-fixed-table-header": "*",
+    "angular-sanitize": "^1.7.7",
     "angular-smart-table": "^2.1.11",
     "angular-toastr": "^2.1.1",
     "angular-ui-bootstrap": "^2.5.6",
@@ -66,6 +67,7 @@
     "pdfmake": "^0.1.39",
     "popper.js": "^1.14.4",
     "stylus": "*",
+    "ui-select": "^0.19.8",
     "underscore": "^1.9.1"
   },
   "devDependencies": {

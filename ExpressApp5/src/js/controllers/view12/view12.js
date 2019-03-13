@@ -263,7 +263,30 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
 
   $ctrl.onCheck = function () {
     $ctrl.matrixlabel = $ctrl.matrix ? "Все":"Матрица" ;
-  }
+  };
+
+  $ctrl.popovers = {
+    status: ''
+  };
+
+  $scope.$watch('popoverStatusOpened', function(v) {
+
+  });
+
+  $ctrl.onPopoverStatusSubmit = function (value) {
+    if (!value) {
+      return false;
+    }
+    $http({
+      method: 'GET',
+      url: `/api/ResultMtrxn?value=${value}`
+    })
+    .then(function (response) {
+      $scope.popoverStatusOpened = false;
+    }, function (err) {
+      $notify.errors(err);
+    });
+  };
 }
 
 export default Ctrl;

@@ -1,0 +1,35 @@
+<absolute-loading ng-if="busy"></absolute-loading>
+<div class="container-fluid" style="margin-top: 30px">
+    <button ng-click="$ctrl.onEdit({})" class="btn btn-outline-success">
+        <i class="fa fa-plus"></i> Новый пользователь
+    </button>
+    <table class="table table-bordered" style="margin-top: 15px">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User_Name</th>
+                <th>full_name</th>
+                <th>Blocked</th>
+                <th colspan="2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in $ctrl.users">
+                <td>{{user.userid}}</td>
+                <td>{{user.User_Name}}</td>
+                <td>{{user.full_name}}</td>
+                <td>{{user.blocked}}</td>
+                <td width="125">
+                    <button ng-click="$ctrl.onEdit(user)" class="btn btn-outline-primary btn-sm">
+                        <i class="fa fa-pencil-alt"></i> Изменить
+                    </button>
+                </td>
+                <td width="125">
+                    <button ng-click="$ctrl.onDelete(user, $index)" class="btn btn-outline-warning btn-sm">
+                        <i class="fa fa-trash"></i> Удалить
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

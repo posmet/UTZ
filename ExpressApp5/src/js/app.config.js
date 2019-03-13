@@ -17,11 +17,14 @@ export default function config($httpProvider, $stateProvider, $urlRouterProvider
     {id: 4, roles: []},
     {id: 7, roles: [1, 8]},
     {id: 8, roles: [8]},
+
     {id: 11, roles: [2, 4, 8]},
     {id: 12, roles: [2, 4, 8]},
     {id: 13, roles: [2, 4, 8]},
     {id: 14, roles: [2, 4, 8]},
     {id: 15, roles: [2, 4, 8]},
+
+    {id: 22, roles: [4, 8]},
   ];
 
   views.forEach(view => {

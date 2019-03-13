@@ -1,0 +1,13 @@
+.ui-select-container {
+  &.open {
+    .dropdown-menu {
+      display: block;
+    }
+  }
+  .ui-select-match-item {
+    &.btn {
+      padding: 2px 5px;
+      font-size: 14px;
+    }
+  }
+}
