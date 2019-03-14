@@ -74,6 +74,8 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
         }
         , headerTooltip: true, cellTooltip: true
       },
+      { name: 'Продажи30', field: 'Sales30', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Продажи60', field: 'Sales60', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
       { name: 'X',width:'30', cellTemplate: '<button class="btn btn-outline-danger btn-sm" ng-click="grid.appScope.deleteRow(row)">X</button>'}
     ],
     headerTemplate: require('../../directives/uiGridHeader.html')
