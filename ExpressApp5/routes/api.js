@@ -367,7 +367,7 @@ module.exports = function (app) {
 	}));
 	app.get('/api/users/:id', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
-		const sqlString = "SELECT ref_users.userid, ref_users.User_Name, ref_users.full_name, ref_users.interface, Pharms.Ph_ID, Pharms.Ph_Name, Pharms.Group_Name, Roles.Rd_Matrix, Roles.Wr_Matrix, Roles.Rd_Req,Roles.Wr_Req	FROM ref_users INNER JOIN Roles ON ref_users.userid = Roles.UserID INNER JOIN		Pharms ON Roles.Ph_ID = Pharms.Ph_ID where userid=" + req.params.id;
+		const sqlString = "SELECT ref_users.userid, ref_users.User_Name, ref_users.full_name, ref_users.interface, Pharms.Ph_ID, Pharms.Ph_Name, Pharms.Group_Name, Roles.Rd_Matrix, Roles.Wr_Matrix, Roles.Rd_Req,Roles.Wr_Req	FROM ref_users INNER JOIN Roles ON ref_users.userid = Roles.UserID INNER JOIN		Pharms ON Roles.Ph_ID = Pharms.Ph_ID where ref_users.userid=" + req.params.id;
 		console.log(sqlString);
 		const rs = await request.query(sqlString);
 		res.json(rs.recordset);
@@ -377,7 +377,7 @@ module.exports = function (app) {
 		const sqlString = `insert into ref_users(User_Name,pwd,full_name,interface) values('${req.body.User_Name}','${req.body.pwd}','${req.body.full_name}','${req.body.interface})'`;
 		console.log(sqlString);
 		const rs = await request.query(sqlString);
-		res.json(rs.recordset);
+		res.json('ok');
 	}));
 	app.put('/api/users/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
@@ -391,28 +391,28 @@ module.exports = function (app) {
 		const sqlString = `delete from ref_users where userid=${req.params.userid}`;
 		console.log(sqlString);
 		const rs = await request.query(sqlString);
-		res.json(rs.recordset);
+		res.json('ok');
 	}));
 	app.post('/api/roles/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
 		const sqlString = `insert into ref_users(userid,ph_id,Rd_Matrix,Wr_Matrix,Rd_Req,Wr_Req) values('${req.body.userid}','${req.Ph_ID}','${req.body.Rd_Matrix}','${req.body.Wr_Matrix},'${req.body.Rd_Req}','${req.body.Wr_Req})'`;
 		console.log(sqlString);
 		const rs = await request.query(sqlString);
-		res.json(rs.recordset);
+		res.json('ok');
 	}));
 	app.put('/api/roles/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
 		const sqlString = `update ref_users set Rd_Matrix='${req.body.Rd_Matrix}',Wr_Matrix='${req.body.Wr_Matrix}',Rd_Req='${req.body.Rd_Req}',Wr_Req=${req.body.Wr_Req} where userid=${req.body.userid} and Ph_ID = ${req.body.Ph_ID}`;
 		console.log(sqlString);
 		const rs = await request.query(sqlString);
-		res.json(rs.recordset);
+		res.json('ok');
 	}));
 	app.delete('/api/roles/:userid/:phid', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
 		const sqlString = `delete from Roles where userid=${req.params.userid} and ph_id = ${req.params.phid}`;
 		console.log(sqlString);
 		const rs = await request.query(sqlString);
-		res.json(rs.recordset);
+		res.json('ok');
 	}));
 };
 

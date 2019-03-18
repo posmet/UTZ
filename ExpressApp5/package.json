@@ -64,7 +64,7 @@
     "passport-facebook": "*",
     "passport-local": "*",
     "passport-vkontakte": "*",
-    "pdfmake": "^0.1.39",
+    "pdfmake": "^0.1.53",
     "popper.js": "^1.14.4",
     "stylus": "*",
     "ui-select": "^0.19.8",
