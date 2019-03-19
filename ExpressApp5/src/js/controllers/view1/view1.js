@@ -66,7 +66,7 @@ function Ctrl($rootScope, $http, $notify, exchange, $state, PharmService, $scope
     if (!value) {
       return false;
     }
-    PharmService.pharmUpdate({Ph_Name: value})
+    PharmService.update({Ph_Name: value})
       .then((response) => {
         getPharmList();
         this.popoverPharmOpened = false;
@@ -87,7 +87,7 @@ function Ctrl($rootScope, $http, $notify, exchange, $state, PharmService, $scope
     });
 
     modalInstance.result.then(() => {
-      PharmService.pharmDelete(row.entity)
+      PharmService.delete(row.entity)
         .then((response) => {
           getPharmList();
         }, (err) => {
@@ -97,7 +97,7 @@ function Ctrl($rootScope, $http, $notify, exchange, $state, PharmService, $scope
   };
 
   let getPharmList = () => {
-    PharmService.pharmList()
+    PharmService.list()
       .then((response) => {
         this.pharms = response.data;
         this.gridOptions.data = response.data;

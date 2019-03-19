@@ -1,13 +1,13 @@
 function PharmService($rootScope, $http) {
 
   return {
-    pharmList: () => {
+    list: () => {
       return $http({
         method: 'GET',
         url: '/api/result'
       });
     },
-    pharmUpdate: (pharm) => {
+    update: (pharm) => {
       const opts = pharm.Ph_ID ? {
         method: 'PUT',
         url: `/api/pharms/${pharm.Ph_ID}`,
@@ -19,7 +19,7 @@ function PharmService($rootScope, $http) {
       };
       return $http(opts)
     },
-    pharmDelete: (pharm) => {
+    delete: (pharm) => {
       return $http({
         method: 'DELETE',
         url: `/api/pharms/${pharm.Ph_ID}`

@@ -63,7 +63,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     $state.go('app.view12');
   };
 
-  PharmService.pharmList()
+  PharmService.list()
     .then(function (response) {
       $ctrl.gridOptions.data = response.data;
     }, function (err) {

@@ -292,6 +292,25 @@ module.exports = function (app) {
     res.json(rs.recordset);
   }));
 
+  app.post('/api/pharms/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+    if (!req.body.Ph_Name) {
+      throw new Error('Необходимо указать название аптеки');
+    }
+    const request = new sql.Request(pool);
+    const sqlString = `insert into pharms(Ph_Name) values('${req.body.Ph_Name}')`;
+    console.log(sqlString);
+    await request.query(sqlString);
+    res.json(messageManager.buildSuccess());
+  }));
+
+  app.delete('/api/pharms/:id', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+    const request = new sql.Request(pool);
+    const sqlString = `delete from pharms where ph_id=${req.params.id}`;
+    console.log(sqlString);
+    await request.query(sqlString);
+    res.json(messageManager.buildSuccess());
+  }));
+
   app.post('/api/updateph/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
     const request = new sql.Request(pool);
     const sqlString = "update pharms set d_d=" + req.body.D_D + ",d_a=" + req.body.D_A + ",d_t=" + req.body.D_T + ",kmin=" + req.body.Kmin + ",kmax=" + req.body.Kmax + ", Categories='" + req.body.Categories + "', graph = '" + req.body.graph + "', [over]=" + req.body.over+" where ph_id=" + req.body.Ph_ID;

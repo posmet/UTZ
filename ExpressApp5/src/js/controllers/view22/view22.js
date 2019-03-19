@@ -19,9 +19,8 @@ function Ctrl($rootScope, $scope, $http, $notify, $uibModal, UserService, TableS
       $ctrl.gridApi = gridApi;
       $scope.gridApi = gridApi;
       gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-        console.log(newValue, oldValue);
         if (newValue != oldValue) {
-          UserService.userUpdate(rowEntity)
+          UserService.update(rowEntity)
             .then((response) => {
 
             }, (err) => {
@@ -78,7 +77,7 @@ function Ctrl($rootScope, $scope, $http, $notify, $uibModal, UserService, TableS
     });
 
     modalInstance.result.then(() => {
-      UserService.userDelete(user)
+      UserService.delete(user)
         .then(loadUsers, (err) => {
           $notify.errors(err);
         });
@@ -104,7 +103,7 @@ function Ctrl($rootScope, $scope, $http, $notify, $uibModal, UserService, TableS
   };
 
   const loadUsers = () => {
-    UserService.userList()
+    UserService.list()
       .then((response) => {
         response.data.forEach(v => {
           v.blocked = v.blocked || 0;
