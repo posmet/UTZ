@@ -13,18 +13,19 @@ function Ctrl($rootScope, $http, $notify, exchange, $state, PharmService, $scope
   this.gridOptions = {
     enableSorting: true,
     enableFiltering: true,
-    MultiSelect: false,
+    showGridFooter: true,
     enableCellEditOnFocus: true,
     onRegisterApi: function (gridApi) {
       $scope.gridApi = gridApi;
       gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-        //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
         if (newValue != oldValue) {
-          $http.post('/api/updateph/', rowEntity).then(function (response) {
-            console.log(rowEntity);
-          }, function (err) {
-            $notify.errors(err);
-          });
+          PharmService.update(rowEntity.Ph_ID, {[colDef.field]: newValue})
+            .then(function (response) {
+
+            }, function (err) {
+              rowEntity[colDef.field] = oldValue;
+              $notify.errors(err);
+            });
         }
       });
       gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -66,7 +67,7 @@ function Ctrl($rootScope, $http, $notify, exchange, $state, PharmService, $scope
     if (!value) {
       return false;
     }
-    PharmService.update({Ph_Name: value})
+    PharmService.create({Ph_ID: value})
       .then((response) => {
         getPharmList();
         this.popoverPharmOpened = false;
@@ -81,7 +82,7 @@ function Ctrl($rootScope, $http, $notify, exchange, $state, PharmService, $scope
       component: 'confirmModal',
       resolve: {
         name: function () {
-          return `Вы действительно хотите удалить аптеку ${row.entity.Ph_Name}?`;
+          return `Вы действительно хотите удалить аптеку ${row.entity.Ph_Name || row.entity.Ph_ID}?`;
         }
       }
     });
@@ -97,7 +98,8 @@ function Ctrl($rootScope, $http, $notify, exchange, $state, PharmService, $scope
   };
 
   let getPharmList = () => {
-    PharmService.list()
+    let promise = $rootScope.currentUser.interface === 4 ? PharmService.list() : PharmService.listByUser();
+    promise
       .then((response) => {
         this.pharms = response.data;
         this.gridOptions.data = response.data;

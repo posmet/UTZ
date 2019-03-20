@@ -48,6 +48,19 @@ const addwhere = function (conds) {
 
 };
 
+const objToString = (obj) => {
+  let str = '';
+  Object.keys(obj).forEach((key, index) => {
+    let postfix = index !== Object.keys(obj).length - 1 ? ',' : '';
+    if (key === 'over') {
+      str = `${str} [over]=${obj[key]}${postfix}`;
+    } else {
+      str = `${str} ${key}='${obj[key]}'${postfix}`;
+    }
+  });
+  return str;
+};
+
 module.exports = function (app) {
 
   app.get('/api/name', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
@@ -292,12 +305,20 @@ module.exports = function (app) {
     res.json(rs.recordset);
   }));
 
+  app.get('/api/pharms/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+    const request = new sql.Request(pool);
+    const sqlString = `select * from pharms`;
+    console.log(sqlString);
+    const rs = await request.query(sqlString);
+    res.json(rs.recordset);
+  }));
+
   app.post('/api/pharms/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
-    if (!req.body.Ph_Name) {
-      throw new Error('Необходимо указать название аптеки');
+    if (!req.body.Ph_ID) {
+      throw new Error('Необходимо указать код аптеки');
     }
     const request = new sql.Request(pool);
-    const sqlString = `insert into pharms(Ph_Name) values('${req.body.Ph_Name}')`;
+    const sqlString = `insert into pharms(Ph_ID) values('${req.body.Ph_ID}')`;
     console.log(sqlString);
     await request.query(sqlString);
     res.json(messageManager.buildSuccess());
@@ -311,13 +332,21 @@ module.exports = function (app) {
     res.json(messageManager.buildSuccess());
   }));
 
-  app.post('/api/updateph/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+  app.put('/api/pharms/:id', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+    const request = new sql.Request(pool);
+    const sqlString = `update pharms set ${objToString(req.body)} where ph_id=${req.params.id}`;
+    console.log(sqlString);
+    await request.query(sqlString);
+    res.json(messageManager.buildSuccess());
+  }));
+
+  /*app.post('/api/updateph/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
     const request = new sql.Request(pool);
     const sqlString = "update pharms set d_d=" + req.body.D_D + ",d_a=" + req.body.D_A + ",d_t=" + req.body.D_T + ",kmin=" + req.body.Kmin + ",kmax=" + req.body.Kmax + ", Categories='" + req.body.Categories + "', graph = '" + req.body.graph + "', [over]=" + req.body.over+" where ph_id=" + req.body.Ph_ID;
     console.log(sqlString);
     await request.query(sqlString);
     res.json(messageManager.buildSuccess());
-  }));
+  }));*/
 
   app.get('/api/acceptmx/:ph_id/:gr_id', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
     const request = new sql.Request(pool);

@@ -1,7 +1,7 @@
 <absolute-loading ng-if="busy"></absolute-loading>
 <script type="text/ng-template" id="popovers/new-pharm.html">
     <div class="input-group">
-        <input type="text" class="form-control" ng-model="$ctrl.popovers.pharm" placeholder="Название аптеки">
+        <input type="number" min="1" class="form-control" ng-model="$ctrl.popovers.pharm" placeholder="Код аптеки">
         <div class="input-group-append">
             <button class="btn btn-outline-info" ng-click="$ctrl.onPopoverPharmSubmit($ctrl.popovers.pharm)" type="button">Создать</button>
         </div>
