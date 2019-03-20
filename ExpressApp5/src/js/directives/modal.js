@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 let ConfirmModal = () => {
   return {
     restrict: 'E',
@@ -15,24 +17,58 @@ let UserEditModal = () => {
     controllerAs: '$ctrl',
     controller: ['$scope', '$http', '$notify', 'PharmService', 'UserService', function ($scope, $http, $notify, PharmService, UserService) {
 
-      PharmService.pharmList()
-        .then((response) => {
-          this.pharms = response.data || [];
-        }, (err) => {
-          $notify.errors(err);
-        });
-
-      if ($scope.$resolve.user.userid) {
-        UserService.userInfo($scope.$resolve.user)
+      const getPharmList = () => {
+        PharmService.pharmList()
           .then((response) => {
-            Object.assign($scope.$resolve.user, response.data);
+            this.pharms = response.data || [];
           }, (err) => {
             $notify.errors(err);
           });
+      };
+
+      this.interfaces = Object.keys(UserService.nav()).map(v => {
+        const intValue = parseInt(v, 10);
+        return {id: intValue, value: intValue}
+      });
+      this.roles = [];
+      $scope.$resolve.user.roles = $scope.$resolve.user.roles || [];
+
+      if ($scope.$resolve.user.userid) {
+        UserService.userRoles($scope.$resolve.user)
+          .then((response) => {
+            $scope.$resolve.user.roles = response.data;
+          }, (err) => {
+            $notify.errors(err);
+          })
+          .then(getPharmList);
+      } else {
+        getPharmList();
       }
 
-      this.save = (user) => {
-        UserService.userUpdate(user)
+      this.filterPharms = (v) => {
+        return _.findIndex($scope.$resolve.user.roles, (o) => o.Ph_ID === v.Ph_ID) === -1;
+      };
+
+      this.save = (Form, user) => {
+        if (Form.$invalid) {
+          if (Form.User_Name.$invalid) {
+            $notify.warning("Необходимо ввести имя пользователя");
+          }
+          if (Form.pwd.$invalid) {
+            $notify.warning("Необходимо ввести пароль пользователя");
+          }
+          if (Form.interface.$invalid) {
+            $notify.warning("Необходимо выбрать интерфейс пользователя");
+          }
+          return false;
+        }
+        let promise = null;
+        if (user.userid) {
+          promise = UserService.userRoleUpdate(user);
+        } else {
+          promise = UserService.userUpdate(user);
+        }
+        promise
           .then((response) => {
             $scope.$close(user);
           }, (err) => {

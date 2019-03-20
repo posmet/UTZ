@@ -205,3 +205,19 @@
 .modal-backdrop {
   opacity: .5;
 }
+
+.table-roles {
+  margin: 10px 5px;
+  th, td {
+    font-size: 12px;
+    padding: 5px;
+    text-align: center;
+  }
+  td {
+    font-size: 14px;
+    vertical-align: middle;
+    &:nth-child(1) {
+      text-align: left;
+    }
+  }
+}

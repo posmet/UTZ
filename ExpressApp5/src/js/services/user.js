@@ -57,13 +57,13 @@ function UserService($rootScope, $localStorage, $http) {
     userList: () => {
       return $http({
         method: 'GET',
-        url: '/api/users'
+        url: '/api/users/'
       });
     },
-    userInfo: (user) => {
+    userRoles: (user) => {
       return $http({
         method: 'GET',
-        url: `/api/users/${user.userid}`
+        url: `/api/roles/${user.userid}`
       });
     },
     userDelete: (user) => {
@@ -83,6 +83,13 @@ function UserService($rootScope, $localStorage, $http) {
         data: user
       };
       return $http(opts)
+    },
+    userRoleUpdate: (user) => {
+      return $http({
+        method: 'PUT',
+        url: `/api/roles/${user.userid}`,
+        data: user
+      });
     }
   };
 }

@@ -3,6 +3,7 @@ const pool = require('../boot/sql');
 const middleware = require('../services/Middleware');
 const authService = require('../services/Auth');
 const messageManager = require('../services/Message');
+const _ = require('lodash');
 
 const addwhere = function (conds) {
   let sqlString = '';
@@ -51,7 +52,8 @@ module.exports = function (app) {
 
   app.get('/api/name', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
     const request = new sql.Request(pool);
-	  const sqlString = `SELECT userid,User_Name,full_name,interface,params.blocked from ref_users,params where userid=${req.user.id}`;
+    const sqlString = `SELECT userid,User_Name,full_name,interface,params.blocked from ref_users,params where userid=${req.user.id}`;
+	  console.log(sqlString);
     const rs = await request.query(sqlString);
     if (!rs.recordset.length) {
       return messageManager.sendMessage(res, "Пользователь не найден", 401);
@@ -365,54 +367,85 @@ module.exports = function (app) {
 		const rs = await request.query(sqlString);
 		res.json(rs.recordset);
 	}));
-	app.get('/api/users/:id', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
-		const request = new sql.Request(pool);
-		const sqlString = "SELECT ref_users.userid, ref_users.User_Name, ref_users.full_name, ref_users.interface, Pharms.Ph_ID, Pharms.Ph_Name, Pharms.Group_Name, Roles.Rd_Matrix, Roles.Wr_Matrix, Roles.Rd_Req,Roles.Wr_Req	FROM ref_users INNER JOIN Roles ON ref_users.userid = Roles.UserID INNER JOIN		Pharms ON Roles.Ph_ID = Pharms.Ph_ID where ref_users.userid=" + req.params.id;
-		console.log(sqlString);
-		const rs = await request.query(sqlString);
-		res.json(rs.recordset);
-	}));
+
 	app.post('/api/users/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
-		const sqlString = `insert into ref_users(User_Name,pwd,full_name,interface) values('${req.body.User_Name}','${req.body.pwd}','${req.body.full_name}','${req.body.interface})'`;
+		let sqlString = `insert into ref_users(User_Name,pwd,full_name,interface) values('${req.body.User_Name}','${req.body.pwd}','${req.body.full_name || ''}',${req.body.interface})`;
 		console.log(sqlString);
-		const rs = await request.query(sqlString);
-		res.json('ok');
+		await request.query(sqlString);
+		if (req.body.roles && req.body.roles.length) {
+		  sqlString = `select TOP (1) * from ref_users where User_Name='${req.body.User_Name}'`;
+		  const rs = await request.query(sqlString);
+		  for (let i=0; i<req.body.roles.length; i++) {
+        const sqlString1 = `insert into Roles(userid,ph_id,Rd_Matrix,Wr_Matrix,Rd_Req,Wr_Req) values('${rs.recordset[0].userid}','${req.body.roles[i].Ph_ID}','${req.body.roles[i].Rd_Matrix || 0}','${req.body.roles[i].Wr_Matrix || 0}','${req.body.roles[i].Rd_Req || 0}','${req.body.roles[i].Wr_Req || 0}')`;
+        console.log(sqlString1);
+        await request.query(sqlString1);
+      }
+    }
+		res.json(messageManager.buildSuccess());
 	}));
-	app.put('/api/users/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+
+	app.put('/api/users/:userId', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
-		const sqlString = `update ref_users set User_Name='${req.body.User_Name}',pwd='${req.body.pwd}',full_name='${req.body.full_name}',interface=${req.body.interface} where userid=${req.body.userid}`;
+		const sqlString = `update ref_users set pwd='${req.body.pwd}',full_name='${req.body.full_name || ''}',interface=${req.body.interface} where userid=${req.params.userId}`;
 		console.log(sqlString);
 		const rs = await request.query(sqlString);
 		res.json(rs.recordset);
 	}));
-	app.delete('/api/users/:userid', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+
+	app.delete('/api/users/:userId', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
-		const sqlString = `delete from ref_users where userid=${req.params.userid}`;
+		const sqlString = `delete from ref_users where userid=${req.params.userId}`;
 		console.log(sqlString);
 		const rs = await request.query(sqlString);
-		res.json('ok');
+		res.json(rs.recordset);
 	}));
-	app.post('/api/roles/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+
+  app.get('/api/roles/:userId', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+    const request = new sql.Request(pool);
+    const sqlString = `SELECT Roles.userid, Roles.Ph_ID, Pharms.Ph_Name, Roles.Rd_Matrix, Roles.Wr_Matrix, Roles.Rd_Req,Roles.Wr_Req	FROM Roles INNER JOIN Pharms ON Roles.Ph_ID = Pharms.Ph_ID where Roles.userid=${req.params.userId}`;
+    console.log(sqlString);
+    const rs = await request.query(sqlString);
+    res.json(rs.recordset);
+  }));
+
+	app.put('/api/roles/:userId', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
-		const sqlString = `insert into ref_users(userid,ph_id,Rd_Matrix,Wr_Matrix,Rd_Req,Wr_Req) values('${req.body.userid}','${req.Ph_ID}','${req.body.Rd_Matrix}','${req.body.Wr_Matrix},'${req.body.Rd_Req}','${req.body.Wr_Req})'`;
+		if (!Array.isArray(req.body.roles)) {
+      return messageManager.sendMessage(res, 'Отсутствует параметр roles');
+    }
+		let sqlString = `select * from Roles where userid=${req.params.userId}`;
 		console.log(sqlString);
 		const rs = await request.query(sqlString);
-		res.json('ok');
+		const bodyRoles = _.keyBy(req.body.roles, 'Ph_ID');
+    let queries = [];
+    for (let i = 0; i < rs.recordset.length; i++) {
+      const item = rs.recordset[i];
+      const bodyItem = bodyRoles[item.Ph_ID];
+      //удалили
+      if (!bodyItem) {
+        queries.push(`delete from Roles where userid=${req.params.userId} and ph_id = ${item.Ph_ID}`);
+      } else {
+        bodyItem.used = true;
+        if (bodyItem.Rd_Matrix !== item.Rd_Matrix || bodyItem.Wr_Matrix !== item.Wr_Matrix || bodyItem.Rd_Req !== item.Rd_Req || bodyItem.Wr_Req !== item.Wr_Req) {
+          //изменили
+          queries.push(`update Roles set Rd_Matrix='${bodyItem.Rd_Matrix || 0}',Wr_Matrix='${bodyItem.Wr_Matrix || 0}',Rd_Req='${bodyItem.Rd_Req || 0}',Wr_Req='${bodyItem.Wr_Req || 0}' where userid=${req.params.userId} and ph_id = ${item.Ph_ID}`);
+        }
+      }
+    }
+    for (let i = 0; i < req.body.roles.length; i++) {
+      const bodyItem = req.body.roles[i];
+      //добавили
+      if (!bodyItem.used) {
+        queries.push(`insert into Roles(userid,ph_id,Rd_Matrix,Wr_Matrix,Rd_Req,Wr_Req) values('${req.params.userId}','${bodyItem.Ph_ID}','${bodyItem.Rd_Matrix || 0}','${bodyItem.Wr_Matrix || 0}','${bodyItem.Rd_Req || 0}','${bodyItem.Wr_Req || 0}')`);
+      }
+    }
+    console.log(queries);
+    for (let i = 0; i < queries.length; i++) {
+      await request.query(queries[i]);
+    }
+		res.json(messageManager.buildSuccess());
 	}));
-	app.put('/api/roles/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
-		const request = new sql.Request(pool);
-		const sqlString = `update ref_users set Rd_Matrix='${req.body.Rd_Matrix}',Wr_Matrix='${req.body.Wr_Matrix}',Rd_Req='${req.body.Rd_Req}',Wr_Req=${req.body.Wr_Req} where userid=${req.body.userid} and Ph_ID = ${req.body.Ph_ID}`;
-		console.log(sqlString);
-		const rs = await request.query(sqlString);
-		res.json('ok');
-	}));
-	app.delete('/api/roles/:userid/:phid', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
-		const request = new sql.Request(pool);
-		const sqlString = `delete from Roles where userid=${req.params.userid} and ph_id = ${req.params.phid}`;
-		console.log(sqlString);
-		const rs = await request.query(sqlString);
-		res.json('ok');
-	}));
+
 };
 
