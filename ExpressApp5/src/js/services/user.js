@@ -54,25 +54,25 @@ function UserService($rootScope, $localStorage, $http) {
 
   return {
     nav: () => nav,
-    userList: () => {
+    list: () => {
       return $http({
         method: 'GET',
         url: '/api/users/'
       });
     },
-    userRoles: (user) => {
+    roles: (user) => {
       return $http({
         method: 'GET',
         url: `/api/roles/${user.userid}`
       });
     },
-    userDelete: (user) => {
+    delete: (user) => {
       return $http({
         method: 'DELETE',
         url: `/api/users/${user.userid}`
       });
     },
-    userUpdate: (user) => {
+    update: (user) => {
       const opts = user.userid ? {
         method: 'PUT',
         url: `/api/users/${user.userid}`,
@@ -84,7 +84,7 @@ function UserService($rootScope, $localStorage, $http) {
       };
       return $http(opts)
     },
-    userRoleUpdate: (user) => {
+    roleUpdate: (user) => {
       return $http({
         method: 'PUT',
         url: `/api/roles/${user.userid}`,

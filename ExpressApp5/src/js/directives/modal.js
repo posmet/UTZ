@@ -18,7 +18,7 @@ let UserEditModal = () => {
     controller: ['$scope', '$http', '$notify', 'PharmService', 'UserService', function ($scope, $http, $notify, PharmService, UserService) {
 
       const getPharmList = () => {
-        PharmService.pharmList()
+        PharmService.list()
           .then((response) => {
             this.pharms = response.data || [];
           }, (err) => {
@@ -34,7 +34,7 @@ let UserEditModal = () => {
       $scope.$resolve.user.roles = $scope.$resolve.user.roles || [];
 
       if ($scope.$resolve.user.userid) {
-        UserService.userRoles($scope.$resolve.user)
+        UserService.roles($scope.$resolve.user)
           .then((response) => {
             $scope.$resolve.user.roles = response.data;
           }, (err) => {
@@ -64,9 +64,9 @@ let UserEditModal = () => {
         }
         let promise = null;
         if (user.userid) {
-          promise = UserService.userRoleUpdate(user);
+          promise = UserService.roleUpdate(user);
         } else {
-          promise = UserService.userUpdate(user);
+          promise = UserService.update(user);
         }
         promise
           .then((response) => {
