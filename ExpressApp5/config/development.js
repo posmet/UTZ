@@ -1,11 +1,11 @@
 module.exports = {
-  /*mssql: {
+  mssql: {
     user: 'online',
     password: 'njkcnsq',
     server: 'ga02.5dd.ru\\MSSQLSERVER1',
     database: 'REQUEST'
-  },*/
-  mssql: {
+  },
+  /*mssql: {
     user: 'sa',
     password: '123456',
     server: '192.168.1.37',
@@ -14,5 +14,5 @@ module.exports = {
       instanceName: 'SQLEXPRESS',
       database: 'REQUEST',
     },
-  }
+  }*/
 };
