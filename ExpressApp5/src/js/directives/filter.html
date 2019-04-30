@@ -5,12 +5,18 @@
         </select>
     </div>
     <div class="col-auto">
-        <select ng-model="cond.cond" class="form-control-sm">
+        <select ng-model="cond.cond" ng-change="changeCondition($index)" class="form-control-sm">
             <option ng-repeat="opt in compList" ng-value="opt.val">{{opt.label}}</option>
         </select>
     </div>
     <div class="col-auto">
-        <input type="text" ng-model="cond.value" class="form-control-sm"/>
+        <input ng-if="['ls', 'nls', 'nl', 'nnl'].indexOf(cond.cond) === -1" type="text" ng-model="cond.value" class="form-control-sm"/>
+        <ui-select ng-if="['ls', 'nls'].indexOf(cond.cond) > -1" multiple tagging tagging-label="" ng-model="cond.value" theme="bootstrap" style="min-width: 200px; max-width: 400px">
+            <ui-select-match placeholder="">{{$item}}</ui-select-match>
+            <ui-select-choices repeat="item in []">
+                {{item}}
+            </ui-select-choices>
+        </ui-select>
     </div>
     <div class="col-auto">
         <button ng-click="ondelcond($index)" class="btn btn-outline-danger btn-sm">

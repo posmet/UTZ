@@ -12,14 +12,14 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     onRegisterApi: function (gridApi) {
       $scope.gridApi = gridApi;
       gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-        //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
         if (newValue != oldValue) {
-          $http.post('/api/updateph/', rowEntity).then(function (response) {
-            $ctrl.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
-            $scope.$apply();
-          }, function (err) {
-            $notify.errors(err);
-          });
+          PharmService.update(rowEntity.Ph_ID, {[colDef.field]: newValue})
+            .then(function (response) {
+
+            }, function (err) {
+              rowEntity[colDef.field] = oldValue;
+              $notify.errors(err);
+            });
         }
       });
       gridApi.selection.on.rowSelectionChanged($scope, function (row) {
@@ -63,7 +63,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     $state.go('app.view12');
   };
 
-  PharmService.list()
+  PharmService.listByUser()
     .then(function (response) {
       $ctrl.gridOptions.data = response.data;
     }, function (err) {

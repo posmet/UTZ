@@ -3,9 +3,10 @@ function Ctrl($rootScope, $scope, $http, $notify, $uibModal, UserService, TableS
 
   const $ctrl = this;
   const stateName = 'gridState22';
-  const interfaces = Object.keys(UserService.nav()).map(v => {
+  const nav = UserService.nav();
+  const interfaces = Object.keys(nav).map(v => {
     const intValue = parseInt(v, 10);
-    return {id: intValue, value: intValue}
+    return {id: intValue, value: `${v} (${nav[v].name})`}
   });
 
   $ctrl.gridOptions = {
@@ -38,18 +39,18 @@ function Ctrl($rootScope, $scope, $http, $notify, $uibModal, UserService, TableS
       }, 100);
     },
     columnDefs: [
-      { name: 'userid', field: 'userid', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
-      { name: 'User_Name', field: 'User_Name', enableCellEdit: false },
-      { name: 'full_name', field: 'full_name', enableCellEdit: true, headerTooltip: true, cellTooltip: true },
+      { name: 'ID', field: 'userid', enableCellEdit: false, type: 'number', headerTooltip: true, cellTooltip: true },
+      { name: 'Логин', field: 'User_Name', enableCellEdit: false },
+      { name: 'Имя', field: 'full_name', enableCellEdit: true, headerTooltip: true, cellTooltip: true },
       {
-        name: 'pwd',
+        name: 'Пароль',
         field: 'pwd',
         enableCellEdit: true,
         headerTooltip: true,
         cellTooltip: true
       },
       {
-        name: 'interface',
+        name: 'Интерфейс',
         field: 'interface',
         enableCellEdit: true,
         headerTooltip: true,
@@ -90,6 +91,7 @@ function Ctrl($rootScope, $scope, $http, $notify, $uibModal, UserService, TableS
       animation: false,
       component: 'userEditModal',
       resolve: {
+        interfaces: () => interfaces,
         user: () => {
           return Object.assign({}, user);
         }

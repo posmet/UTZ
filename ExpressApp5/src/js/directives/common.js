@@ -40,6 +40,14 @@ let PhFilter = () => {
         {
           val: "lt",
           label: "меньше"
+        },
+        {
+          val: "ls",
+          label: "в списке"
+        },
+        {
+          val: "nls",
+          label: "не в списке"
         }
       ];
       scope.showCondition = function (value, cond) {
@@ -55,6 +63,17 @@ let PhFilter = () => {
           return item.field === condition.field;
         })[0];
         condition.type = found.type;
+      };
+
+      scope.changeCondition = function ($index) {
+        let condition = scope.conditions[$index];
+        if (["ls", "nls"].indexOf(condition.cond) > -1) {
+          if (typeof condition.val === 'string') {
+            condition.val = [condition.val];
+          }
+        } else if (Array.isArray(condition.val)) {
+          condition.val = condition.val.length ? condition.val[0] : "";
+        }
       };
 
       scope.ondelcond = function ($index) {

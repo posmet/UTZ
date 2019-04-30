@@ -4,20 +4,28 @@ function PharmService($rootScope, $http) {
     list: () => {
       return $http({
         method: 'GET',
+        url: '/api/pharms'
+      });
+    },
+    listByUser: () => {
+      return $http({
+        method: 'GET',
         url: '/api/result'
       });
     },
-    update: (pharm) => {
-      const opts = pharm.Ph_ID ? {
-        method: 'PUT',
-        url: `/api/pharms/${pharm.Ph_ID}`,
-        data: pharm
-      } : {
+    create: (pharm) => {
+      return $http({
         method: 'POST',
-        url: `/api/pharms`,
+        url: '/api/pharms/',
         data: pharm
-      };
-      return $http(opts)
+      });
+    },
+    update: (id, pharm) => {
+      return $http({
+        method: 'PUT',
+        url: `/api/pharms/${id}`,
+        data: pharm
+      });
     },
     delete: (pharm) => {
       return $http({

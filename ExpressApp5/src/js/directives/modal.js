@@ -26,10 +26,6 @@ let UserEditModal = () => {
           });
       };
 
-      this.interfaces = Object.keys(UserService.nav()).map(v => {
-        const intValue = parseInt(v, 10);
-        return {id: intValue, value: intValue}
-      });
       this.roles = [];
       $scope.$resolve.user.roles = $scope.$resolve.user.roles || [];
 
