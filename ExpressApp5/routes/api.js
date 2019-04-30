@@ -11,8 +11,13 @@ const addwhere = function (conds) {
     sqlString = sqlString + ' where ';
     sqlString = sqlString + conds.reduce(function (prev, curr) {
       var Whr = prev;
-      if (prev != '')
-        Whr = Whr + ' and ';
+		if (prev !== '') {
+			Whr = Whr + ' and ';
+			if (curr.condition === 'nls') {
+				Whr = Whr + ' not (';
+			}
+
+		}
       Whr = Whr + curr.field;
       switch (curr.cond) {
         case 'eq':
@@ -38,8 +43,14 @@ const addwhere = function (conds) {
           break;
         case 'lt':
           Whr = Whr + " < '" + curr.value + "'";
-          break;
-      }
+		  break;
+		case 'ls':
+		  Whr = Whr + " IN ('" + curr.value.join() + "')";
+		  break;
+		case 'nls':
+		  Whr = Whr + " IN ('" + curr.value.join() + "'))";
+		  break;
+	  }
       return Whr;
 
     }, "");

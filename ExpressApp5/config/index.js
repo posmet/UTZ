@@ -6,7 +6,7 @@ nconf
   .file({ file: './config/config.json' });
 
 const all = {
-  mssql: {
+  pg: {
     connectionTimeout: 180000,
     requestTimeout: 180000,
     options: {
@@ -30,7 +30,7 @@ const all = {
 
 const merged = _.merge(
   all,
-  require('./' + nconf.get('NODE_ENV') + '.js') || {});
+  require('./' + 'development' + '.js') || {});
 
 for (let key in merged) {
   nconf.set(key, merged[key]);
