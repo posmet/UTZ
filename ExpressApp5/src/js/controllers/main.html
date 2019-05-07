@@ -23,3 +23,19 @@
         <h2 style="text-align: center; margin-top: 50px;">Ведутся регламентные расчеты. Попробуйте позже.</h2>
     </div>
 </div>
+
+<script type="text/ng-template" id="popovers/group-code-submit.html">
+    <div class="input-group" style="flex-wrap: nowrap">
+        <ui-select ng-model="$ctrl.popovers.code"
+                   tagging tagging-label="false"
+                   theme="bootstrap">
+            <ui-select-match placeholder="Введите код...">{{$select.selected.goods_group_id || $select.selected}}</ui-select-match>
+            <ui-select-choices repeat="code in $ctrl.codes | filter:$select.search">
+                <div ng-bind-html="code.goods_group_id | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+        <div class="input-group-append">
+            <button class="btn btn-outline-info" ng-click="$ctrl.onPopoverCodeSubmit($ctrl.popovers.code)" type="button">Добавить</button>
+        </div>
+    </div>
+</script>

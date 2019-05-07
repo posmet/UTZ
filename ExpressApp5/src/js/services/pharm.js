@@ -13,11 +13,24 @@ function PharmService($rootScope, $http) {
         url: '/api/result'
       });
     },
+    listGroupCodes: (filter) => {
+      return $http({
+        method: 'POST',
+        url: '/api/table/Gg_attr',
+        data: {filter}
+      });
+    },
     create: (pharm) => {
       return $http({
         method: 'POST',
         url: '/api/pharms/',
         data: pharm
+      });
+    },
+    createByGroupCode: (pharmId, groupCode) => {
+      return $http({
+        method: 'GET',
+        url: '/api/addmx/' + pharmId + "/" + groupCode
       });
     },
     update: (id, pharm) => {
