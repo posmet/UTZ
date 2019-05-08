@@ -577,11 +577,11 @@ module.exports = function (app) {
 
   app.post('/api/table/:key', middleware.asyncMiddleware(async (req, res) => {
 	  const request = new sql.Request(pool);
+	  let limit = '';
 	  if (req.body.limit) {
-		  let sqlString = `SELECT TOP(${req.body.limit}) * from ${req.params.key} ${addwhere(req.body.filter)}`;
-	  } else {
-		  let sqlString = `SELECT * from ${req.params.key} ${addwhere(req.body.filter)}`;
+	    limit = `TOP(${req.body.limit})`;
 	  }
+    let sqlString = `SELECT ${limit} * from ${req.params.key} ${addwhere(req.body.filter)}`;
 		  
     console.log(sqlString);
     const rs = await request.query(sqlString);
