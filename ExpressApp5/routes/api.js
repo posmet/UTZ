@@ -350,6 +350,14 @@ module.exports = function (app) {
     await request.query(sqlString);
     res.json(messageManager.buildSuccess());
   }));
+	app.get('/api/gg_attr/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
+		const request = new sql.Request(pool);
+		const sqlString = "select * from gg_attr";
+		console.log(sqlString);
+		const rs = await request.query(sqlString);
+		res.json(rs.recordset);
+	}));
+
 
   /*app.post('/api/updateph/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
     const request = new sql.Request(pool);
