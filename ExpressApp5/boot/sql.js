@@ -9,7 +9,7 @@ const connect = () => {
     .then(pool => {
       console.log('pool connected');
     }).catch(err => {
-      setTimeout(() => connect, 5000);
+      setTimeout(connect, 5000);
       console.error('Error creating connection pool', err);
     });
 };

@@ -2,7 +2,17 @@
 <div>
     <h3>Настройка параметров обработки активной матрицы аптеки</h3>
     <div class="form-row">
-        <a class="btn btn-outline-primary btn-sm" ng-click="$ctrl.onCreate()">Добавить</a>
+        <a
+            class="btn btn-outline-primary btn-sm"
+            ng-click="popoverCodeOpened = !popoverCodeOpened"
+            popover-is-open="popoverCodeOpened"
+            popover-class="bs-popover-bottom popover-value-submit"
+            popover-animation="false"
+            popover-append-to-body="true"
+            popover-placement="bottom-left"
+            popover-trigger="'outsideClick'"
+            uib-popover-template="'popovers/group-code-submit.html'"
+        >Добавить по групповому коду</a>
         {{$ctrl.rsp}}
     </div>
     <div ng-show="$ctrl.checkadd">

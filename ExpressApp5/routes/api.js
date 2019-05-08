@@ -392,29 +392,90 @@ module.exports = function (app) {
     await request.query(sqlString);
     res.json(messageManager.buildSuccess());
   }));
+
 	app.post('/api/sendfile/', authService.isAuthenticated(), middleware.asyncMiddleware(async (req, res) => {
 		const request = new sql.Request(pool);
-		var response = '';
-		var sqlString = '';
-		req.body.items.forEach(function(rec,i,arr) {
-			if (rec.M === 'Н') {
-				sqlString = "exec api_deletematrix " + rec.Ph_ID + " , " + rec.Gr_ID + ",'" + req.user.username + "' ";
-			    request.query(sqlString);
-			} else {
-				sqlString = "exec api_addmatrix " + rec.Ph_ID + ", " + rec.Gr_ID + ",'" + req.user.username + "'";
-				console.log(sqlString);
-			    request.query(sqlString);
-				var sqlUpdate = 'update matrix set valid = 1';
-				req.body.cols.forEach(function(col,j,arrc) {
-					if (col.enableCellEdit && rec[col.field]) sqlUpdate = sqlUpdate + ",[" + col.field + "] = '" + rec[col.field] + "'";
-				});
-				sqlString = sqlUpdate + " where Ph_ID = " + rec.Ph_ID + " and Gr_ID = " + rec.Gr_ID;
-   			    request.query(sqlString);
-			}
-			//sqlString = "SELECT * from matrix_cez_n where Gr_ID= " + rec.Gr_ID + " and Ph_ID = " + rec.Ph_ID + ";";
-			console.log(sqlString);
-			//const rs = await request.query(sqlString);
-		})
+		let response = [];
+    let responseParams = [];
+		req.body.items.forEach(async (rec,i,arr) => {
+      let sqlString = '';
+      if (rec.M === 'Н') {
+        if (rec.Ph_ID) {
+          sqlString = `exec api_deletematrix ${rec.Ph_ID}, ${rec.Gr_ID},'${req.user.username}'`;
+          try {
+            await request.query(sqlString);
+          } catch (e) {
+
+          }
+          console.log(sqlString);
+        }
+      } else {
+        if (rec.Ph_ID) {
+          sqlString = `exec api_addmatrix ${rec.Ph_ID}, ${rec.Gr_ID},'${req.user.username}'`;
+          try {
+            await request.query(sqlString);
+            if (!responseParams.some(v => v.Ph_ID === rec.Ph_ID && v.Gr_ID === rec.Gr_ID)) {
+              responseParams.push({Ph_ID: rec.Ph_ID, Gr_ID: rec.Gr_ID});
+            }
+          } catch (e) {
+
+          }
+          console.log(sqlString);
+        } else {
+          sqlString = `SELECT Ph_ID FROM Pharms WHERE Categories='${rec.Categories}'`;
+          let pharms = null;
+          try {
+            pharms = await request.query(sqlString);
+          } catch (e) {
+
+          }
+          console.log(sqlString);
+          if (pharms) {
+            pharms.recordset.forEach(async (ph) => {
+              sqlString = `exec api_addmatrix ${ph.Ph_ID}, ${rec.Gr_ID},'${req.user.username}'`;
+              try {
+                await request.query(sqlString);
+                if (!responseParams.some(v => v.Ph_ID === ph.Ph_ID && v.Gr_ID === rec.Gr_ID)) {
+                  responseParams.push({Ph_ID: ph.Ph_ID, Gr_ID: rec.Gr_ID});
+                }
+              } catch (e) {
+
+              }
+              console.log(sqlString);
+            });
+          }
+        }
+        let sqlUpdate = 'update matrix set valid = 1';
+        req.body.cols.forEach(function (col, j, arrc) {
+          if (col.enableCellEdit && rec[col.field]) sqlUpdate = sqlUpdate + ",[" + col.field + "] = '" + rec[col.field] + "'";
+        });
+        sqlString =  `${sqlUpdate} where Gr_ID = ${rec.Gr_ID} and Ph_ID `;
+        if (rec.Ph_ID) {
+          sqlString = `${sqlString} = ${rec.Ph_ID}`;
+        } else {
+          sqlString = `${sqlString} IN (SELECT Ph_ID FROM Pharms WHERE Categories='${rec.Categories}')`;
+        }
+        try {
+          await request.query(sqlString);
+        } catch (e) {
+
+        }
+        console.log(sqlString);
+      }
+		});
+		if (responseParams.length) {
+      responseParams.forEach(async (r) => {
+        let sqlString = `SELECT * from matrix_cez_n where Ph_ID=${r.Ph_ID} and Gr_ID=${r.Gr_ID}`;
+        let rs = null;
+        try {
+          rs = await request.query(sqlString);
+          response = response.concat(rs.recordset);
+        } catch (e) {
+
+        }
+        console.log(sqlString);
+      });
+    }
 		res.json(response);
 
 	}));
@@ -505,6 +566,15 @@ module.exports = function (app) {
     }
 		res.json(messageManager.buildSuccess());
 	}));
+
+  app.post('/api/table/:key', middleware.asyncMiddleware(async (req, res) => {
+    const request = new sql.Request(pool);
+    let sqlString = `SELECT * from ${req.params.key} ${addwhere(req.body.filter)}`;
+    console.log(sqlString);
+    const rs = await request.query(sqlString);
+    res.json(rs.recordset);
+  }));
+
 
 };
 

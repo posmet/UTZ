@@ -1,7 +1,7 @@
 import ExcelJS from 'exceljs/dist/exceljs.min';
 
-Ctrl.$inject = ['$scope', '$http', '$notify', 'exchange', '$state', '$timeout', 'TableService'];
-function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) {
+Ctrl.$inject = ['$scope', '$http', '$notify', 'exchange', '$state', '$timeout', 'TableService', 'PharmService'];
+function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, PharmService) {
 
   const $ctrl = this;
   const stateName = 'gridState12';
@@ -202,6 +202,9 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
     $http.post('/api/sendfile/', {items: $ctrl.gridOptions.data,cols:$ctrl.gridOptions.columnDefs})
       .then(function (response) {
         $notify.success('Записи успешно отправлены');
+        $ctrl.fileData = [];
+        $ctrl.serverData = response.data;
+        $ctrl.gridOptions.data = $ctrl.serverData;
       }, function (err) {
         $notify.errors(err);
       });
@@ -287,6 +290,26 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
       $notify.errors(err);
     });
   };
+
+  $ctrl.onPopoverCodeSubmit = function (value) {
+    if (!value || !$ctrl.exchange.pharmid) {
+      return false;
+    }
+    PharmService.createByGroupCode($ctrl.exchange.pharmid, value.goods_group_id || value)
+      .then(function (response) {
+        $notify.success("Успешно добавлено");
+      }, function (err) {
+        $notify.errors(err);
+      });
+  };
+
+  PharmService.listGroupCodes()
+    .then((response) => {
+      $ctrl.codes = response.data || [];
+    }, (err) => {
+      // $ctrl.codes = [{goods_group_id: 12}, {goods_group_id: 45}];
+      $notify.errors(err);
+    });
 }
 
 export default Ctrl;

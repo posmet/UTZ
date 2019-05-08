@@ -6,7 +6,7 @@ nconf
   .file({ file: './config/config.json' });
 
 const all = {
-  pg: {
+  mssql: {
     connectionTimeout: 180000,
     requestTimeout: 180000,
     options: {
