@@ -17,7 +17,7 @@ function PharmService($rootScope, $http) {
       return $http({
         method: 'POST',
         url: '/api/table/Gg_attr',
-        data: {filter}
+        data: {filter: filter || [], limit: 100}
       });
     },
     create: (pharm) => {

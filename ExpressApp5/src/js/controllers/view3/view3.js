@@ -23,6 +23,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
         //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
         if (newValue != oldValue) {
           TableService.minQty05.apply(null, arguments);
+          $scope.loading = true;
           $http({
             method: 'GET',
             url: '/api/updatemx/' + rowEntity.Ph_ID + "/" + rowEntity.Gr_ID + "/" + rowEntity.MinQty + "/" + rowEntity.MinReq + "/" + rowEntity.Ratio + "/" + rowEntity.TempReq
@@ -32,6 +33,9 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
             $scope.$apply();
           }, function (err) {
             $notify.errors(err);
+          })
+          .then(() => {
+            $scope.loading = false;
           });
         }
       });
@@ -94,6 +98,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
       return;
     }
     $ctrl.rsp = '/api/deletemx/' + pharm.Ph_ID + "/" + pharm.Gr_ID;
+    $scope.loading = true;
     $http({
       method: 'GET',
       url: '/api/deletemx/' + pharm.Ph_ID + "/" + pharm.Gr_ID
@@ -104,9 +109,13 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
       $ctrl.gridOptions.data.splice($index, 1);
     }, function (err) {
       $notify.errors(err);
+    })
+    .then(() => {
+      $scope.loading = false;
     });
   };
 
+  $scope.loading = true;
   $http({
     method: 'GET',
     url: '/api/Resultmtrx/' + $ctrl.exchange.pharmid
@@ -115,27 +124,42 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     $ctrl.gridOptions.data = response.data;
   }, function (err) {
     $notify.errors(err);
+  })
+  .then(() => {
+    $scope.loading = false;
   });
 
   $ctrl.onPopoverCodeSubmit = function (value) {
     if (!value || !$ctrl.exchange.pharmid) {
       return false;
     }
+    $scope.loading = true;
     PharmService.createByGroupCode($ctrl.exchange.pharmid, value.goods_group_id || value)
       .then(function (response) {
         $notify.success("Успешно добавлено");
       }, function (err) {
         $notify.errors(err);
+      })
+      .then(() => {
+        $scope.loading = false;
       });
   };
 
-  PharmService.listGroupCodes()
-    .then((response) => {
-      $ctrl.codes = response.data || [];
-    }, (err) => {
-      // $ctrl.codes = [{goods_group_id: 12}, {goods_group_id: 45}];
-      $notify.errors(err);
-    });
+  $ctrl.refreshCodes = function (value) {
+    if (!value) {
+      return false;
+    }
+    if (value.length < 2) {
+      return false;
+    }
+    PharmService.listGroupCodes([{field: "goods_group_id", cond: "cn", value}])
+      .then((response) => {
+        $ctrl.codes = response.data || [];
+      }, (err) => {
+        // $ctrl.codes = [{goods_group_id: 12}, {goods_group_id: 45}];
+        $notify.errors(err);
+      });
+  };
 }
 
 export default Ctrl;

@@ -133,11 +133,15 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
         //rowEntity.MinQty = rowEntity.MinQty.replace(",", ".");
         if (newValue != oldValue) {
           TableService.minQty05.apply(null, arguments);
+          $scope.loading = true;
           $http.post('/api/updatemx/', rowEntity).then(function (response) {
             $ctrl.msg.lastCellEdited = 'Изменено строка:' + rowEntity.Gr_ID + ' Столбец:' + colDef.name + ' Было:' + oldValue + ' Стало:' + newValue;
             $scope.$apply();
           }, function (err) {
             $notify.errors(err);
+          })
+          .then(() => {
+            $scope.loading = false;
           });
         }
       });
@@ -169,6 +173,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     if (!$ctrl.exchange.grid) {
       $ctrl.exchange.grid = 0;
     }
+    $scope.loading = true;
     $http.post('/api/ResultMtrxn/', {
       conds: $ctrl.exchange.conditions
     })
@@ -177,6 +182,9 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
         $ctrl.gridOptions.data = $ctrl.fileData.concat($ctrl.serverData);
       }, function (err) {
         $notify.errors(err);
+      })
+      .then(() => {
+        $scope.loading = false;
       });
   };
 
@@ -199,6 +207,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
       return false;
     }
     alert('отправка ' + $ctrl.fileData.length + ' записей');
+    $scope.loading = true;
     $http.post('/api/sendfile/', {items: $ctrl.gridOptions.data,cols:$ctrl.gridOptions.columnDefs})
       .then(function (response) {
         $notify.success('Записи успешно отправлены');
@@ -207,11 +216,15 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
         $ctrl.gridOptions.data = $ctrl.serverData;
       }, function (err) {
         $notify.errors(err);
+      })
+      .then(() => {
+        $scope.loading = false;
       });
   };
 
   $ctrl.onDelete = function () {
     $ctrl.rsp = "удаление" + $ctrl.exchange.Gr_Name;
+    $scope.loading = true;
     $http.post('/api/deletemx/', exchange.entity)
       .then(function (response) {
         $ctrl.rsp = '';
@@ -219,6 +232,9 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
       },
       function (err) {
         $notify.errors(err);
+      })
+      .then(() => {
+        $scope.loading = false;
       });
   };
 
@@ -227,12 +243,16 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     console.log($ctrl.gridOptions.data[$ctrl.gridOptions.data.indexOf(exchange.entity)]);
     if (exchange.entity.M == 'Н') {
       $ctrl.rsp = "добавление";
+      $scope.loading = true;
       $http.post('/api/addmx/', exchange.entity)
         .then(function (response) {
           $ctrl.rsp = '';
           $ctrl.gridOptions.data[$ctrl.gridOptions.data.indexOf(exchange.entity)] = response.data;
         }, function (err) {
           $notify.errors(err);
+        })
+        .then(() => {
+          $scope.loading = false;
         });
     }
   };
@@ -244,6 +264,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     if (!$ctrl.searchGrp) {
       $ctrl.searchGrp = 0;
     }
+    $scope.loading = true;
     $http({
       method: 'GET',
       url: '/api/resultmtrxacc'
@@ -252,6 +273,9 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
       $ctrl.gridOptions.data = response.data;
     }, function (err) {
       $notify.errors(err);
+    })
+    .then(() => {
+      $scope.loading = false;
     });
 
   };
@@ -280,6 +304,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     if (!value) {
       return false;
     }
+    $scope.loading = true;
     $http({
       method: 'GET',
       url: `/api/ResultMtrxn?value=${value}`
@@ -288,6 +313,9 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
       $scope.popoverStatusOpened = false;
     }, function (err) {
       $notify.errors(err);
+    })
+    .then(() => {
+      $scope.loading = false;
     });
   };
 
@@ -295,21 +323,33 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     if (!value || !$ctrl.exchange.pharmid) {
       return false;
     }
+    $scope.loading = true;
     PharmService.createByGroupCode($ctrl.exchange.pharmid, value.goods_group_id || value)
       .then(function (response) {
         $notify.success("Успешно добавлено");
       }, function (err) {
         $notify.errors(err);
+      })
+      .then(() => {
+        $scope.loading = false;
       });
   };
 
-  PharmService.listGroupCodes()
-    .then((response) => {
-      $ctrl.codes = response.data || [];
-    }, (err) => {
-      // $ctrl.codes = [{goods_group_id: 12}, {goods_group_id: 45}];
-      $notify.errors(err);
-    });
+  $ctrl.refreshCodes = function (value) {
+    if (!value) {
+      return false;
+    }
+    if (value.length < 2) {
+      return false;
+    }
+    PharmService.listGroupCodes([{field: "goods_group_id", cond: "cn", value}])
+      .then((response) => {
+        $ctrl.codes = response.data || [];
+      }, (err) => {
+        // $ctrl.codes = [{goods_group_id: 12}, {goods_group_id: 45}];
+        $notify.errors(err);
+      });
+  };
 }
 
 export default Ctrl;

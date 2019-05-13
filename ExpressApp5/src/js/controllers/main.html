@@ -30,7 +30,9 @@
                    tagging tagging-label="false"
                    theme="bootstrap">
             <ui-select-match placeholder="Введите код...">{{$select.selected.goods_group_id || $select.selected}}</ui-select-match>
-            <ui-select-choices repeat="code in $ctrl.codes | filter:$select.search">
+            <ui-select-choices repeat="code in $ctrl.codes track by $index"
+                               refresh="$ctrl.refreshCodes($select.search)"
+                               refresh-delay="0">
                 <div ng-bind-html="code.goods_group_id | highlight: $select.search"></div>
             </ui-select-choices>
         </ui-select>
