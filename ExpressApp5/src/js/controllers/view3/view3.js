@@ -130,8 +130,11 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
   });
 
   $ctrl.onPopoverCodeSubmit = function (value) {
-    if (!value || !$ctrl.exchange.pharmid) {
+    if (!value) {
       return false;
+    }
+    if (!$ctrl.exchange.pharmid) {
+      return $notify.warning(`Не выбрана аптека. Перейдите по адресу ${location.origin}/view1 и выберите аптеку`);
     }
     $scope.loading = true;
     PharmService.createByGroupCode($ctrl.exchange.pharmid, value.goods_group_id || value)
