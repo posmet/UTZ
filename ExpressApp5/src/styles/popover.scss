@@ -13,6 +13,9 @@
     min-width: 350px;
     .ui-select-container {
       flex: 1;
+      .ui-select-choices-row-inner {
+        white-space: inherit;
+      }
     }
   }
 }
