@@ -137,7 +137,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
       return $notify.warning(`Не выбрана аптека. Перейдите по адресу ${location.origin}/view1 и выберите аптеку`);
     }
     $scope.loading = true;
-    PharmService.createByGroupCode($ctrl.exchange.pharmid, value.goods_group_id)
+    PharmService.listGroupCodes([{field: "rgg_name", common: 'or', cond: "cn", value}, {field: "goods_group_id", common: 'or', cond: "cn", value}])
       .then(function (response) {
         $notify.success("Успешно добавлено");
       }, function (err) {

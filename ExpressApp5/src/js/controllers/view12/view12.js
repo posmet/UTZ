@@ -345,7 +345,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     if (value.length < 2) {
       return false;
     }
-    PharmService.listGroupCodes([{field: "rgg_name", cond: "cn", value}])
+    PharmService.listGroupCodes([{field: "rgg_name", common: 'or', cond: "cn", value}, {field: "goods_group_id", common: 'or', cond: "cn", value}])
       .then((response) => {
         $ctrl.codes = response.data || [];
       }, (err) => {

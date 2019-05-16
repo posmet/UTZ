@@ -32,11 +32,11 @@
         <ui-select ng-model="$ctrl.popovers.code"
                    style=""
                    theme="bootstrap">
-            <ui-select-match placeholder="Введите код...">{{$select.selected.rgg_name}}</ui-select-match>
+            <ui-select-match placeholder="Введите код...">{{$select.selected.goods_group_id}}, {{$select.selected.rgg_name}}</ui-select-match>
             <ui-select-choices repeat="code in $ctrl.codes track by $index"
                                refresh="$ctrl.refreshCodes($select.search)"
                                refresh-delay="0">
-                <div ng-bind-html="code.rgg_name | highlight: $select.search"></div>
+                <div ng-bind-html="(code.goods_group_id + ', ' + code.rgg_name) | highlight: $select.search"></div>
             </ui-select-choices>
         </ui-select>
         <div class="input-group-append">
