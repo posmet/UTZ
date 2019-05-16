@@ -12,8 +12,12 @@ const addwhere = function (conds) {
     sqlString = sqlString + conds.reduce(function (prev, curr) {
       var Whr = prev;
 		if (prev !== '') {
-			Whr = Whr + ' and ';
-			if (curr.condition === 'nls') {
+			if (curr.common === 'or') {
+				Whr = Whr + ' or ';
+			} else {
+				Whr = Whr + ' and ';
+			}
+	if (curr.condition === 'nls') {
 				Whr = Whr + ' not (';
 			}
 
