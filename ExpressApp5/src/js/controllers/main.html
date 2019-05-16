@@ -15,7 +15,10 @@
             </span>
         </div>
 
-        Пользователь: {{currentUser.full_name}} {{ $ctrl.interface[currentUser.interface].name || '' }}
+        <div>
+            <div>Пользователь: {{currentUser.full_name}} {{ $ctrl.interface[currentUser.interface].name || '' }}</div>
+            <div style="font-size: 12px;">Аптека: <a href="javascript:void(0)" title="Изменить" ui-sref="app.view1">{{$ctrl.exchange.phname || 'Не выбрано'}}</a></div>
+        </div>
         <a class="nav-link" href="javascript:void(0)" ng-click="logout()">Выйти ←</a>
     </nav>
     <div ng-if="!currentUser.blocked" ui-view=""></div>
@@ -27,13 +30,13 @@
 <script type="text/ng-template" id="popovers/group-code-submit.html">
     <div class="input-group" style="flex-wrap: nowrap">
         <ui-select ng-model="$ctrl.popovers.code"
-                   tagging tagging-label="false"
+                   style=""
                    theme="bootstrap">
-            <ui-select-match placeholder="Введите код...">{{$select.selected.goods_group_id || $select.selected}}</ui-select-match>
+            <ui-select-match placeholder="Введите код...">{{$select.selected.rgg_name}}</ui-select-match>
             <ui-select-choices repeat="code in $ctrl.codes track by $index"
                                refresh="$ctrl.refreshCodes($select.search)"
                                refresh-delay="0">
-                <div ng-bind-html="code.goods_group_id | highlight: $select.search"></div>
+                <div ng-bind-html="code.rgg_name | highlight: $select.search"></div>
             </ui-select-choices>
         </ui-select>
         <div class="input-group-append">

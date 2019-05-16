@@ -1,6 +1,7 @@
-AppCtrl.$inject = ['$state', 'UserService'];
-function AppCtrl($state, UserService) {
+AppCtrl.$inject = ['$state', 'UserService', 'exchange'];
+function AppCtrl($state, UserService, exchange) {
   this.$state = $state;
+  this.exchange = exchange;
   this.interface = UserService.nav();
 }
 

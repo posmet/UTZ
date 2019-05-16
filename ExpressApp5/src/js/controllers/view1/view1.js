@@ -1,12 +1,18 @@
-Ctrl.$inject = ['$rootScope', '$http', '$notify', 'exchange', '$state', 'PharmService', '$scope', 'TableService', '$timeout', '$uibModal'];
-function Ctrl($rootScope, $http, $notify, exchange, $state, PharmService, $scope, TableService, $timeout, $uibModal) {
+import {MODULE_NAME} from '../../app';
+
+Ctrl.$inject = ['$rootScope', '$localStorage', '$notify', 'exchange', '$state', 'PharmService', '$scope', 'TableService', '$timeout', '$uibModal'];
+function Ctrl($rootScope, $localStorage, $notify, exchange, $state, PharmService, $scope, TableService, $timeout, $uibModal) {
 
   const stateName = 'gridState1';
 
   this.clickph = (pharm, $index) => {
-    exchange.pharmid = this.pharms[$index].Ph_ID;
-    exchange.phname = this.pharms[$index].Ph_Name;
-    exchange.filial = this.pharms[$index].Filial;
+    const obj = {
+      pharmid: this.pharms[$index].Ph_ID,
+      phname: this.pharms[$index].Ph_Name,
+      filial: this.pharms[$index].Filial
+    };
+    Object.assign(exchange, obj);
+    $localStorage.set(`${MODULE_NAME}_ph`, obj);
     $state.go('app.view4');
   };
 

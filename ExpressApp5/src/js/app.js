@@ -34,7 +34,7 @@ import 'file-saver/dist/FileSaver.min';
 import 'excel-builder/dist/excel-builder.compiled.min';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-const MODULE_NAME = 'UTZ';
+export const MODULE_NAME = 'UTZ';
 
 angular.module(MODULE_NAME, [
     uiRouter, ngCookies, ngAnimate, ngSanitize, ngAria, toastr, controllers, directives, services, filters,
@@ -44,7 +44,7 @@ angular.module(MODULE_NAME, [
     'ui.grid.expandable', 'ui.grid.importer','ui.grid.grouping',
   ])
   .config(config)
-  .run(['$rootScope', '$state', '$localStorage', '$http', '$notify', 'i18nService', '$transitions', function ($rootScope, $state, $localStorage, $http, $notify, i18nService, $transitions) {
+  .run(['$rootScope', '$state', '$localStorage', '$http', '$notify', 'i18nService', '$transitions', 'exchange', function ($rootScope, $state, $localStorage, $http, $notify, i18nService, $transitions, exchange) {
 
     i18nService.setCurrentLang('ru');
 
@@ -69,6 +69,7 @@ angular.module(MODULE_NAME, [
     });
 
     $rootScope.redirectToLogin = () => {
+      $localStorage.remove(`${MODULE_NAME}_ph`);
       $state.go('access.login');
     };
 
@@ -109,6 +110,11 @@ angular.module(MODULE_NAME, [
 
     if (!$rootScope.isAuthorized()) {
       $rootScope.redirectToLogin();
+    } else {
+      const ph = $localStorage.get(`${MODULE_NAME}_ph`);
+      if (ph && ph.pharmid) {
+        Object.assign(exchange, ph);
+      }
     }
 
   }]);

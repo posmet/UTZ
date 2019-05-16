@@ -131,13 +131,13 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
 
   $ctrl.onPopoverCodeSubmit = function (value) {
     if (!value) {
-      return false;
+      return $notify.warning(`Выберите групповой код из списка`);
     }
     if (!$ctrl.exchange.pharmid) {
       return $notify.warning(`Не выбрана аптека. Перейдите по адресу ${location.origin}/view1 и выберите аптеку`);
     }
     $scope.loading = true;
-    PharmService.createByGroupCode($ctrl.exchange.pharmid, value.goods_group_id || value)
+    PharmService.createByGroupCode($ctrl.exchange.pharmid, value.goods_group_id)
       .then(function (response) {
         $notify.success("Успешно добавлено");
       }, function (err) {
@@ -155,7 +155,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
     if (value.length < 2) {
       return false;
     }
-    PharmService.listGroupCodes([{field: "goods_group_id", cond: "cn", value}])
+    PharmService.listGroupCodes([{field: "rgg_name", cond: "cn", value}])
       .then((response) => {
         $ctrl.codes = response.data || [];
       }, (err) => {
