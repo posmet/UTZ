@@ -49,10 +49,10 @@ const addwhere = function (conds) {
           Whr = Whr + " < '" + curr.value + "'";
 		  break;
 		case 'ls':
-		  Whr = Whr + " IN ('" + curr.value.join() + "')";
+		  Whr = Whr + " IN ('" + curr.value.join("','") + "')";
 		  break;
 		case 'nls':
-		  Whr = Whr + " IN ('" + curr.value.join() + "'))";
+			  Whr = Whr + " IN ('" + curr.value.join("','") + "'))";
 		  break;
 	  }
       return Whr;
