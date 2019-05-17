@@ -72,7 +72,6 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
           })
           .then(function (response) {
             $ctrl.msg.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
-            $scope.$apply();
             //$ctrl.gridOptions.data = response.data;
           }, function (err) {
             $notify.errors(err);
