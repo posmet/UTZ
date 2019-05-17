@@ -28,7 +28,6 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService) 
             url: '/api/updaterq/' + rowEntity.Ph_ID + "/" + rowEntity.GrCode + "/" + rowEntity.Req
           }).then(function (response) {
             $ctrl.lastCellEdited = 'edited row id:' + rowEntity.Gr_ID + ' Column:' + colDef.name + ' newValue:' + newValue + ' oldValue:' + oldValue;
-            $scope.$apply();
           }, function (err) {
             $notify.errors(err);
           });

@@ -136,7 +136,7 @@ function Ctrl($scope, $http, $notify, exchange, $state, $timeout, TableService, 
           $scope.loading = true;
           $http.post('/api/updatemx/', rowEntity).then(function (response) {
             $ctrl.msg.lastCellEdited = 'Изменено строка:' + rowEntity.Gr_ID + ' Столбец:' + colDef.name + ' Было:' + oldValue + ' Стало:' + newValue;
-            $scope.$apply();
+
           }, function (err) {
             $notify.errors(err);
           })
