@@ -585,6 +585,7 @@ module.exports = function (app) {
 	  if (req.body.limit) {
 	    limit = `TOP(${req.body.limit})`;
 	  }
+	  console.log(req.body.filter);
     let sqlString = `SELECT ${limit} * from ${req.params.key} ${addwhere(req.body.filter)}`;
 		  
     console.log(sqlString);
